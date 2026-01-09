@@ -1,0 +1,65 @@
+/* Design Tokens - Extracted from Figma */
+
+:root {
+  /* ==================== COLORS ==================== */
+
+  /* Primitives */
+  --color-off-white-100: #f6f4eb;
+  --color-black-900: #0e0e0e;
+  --color-pink-500: #f07aaa;
+
+  /* Surface */
+  --color-surface-background-default: #0e0e0e;
+  --color-surface-background-highlight: #f07aaa;
+  --color-surface-button-default: #f6f4eb;
+  --color-surface-button-hover: #f07aaa;
+  --color-surface-stroke-light: #f6f4eb;
+  --color-surface-logo-light: #f6f4eb;
+  --color-surface-logo-dark: #0e0e0e;
+
+  /* Typography */
+  --color-typography-headings: #f6f4eb;
+  --color-typography-body: #f6f4eb;
+  --color-typography-body-invert: #0e0e0e;
+
+  /* ==================== SPACING ==================== */
+  --spacing-4xxs: 0px;
+  --spacing-2xxs: 8px;
+  --spacing-xxs: 10px;
+  --spacing-3xs: 12px;
+  --spacing-2xs: 14px;
+  --spacing-xs: 16px;
+  --spacing-s: 18px;
+  --spacing-2s: 20px;
+  --spacing-3s: 26px;
+  --spacing-m: 36px;
+  --spacing-3m: 60px;
+  --spacing-l: 70px;
+  --spacing-2l: 80px;
+  --spacing-3l: 100px;
+  --spacing-xl: 120px;
+
+  /* ==================== TYPOGRAPHY ==================== */
+
+  /* Font Sizes */
+  --font-size-h2: 36px;
+  --font-size-h3: 24px;
+  --font-size-h5: 14px;
+  --font-size-body-s: 16px;
+  --font-size-cta: 12px;
+
+  /* Font Weights */
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.3;
+  --line-height-relaxed: 1.6;
+
+  /* Letter Spacing */
+  --letter-spacing-h2: -0.72px;
+  --letter-spacing-h3: -0.48px;
+  --letter-spacing-body: -0.32px;
+  --letter-spacing-cta: 0.36px;
+  --letter-spacing-h5: 0.42px;
+}

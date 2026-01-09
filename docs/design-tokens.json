@@ -1,0 +1,118 @@
+{
+  "colors": {
+    "primitives": {
+      "off-white-100": "#f6f4eb",
+      "black-900": "#0e0e0e",
+      "pink-500": "#f07aaa"
+    },
+    "semantic": {
+      "surface": {
+        "background-default": "#0e0e0e",
+        "background-highlight": "#f07aaa",
+        "button-default": "#f6f4eb",
+        "button-hover": "#f07aaa",
+        "stroke-light": "#f6f4eb",
+        "logo-light": "#f6f4eb",
+        "logo-dark": "#0e0e0e"
+      },
+      "typography": {
+        "headings": "#f6f4eb",
+        "body": "#f6f4eb",
+        "body-invert": "#0e0e0e"
+      }
+    }
+  },
+  "spacing": {
+    "4xxs": "0px",
+    "2xxs": "8px",
+    "xxs": "10px",
+    "3xs": "12px",
+    "2xs": "14px",
+    "xs": "16px",
+    "s": "18px",
+    "2s": "20px",
+    "3s": "26px",
+    "m": "36px",
+    "3m": "60px",
+    "l": "70px",
+    "2l": "80px",
+    "3l": "100px",
+    "xl": "120px"
+  },
+  "typography": {
+    "fontFamilies": {
+      "h2": "Sabon",
+      "h3": "Sabon",
+      "h5": "Gotham",
+      "body": "Sabon",
+      "cta": "Gotham"
+    },
+    "fontSizes": {
+      "h2": "36px",
+      "h3": "24px",
+      "h5": "14px",
+      "body-s": "16px",
+      "cta": "12px"
+    },
+    "fontWeights": {
+      "headings-sabon": "400",
+      "headings-gotham": "700",
+      "body-copy": "400",
+      "cta": "700"
+    },
+    "lineHeights": {
+      "tight": "1.3",
+      "relaxed": "1.6"
+    },
+    "letterSpacing": {
+      "tight": "-0.72px",
+      "normal": "-0.48px",
+      "body": "-0.32px",
+      "wide": "0.36px",
+      "wider": "0.42px"
+    },
+    "styles": {
+      "h2": {
+        "fontFamily": "Sabon",
+        "fontWeight": "400",
+        "fontSize": "36px",
+        "lineHeight": "1.3",
+        "letterSpacing": "-0.72px"
+      },
+      "h3": {
+        "fontFamily": "Sabon",
+        "fontWeight": "400",
+        "fontSize": "24px",
+        "lineHeight": "1.3",
+        "letterSpacing": "-0.48px"
+      },
+      "h5": {
+        "fontFamily": "Gotham",
+        "fontWeight": "700",
+        "fontSize": "14px",
+        "lineHeight": "1.6",
+        "letterSpacing": "0.42px",
+        "textTransform": "uppercase"
+      },
+      "body-s": {
+        "fontFamily": "Sabon",
+        "fontWeight": "400",
+        "fontSize": "16px",
+        "lineHeight": "1.6",
+        "letterSpacing": "-0.32px"
+      },
+      "cta": {
+        "fontFamily": "Gotham",
+        "fontWeight": "700",
+        "fontSize": "12px",
+        "lineHeight": "1.3",
+        "letterSpacing": "0.36px",
+        "textTransform": "uppercase"
+      }
+    }
+  },
+  "borderRadius": {
+    "none": "0px"
+  },
+  "shadows": {}
+}

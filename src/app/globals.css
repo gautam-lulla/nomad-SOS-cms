@@ -1,14 +1,56 @@
+@import "../styles/tokens.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #0e0e0e;
-  --foreground: #f6f4eb;
+body {
+  color: var(--color-typography-body);
+  background: var(--color-surface-background-default);
+  font-family: var(--font-sabon), serif;
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-sabon), serif;
+/* Typography utility classes */
+@layer utilities {
+  .text-style-h2 {
+    font-family: var(--font-sabon), serif;
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-h2);
+  }
+
+  .text-style-h3 {
+    font-family: var(--font-sabon), serif;
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-h3);
+  }
+
+  .text-style-h5 {
+    font-family: var(--font-gotham), sans-serif;
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-relaxed);
+    letter-spacing: var(--letter-spacing-h5);
+    text-transform: uppercase;
+  }
+
+  .text-style-body {
+    font-family: var(--font-sabon), serif;
+    font-size: var(--font-size-body-s);
+    font-weight: var(--font-weight-regular);
+    line-height: var(--line-height-relaxed);
+    letter-spacing: var(--letter-spacing-body);
+  }
+
+  .text-style-cta {
+    font-family: var(--font-gotham), sans-serif;
+    font-size: var(--font-size-cta);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--line-height-tight);
+    letter-spacing: var(--letter-spacing-cta);
+    text-transform: uppercase;
+  }
 }
