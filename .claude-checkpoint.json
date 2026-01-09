@@ -1,31 +1,41 @@
 {
   "project": "Nomad Wynwood",
   "figmaFileKey": "bGCUY43jJhcFUafm33ncgW",
-  "currentPhase": 2,
+  "currentPhase": 3,
   "phaseStatus": "complete",
-  "timestamp": "2025-01-09T12:15:00Z",
+  "timestamp": "2025-01-09T12:30:00Z",
   "phases": {
-    "0": {
-      "name": "Pre-flight Validation",
-      "status": "complete"
-    },
-    "1": {
-      "name": "Project Initialization",
-      "status": "complete"
-    },
-    "2": {
-      "name": "Design Token Extraction",
+    "0": { "name": "Pre-flight Validation", "status": "complete" },
+    "1": { "name": "Project Initialization", "status": "complete" },
+    "2": { "name": "Design Token Extraction", "status": "complete" },
+    "3": {
+      "name": "Asset Extraction",
       "status": "complete",
       "details": {
-        "colorsExtracted": 11,
-        "spacingScaleExtracted": 16,
-        "typographyStylesExtracted": 5,
-        "tokensFile": "/docs/design-tokens.json",
-        "cssFile": "/src/styles/tokens.css",
-        "tailwindConfigured": true
+        "fonts": {
+          "sabon": "Configured via next/font/local",
+          "gotham": "Configured via next/font/local"
+        },
+        "icons": [
+          "HamburgerIcon",
+          "CloseIcon",
+          "ArrowRightIcon",
+          "ArrowLeftIcon",
+          "AddIcon",
+          "MinusIcon",
+          "InstagramIcon"
+        ],
+        "imagesExtracted": {
+          "hero": 3,
+          "gallery": 3,
+          "sections": 2,
+          "instagram": 4,
+          "about": 5,
+          "logos": 7
+        },
+        "manifestFile": "/docs/image-manifest.json"
       }
     },
-    "3": { "name": "Asset Extraction", "status": "pending" },
     "4": { "name": "Component Generation", "status": "pending" },
     "5": { "name": "Page Assembly", "status": "pending" },
     "6": { "name": "Automated QA", "status": "pending" },

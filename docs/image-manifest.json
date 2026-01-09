@@ -1,0 +1,159 @@
+{
+  "version": "1.0",
+  "extractedAt": "2025-01-09",
+  "source": "Figma",
+  "images": {
+    "hero": {
+      "left-image.jpg": {
+        "path": "/images/hero/left-image.jpg",
+        "description": "Hero section left split image",
+        "usage": ["homepage"]
+      },
+      "right-image.jpg": {
+        "path": "/images/hero/right-image.jpg",
+        "description": "Hero section right split image",
+        "usage": ["homepage"]
+      },
+      "nav-background.jpg": {
+        "path": "/images/hero/nav-background.jpg",
+        "description": "Navigation menu background image",
+        "usage": ["navigation"]
+      }
+    },
+    "gallery": {
+      "image-1.jpg": {
+        "path": "/images/gallery/image-1.jpg",
+        "description": "Gallery image 1",
+        "usage": ["homepage"]
+      },
+      "image-2.jpg": {
+        "path": "/images/gallery/image-2.jpg",
+        "description": "Gallery image 2",
+        "usage": ["homepage"]
+      },
+      "image-3.jpg": {
+        "path": "/images/gallery/image-3.jpg",
+        "description": "Gallery image 3",
+        "usage": ["homepage"]
+      }
+    },
+    "sections": {
+      "events-right.jpg": {
+        "path": "/images/sections/events-right.jpg",
+        "description": "Events section image",
+        "usage": ["homepage", "private-events"]
+      },
+      "contact-left.jpg": {
+        "path": "/images/sections/contact-left.jpg",
+        "description": "Contact section image",
+        "usage": ["homepage", "contact"]
+      }
+    },
+    "instagram": {
+      "insta-1.jpg": {
+        "path": "/images/instagram/insta-1.jpg",
+        "description": "Instagram feed image 1",
+        "usage": ["homepage", "about"]
+      },
+      "insta-2.jpg": {
+        "path": "/images/instagram/insta-2.jpg",
+        "description": "Instagram feed image 2",
+        "usage": ["homepage", "about"]
+      },
+      "insta-3.jpg": {
+        "path": "/images/instagram/insta-3.jpg",
+        "description": "Instagram feed image 3",
+        "usage": ["homepage", "about"]
+      },
+      "insta-4.jpg": {
+        "path": "/images/instagram/insta-4.jpg",
+        "description": "Instagram feed image 4",
+        "usage": ["homepage", "about"]
+      }
+    },
+    "about": {
+      "heritage.jpg": {
+        "path": "/images/about/heritage.jpg",
+        "description": "Heritage section image",
+        "usage": ["about"]
+      },
+      "chef-1.jpg": {
+        "path": "/images/about/chef-1.jpg",
+        "description": "Executive Chef Marta Jones",
+        "usage": ["about"]
+      },
+      "chef-2.jpg": {
+        "path": "/images/about/chef-2.jpg",
+        "description": "Bar Director Elias Berg",
+        "usage": ["about"]
+      },
+      "chef-3.jpg": {
+        "path": "/images/about/chef-3.jpg",
+        "description": "Wine Director Liam Foster",
+        "usage": ["about"]
+      },
+      "dining-table.jpg": {
+        "path": "/images/about/dining-table.jpg",
+        "description": "Dining table decoration",
+        "usage": ["about"]
+      }
+    },
+    "logos": {
+      "logo-mark-group.png": {
+        "path": "/images/logo-mark-group.png",
+        "description": "NoMad Wynwood logo mark - group element"
+      },
+      "logo-vector.png": {
+        "path": "/images/logo-vector.png",
+        "description": "NoMad Wynwood logo vector"
+      },
+      "logo-mark-dark.png": {
+        "path": "/images/logo-mark-dark.png",
+        "description": "NoMad Wynwood logo mark - dark version"
+      },
+      "logo-mark-footer.png": {
+        "path": "/images/logo-mark-footer.png",
+        "description": "NoMad Wynwood logo for footer"
+      },
+      "logo-vector-dark.png": {
+        "path": "/images/logo-vector-dark.png",
+        "description": "NoMad Wynwood logo vector - dark version"
+      },
+      "nomad-wynwood-mark-horizontal.png": {
+        "path": "/images/nomad-wynwood-mark-horizontal.png",
+        "description": "NoMad Wynwood horizontal wordmark"
+      },
+      "nomad-wynwood-mark-svg.svg": {
+        "path": "/images/nomad-wynwood-mark-svg.svg",
+        "description": "NoMad Wynwood SVG logo"
+      }
+    }
+  },
+  "icons": {
+    "hamburger-lines.svg": {
+      "path": "/icons/hamburger-lines.svg",
+      "description": "Hamburger menu lines"
+    },
+    "close.svg": {
+      "path": "/icons/close.svg",
+      "description": "Close/X icon"
+    },
+    "arrow-right.svg": {
+      "path": "/icons/arrow-right.svg",
+      "description": "Right arrow for inputs and links"
+    },
+    "arrow-left.svg": {
+      "path": "/icons/arrow-left.svg",
+      "description": "Left arrow for carousel"
+    },
+    "add.svg": {
+      "path": "/icons/add.svg",
+      "description": "Plus/add icon for accordions"
+    }
+  },
+  "notes": {
+    "exportFormat": "Images exported as JPG/PNG from Figma API",
+    "iconFormat": "Icons created as React components in /src/components/icons/",
+    "figmaAssetExpiry": "Figma asset URLs expire after 7 days"
+  }
+}
