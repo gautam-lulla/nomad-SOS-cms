@@ -1,22 +1,31 @@
 {
   "project": "Nomad Wynwood",
   "figmaFileKey": "bGCUY43jJhcFUafm33ncgW",
-  "currentPhase": 3,
+  "currentPhase": 4,
   "phaseStatus": "complete",
-  "timestamp": "2025-01-09T12:30:00Z",
+  "timestamp": "2025-01-09T13:00:00Z",
   "phases": {
     "0": { "name": "Pre-flight Validation", "status": "complete" },
     "1": { "name": "Project Initialization", "status": "complete" },
     "2": { "name": "Design Token Extraction", "status": "complete" },
-    "3": {
-      "name": "Asset Extraction",
+    "3": { "name": "Asset Extraction", "status": "complete" },
+    "4": {
+      "name": "Component Generation",
       "status": "complete",
       "details": {
-        "fonts": {
-          "sabon": "Configured via next/font/local",
-          "gotham": "Configured via next/font/local"
-        },
-        "icons": [
+        "uiComponents": ["Button", "Input", "Checkbox"],
+        "layoutComponents": ["Navigation", "Footer", "Logo", "LogoHorizontal"],
+        "blockComponents": [
+          "HeroSplitScreen",
+          "SectionHalfScreen",
+          "Gallery",
+          "InstagramFeed",
+          "TextSection",
+          "FAQAccordion",
+          "TeamGrid",
+          "FullWidthImage"
+        ],
+        "iconComponents": [
           "HamburgerIcon",
           "CloseIcon",
           "ArrowRightIcon",
@@ -25,18 +34,10 @@
           "MinusIcon",
           "InstagramIcon"
         ],
-        "imagesExtracted": {
-          "hero": 3,
-          "gallery": 3,
-          "sections": 2,
-          "instagram": 4,
-          "about": 5,
-          "logos": 7
-        },
-        "manifestFile": "/docs/image-manifest.json"
+        "types": "/src/types/content.ts",
+        "inventory": "/docs/component-inventory.md"
       }
     },
-    "4": { "name": "Component Generation", "status": "pending" },
     "5": { "name": "Page Assembly", "status": "pending" },
     "6": { "name": "Automated QA", "status": "pending" },
     "7": { "name": "Production Audit", "status": "pending" }
