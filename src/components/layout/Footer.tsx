@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import { Input, Checkbox } from "@/components/ui";
-import { Logo, LogoHorizontal } from "./Logo";
+import { Logo } from "./Logo";
+import Image from "next/image";
 import Link from "next/link";
 
 interface FooterProps {
@@ -26,7 +27,7 @@ export function Footer({ className }: FooterProps) {
     <footer className={cn("bg-pink-500", className)}>
       <div className="max-w-[1440px] mx-auto">
         {/* Main Footer Content */}
-        <div className="flex flex-col lg:flex-row items-start justify-between p-3m gap-3m lg:gap-0">
+        <div className="flex flex-col lg:flex-row items-start justify-between p-4 md:p-6 lg:p-3m gap-8 lg:gap-0">
           {/* Address */}
           <div className="w-full lg:w-[229px]">
             <div className="font-gotham font-bold text-h5 uppercase tracking-wide-h5 text-black-900 leading-relaxed">
@@ -63,6 +64,7 @@ export function Footer({ className }: FooterProps) {
                 type="email"
                 placeholder="Please enter your email"
                 variant="dark"
+                showArrow={true}
               />
               <Checkbox
                 label="I agree to the Privacy Policy"
@@ -72,29 +74,36 @@ export function Footer({ className }: FooterProps) {
           </div>
         </div>
 
-        {/* Logo Mark */}
-        <div className="flex justify-center py-3m">
+        {/* Logo Mark - 272px per Figma */}
+        <div className="flex justify-center py-8 md:py-10 lg:py-3m">
           <Logo variant="dark" size="large" />
         </div>
 
-        {/* Horizontal Wordmark */}
-        <div className="px-3m pb-0">
-          <LogoHorizontal className="max-w-[1320px] mx-auto" />
-        </div>
-
-        {/* Legal Bar */}
-        <div className="bg-black-900 px-2s py-xs mt-0">
-          <div className="flex flex-wrap items-center justify-center gap-xs">
-            {legalLinks.map((link, index) => (
-              <Link
-                key={index}
-                href={link.href}
-                className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 hover:underline"
-              >
-                {link.label}
-              </Link>
-            ))}
+        {/* Horizontal Wordmark - matches hero at 96px */}
+        <div className="px-4 md:px-6 lg:px-3m pb-8 md:pb-10 lg:pb-3m">
+          <div className="relative h-[40px] md:h-[70px] lg:h-[96px] w-full max-w-[1320px] mx-auto">
+            <Image
+              src="/images/nomad-wynwood-wordmark-footer.svg"
+              alt="The NoMad Bar"
+              fill
+              className="object-contain"
+            />
           </div>
+        </div>
+      </div>
+
+      {/* Legal Bar - Full Width */}
+      <div className="bg-black-900 px-2s py-xs">
+        <div className="flex flex-wrap items-center justify-center gap-xs">
+          {legalLinks.map((link, index) => (
+            <Link
+              key={index}
+              href={link.href}
+              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 hover:underline"
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
       </div>
     </footer>

@@ -28,7 +28,7 @@ export function Navigation({ className }: NavigationProps) {
       {/* Main Navigation */}
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 h-[110px]",
+          "fixed top-0 left-0 right-0 z-50 h-[80px] md:h-[100px] lg:h-[110px]",
           "flex items-center justify-between",
           className
         )}
@@ -36,10 +36,10 @@ export function Navigation({ className }: NavigationProps) {
         {/* Hamburger Menu */}
         <button
           onClick={() => setIsMenuOpen(true)}
-          className="absolute left-5 top-[34px] flex items-center gap-4 text-off-white-100 cursor-pointer"
+          className="absolute left-4 md:left-5 top-[24px] md:top-[30px] lg:top-[34px] flex items-center gap-2 md:gap-4 text-off-white-100 cursor-pointer"
         >
           <HamburgerIcon />
-          <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta">
+          <span className="hidden md:inline font-gotham font-bold text-cta uppercase tracking-wide-cta">
             menu
           </span>
         </button>
@@ -50,8 +50,8 @@ export function Navigation({ className }: NavigationProps) {
         </div>
 
         {/* Reserve Button */}
-        <div className="absolute right-5 top-5">
-          <Button variant="filled">Reserve a Table</Button>
+        <div className="absolute right-4 md:right-5 top-4 md:top-5">
+          <Button variant="filled" className="text-[10px] md:text-cta px-3 md:px-s">Reserve a Table</Button>
         </div>
       </header>
 
@@ -71,17 +71,17 @@ export function Navigation({ className }: NavigationProps) {
           {/* Close Button */}
           <button
             onClick={() => setIsMenuOpen(false)}
-            className="absolute left-5 top-7 flex items-center gap-2.5 text-off-white-100 cursor-pointer z-10"
+            className="absolute left-4 md:left-5 top-6 md:top-7 flex items-center gap-2 md:gap-2.5 text-off-white-100 cursor-pointer z-10"
           >
             <CloseIcon />
-            <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta">
+            <span className="hidden md:inline font-gotham font-bold text-cta uppercase tracking-wide-cta">
               Close
             </span>
           </button>
 
           {/* Reserve Button */}
-          <div className="absolute right-5 top-5 z-10">
-            <Button variant="filled">Reserve a Table</Button>
+          <div className="absolute right-4 md:right-5 top-4 md:top-5 z-10">
+            <Button variant="filled" className="text-[10px] md:text-cta px-3 md:px-s">Reserve a Table</Button>
           </div>
 
           {/* Center Logo */}
@@ -90,7 +90,7 @@ export function Navigation({ className }: NavigationProps) {
           </div>
 
           {/* Menu Links */}
-          <nav className="absolute left-[60px] top-[190px]">
+          <nav className="absolute left-4 md:left-[60px] top-[120px] md:top-[160px] lg:top-[190px]">
             <ul className="space-y-[3px]">
               {menuLinks.map((link) => (
                 <li key={link.href}>
@@ -98,7 +98,7 @@ export function Navigation({ className }: NavigationProps) {
                     href={link.href}
                     onClick={() => setIsMenuOpen(false)}
                     className={cn(
-                      "font-sabon text-[36px] leading-[1.2] tracking-tight-h2",
+                      "font-sabon text-[28px] md:text-[32px] lg:text-[36px] leading-[1.2] tracking-tight-h2",
                       "text-off-white-100 hover:text-pink-500 hover:italic",
                       "transition-all duration-200"
                     )}
@@ -111,10 +111,10 @@ export function Navigation({ className }: NavigationProps) {
           </nav>
 
           {/* Location Info */}
-          <div className="absolute left-[60px] bottom-[178px]">
-            <div className="flex gap-[60px]">
+          <div className="absolute left-4 md:left-[60px] bottom-[80px] md:bottom-[120px] lg:bottom-[178px]">
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-[60px]">
               {/* Location */}
-              <div className="w-[187px]">
+              <div className="w-full sm:w-[187px]">
                 <div className="flex items-center gap-2.5 mb-3xs">
                   <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
                     01.
@@ -130,7 +130,7 @@ export function Navigation({ className }: NavigationProps) {
               </div>
 
               {/* Hours */}
-              <div className="w-[187px]">
+              <div className="w-full sm:w-[187px]">
                 <div className="flex items-center gap-2.5 mb-3xs">
                   <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
                     02.

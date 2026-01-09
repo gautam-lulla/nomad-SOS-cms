@@ -1,0 +1,63 @@
+{
+  "hero": {
+    "images": [
+      { "src": "/images/gallery/image-1.jpg", "alt": "Restaurant ambiance" },
+      { "src": "/images/gallery/image-2.jpg", "alt": "Dining experience" }
+    ]
+  },
+  "categories": ["Brunch", "All day", "Cocktails", "Wine", "Happy hour"],
+  "activeCategory": "Brunch",
+  "menuTitle": "Brunch",
+  "menuSubtitle": "Available Every Day, 11 AM – 3 PM",
+  "sections": [
+    {
+      "name": "Appetizers",
+      "items": [
+        { "name": "Yoghurt & Berries", "price": "$14", "description": "NoMad Granola, Honey, Mint" },
+        { "name": "Kale Salad", "price": "$17", "description": "Pear, Pevensey Blue, Sourdough Crisps" },
+        { "name": "Raw Farm Vegetables", "price": "$18", "description": "Sesame Carrot Dip, Sunflower Seeds" },
+        { "name": "Cacio e Pepe", "price": "$22", "description": "Black Pepper, Pecorino, Confit Egg Yolk" },
+        { "name": "Butternut Soup", "price": "$11", "description": "Lime Creme, Croutons" },
+        { "name": "Mushroom Flatbread", "price": "$16", "description": "Fresh Mozzarella, Pickled Onions" }
+      ]
+    },
+    {
+      "name": "Mains",
+      "items": [
+        { "name": "Seared Salmon", "price": "$28", "description": "Quinoa, Roasted Vegetables" },
+        { "name": "Steak Frites", "price": "$35", "description": "Garlic Butter, Rosemary" },
+        { "name": "Pasta Primavera", "price": "$24", "description": "Seasonal Vegetables, Pesto Cream" },
+        { "name": "Chicken Pot Pie", "price": "$26", "description": "Root Vegetables, Flaky Crust" },
+        { "name": "Lentil Shepherd's Pie", "price": "$22", "description": "Mashed Potatoes, Crispy Onions" },
+        { "name": "Pork Tenderloin", "price": "$30", "description": "Apple Chutney, Sage" },
+        { "name": "Vegetable Stir Fry", "price": "$18", "description": "Broccoli, Bell Peppers, Carrots" },
+        { "name": "Mushroom Risotto", "price": "$24", "description": "Arborio Rice, Parmesan, Fresh Herbs" }
+      ]
+    },
+    {
+      "name": "Sides",
+      "items": [
+        { "name": "Grilled Asparagus", "price": "$12", "description": "Lemon Aioli" },
+        { "name": "Truffle Fries", "price": "$15", "description": "Parmesan, Herbs" },
+        { "name": "Mac & Cheese", "price": "$14", "description": "Cheddar, Gruyere, Breadcrumbs" },
+        { "name": "Roasted Carrots", "price": "$10", "description": "Maple Glaze, Pistachios" }
+      ]
+    }
+  ],
+  "gallery": [
+    { "src": "/images/gallery/image-1.jpg", "alt": "Food presentation 1" },
+    { "src": "/images/gallery/image-2.jpg", "alt": "Food presentation 2" },
+    { "src": "/images/gallery/image-3.jpg", "alt": "Food presentation 3" }
+  ],
+  "instagram": {
+    "title": "Inspiration is everywhere",
+    "handle": "@nomadwynwood",
+    "handleUrl": "https://instagram.com/nomadwynwood",
+    "images": [
+      { "src": "/images/instagram/insta-1.jpg", "alt": "Instagram post 1" },
+      { "src": "/images/instagram/insta-2.jpg", "alt": "Instagram post 2" },
+      { "src": "/images/instagram/insta-3.jpg", "alt": "Instagram post 3" },
+      { "src": "/images/instagram/insta-4.jpg", "alt": "Instagram post 4" }
+    ]
+  }
+}

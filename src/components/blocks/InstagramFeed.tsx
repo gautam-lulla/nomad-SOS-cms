@@ -38,9 +38,9 @@ export function InstagramFeed({
       </div>
 
       {/* Images */}
-      <div className="flex">
+      <div className="grid grid-cols-2 md:grid-cols-4">
         {images.map((image, index) => (
-          <div key={index} className="flex-1 relative h-[444px]">
+          <div key={index} className="relative h-[200px] md:h-[300px] lg:h-[444px]">
             <Image
               src={image.src}
               alt={image.alt || `Instagram post ${index + 1}`}

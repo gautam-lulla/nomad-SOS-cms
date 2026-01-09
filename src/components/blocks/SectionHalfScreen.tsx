@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui";
 import Image from "next/image";
+import Link from "next/link";
 
 interface SectionHalfScreenProps {
   heading: string;
@@ -72,13 +72,22 @@ export function SectionHalfScreen({
             ))}
           </div>
 
-          {buttonText && (
-            <Button
-              variant="outline"
-              onClick={() => buttonHref && (window.location.href = buttonHref)}
+          {buttonText && buttonHref && (
+            <Link
+              href={buttonHref}
+              className={cn(
+                "font-gotham font-bold text-cta uppercase tracking-wide-cta",
+                "inline-flex items-center justify-center gap-xxs",
+                "transition-all duration-300 ease-in-out",
+                "px-s pt-3xs pb-2xs",
+                "bg-transparent text-off-white-100",
+                "border border-off-white-100",
+                "hover:bg-pink-500 hover:text-black-900 hover:border-pink-500",
+                "w-fit"
+              )}
             >
               {buttonText}
-            </Button>
+            </Link>
           )}
         </div>
       </div>

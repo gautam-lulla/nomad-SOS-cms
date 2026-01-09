@@ -1,11 +1,170 @@
-export default function Home() {
+import { Navigation, Footer } from "@/components/layout";
+import {
+  HeroSplitScreen,
+  Gallery,
+  SectionHalfScreen,
+  InstagramFeed,
+  FullWidthImage,
+} from "@/components/blocks";
+import { Button } from "@/components/ui";
+import homepageContent from "@/content/pages/homepage.json";
+
+export default function HomePage() {
+  const {
+    hero,
+    introSection,
+    gallery,
+    menuSection,
+    eventsSection,
+    contactSection,
+    instagram,
+  } = homepageContent;
+
   return (
-    <main className="min-h-screen bg-[#0e0e0e]">
-      <div className="flex items-center justify-center min-h-screen">
-        <h1 className="font-sabon text-4xl text-[#f6f4eb]">
-          NoMad Wynwood
-        </h1>
-      </div>
+    <main className="bg-black-900 min-h-screen">
+      {/* Navigation */}
+      <Navigation />
+
+      {/* Hero Section */}
+      <HeroSplitScreen
+        leftImage={hero.leftImage}
+        rightImage={hero.rightImage}
+        logoSrc={hero.logoSrc}
+        showGradients={true}
+        showLogo={true}
+      />
+
+      {/* Intro Section with Location & Hours */}
+      <section className="pt-10 md:pt-16 lg:pt-3l px-4 md:px-6 lg:px-3m">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
+          {/* Heading */}
+          <div className="lg:w-1/2">
+            <h2 className="font-sabon text-h2 text-off-white-100 max-w-[544px]">
+              {introSection.heading}
+            </h2>
+          </div>
+
+          {/* Content */}
+          <div className="lg:w-[715px] lg:ml-auto">
+            <div className="max-w-[433px]">
+              <p className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s">
+                {introSection.paragraph}
+              </p>
+
+              <Button variant="outline" className="mb-8 lg:mb-3m">
+                {introSection.buttonText}
+              </Button>
+
+              {/* Location & Hours */}
+              <div className="flex flex-col sm:flex-row gap-6 sm:gap-m">
+                {/* Location */}
+                <div className="w-full sm:w-[186px]">
+                  <div className="flex items-center gap-xxs mb-3xs">
+                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
+                      01.
+                    </span>
+                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
+                      location
+                    </span>
+                  </div>
+                  <div className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body">
+                    <p>{introSection.location.address}</p>
+                    <p>{introSection.location.phone}</p>
+                  </div>
+                </div>
+
+                {/* Hours */}
+                <div className="w-full sm:w-[186px]">
+                  <div className="flex items-center gap-xxs mb-3xs">
+                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
+                      02.
+                    </span>
+                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
+                      hours
+                    </span>
+                  </div>
+                  <div className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body">
+                    {introSection.hours.times.map((time, index) => (
+                      <p key={index}>{time}</p>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <section className="pt-10 md:pt-16 lg:pt-xl">
+        <Gallery images={gallery} />
+      </section>
+
+      {/* Menu Section */}
+      <section className="pt-10 md:pt-16 lg:pt-3l">
+        <div className="px-4 md:px-6 lg:px-3m">
+          <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
+            {/* Heading */}
+            <div className="lg:w-1/2">
+              <h2 className="font-sabon text-h2 text-off-white-100 max-w-[544px]">
+                {menuSection.heading}
+              </h2>
+            </div>
+
+            {/* Content */}
+            <div className="lg:w-[715px] lg:ml-auto">
+              <div className="max-w-[433px]">
+                <p className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s">
+                  {menuSection.paragraph}
+                </p>
+                <Button variant="outline">
+                  {menuSection.buttonText}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Full Width Menu Image */}
+        <div className="mt-10 md:mt-16 lg:mt-xl">
+          <FullWidthImage
+            src="/images/about/dining-table.jpg"
+            alt="Dining experience"
+            height={840}
+          />
+        </div>
+      </section>
+
+      {/* Events Section - Image Right */}
+      <SectionHalfScreen
+        heading={eventsSection.heading}
+        paragraphs={[eventsSection.paragraph]}
+        buttonText={eventsSection.buttonText}
+        buttonHref={eventsSection.buttonHref}
+        imageSrc={eventsSection.imageSrc}
+        variant="image-right"
+      />
+
+      {/* Contact Section - Image Left */}
+      <SectionHalfScreen
+        heading={contactSection.heading}
+        paragraphs={[contactSection.paragraph]}
+        buttonText={contactSection.buttonText}
+        buttonHref={contactSection.buttonHref}
+        imageSrc={contactSection.imageSrc}
+        variant="image-left"
+      />
+
+      {/* Instagram Feed */}
+      <InstagramFeed
+        title={instagram.title}
+        handle={instagram.handle}
+        handleUrl={instagram.handleUrl}
+        images={instagram.images}
+      />
+
+      {/* Footer */}
+      <Footer />
     </main>
   );
 }

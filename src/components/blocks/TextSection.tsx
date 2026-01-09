@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Button } from "@/components/ui";
+import Link from "next/link";
 
 interface TextSectionProps {
   heading: string;
@@ -22,8 +22,8 @@ export function TextSection({
 }: TextSectionProps) {
   if (layout === "centered") {
     return (
-      <section className={cn("max-w-[454px] mx-auto text-center px-6", className)}>
-        <h2 className="font-sabon text-h2 text-off-white-100 mb-3s">
+      <section className={cn("max-w-[454px] mx-auto text-center px-4 md:px-6", className)}>
+        <h2 className="font-sabon text-h2 text-off-white-100 mb-4 lg:mb-3s">
           {heading}
         </h2>
         {paragraph && (
@@ -36,8 +36,8 @@ export function TextSection({
   }
 
   return (
-    <section className={cn("px-3m pt-3l pb-0", className)}>
-      <div className="flex flex-col lg:flex-row gap-3s lg:gap-0">
+    <section className={cn("px-4 md:px-6 lg:px-3m pt-10 md:pt-16 lg:pt-3l pb-0", className)}>
+      <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
         {/* Heading */}
         <div className="lg:w-1/2">
           <h2 className="font-sabon text-h2 text-off-white-100 max-w-[544px]">
@@ -48,25 +48,33 @@ export function TextSection({
         {/* Content */}
         <div className="lg:w-[715px] lg:ml-auto">
           {paragraph && (
-            <p className="font-sabon text-body-s text-off-white-100 leading-relaxed max-w-[433px] mb-3s">
+            <p className="font-sabon text-body-s text-off-white-100 leading-relaxed max-w-[433px] mb-6 lg:mb-3s">
               {paragraph}
             </p>
           )}
 
-          {buttonText && (
-            <Button
-              variant="outline"
-              onClick={() => buttonHref && (window.location.href = buttonHref)}
-              className="mb-3m"
+          {buttonText && buttonHref && (
+            <Link
+              href={buttonHref}
+              className={cn(
+                "font-gotham font-bold text-cta uppercase tracking-wide-cta",
+                "inline-flex items-center justify-center gap-xxs",
+                "transition-all duration-300 ease-in-out",
+                "px-s pt-3xs pb-2xs",
+                "bg-transparent text-off-white-100",
+                "border border-off-white-100",
+                "hover:bg-pink-500 hover:text-black-900 hover:border-pink-500",
+                "w-fit mb-8 lg:mb-3m"
+              )}
             >
               {buttonText}
-            </Button>
+            </Link>
           )}
 
           {showLocationHours && (
-            <div className="flex gap-m max-w-[433px] mt-3m">
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-m max-w-[433px] mt-8 lg:mt-3m">
               {/* Location */}
-              <div className="w-[186px]">
+              <div className="w-full sm:w-[186px]">
                 <div className="flex items-center gap-xxs mb-3xs">
                   <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
                     01.
@@ -82,7 +90,7 @@ export function TextSection({
               </div>
 
               {/* Hours */}
-              <div className="w-[186px]">
+              <div className="w-full sm:w-[186px]">
                 <div className="flex items-center gap-xxs mb-3xs">
                   <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
                     02.

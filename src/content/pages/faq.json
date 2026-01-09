@@ -1,0 +1,64 @@
+{
+  "hero": {
+    "heading": "A vibrant gathering place where tastemakers and travelers connect over inspired cuisine",
+    "images": [
+      { "src": "/images/gallery/image-1.jpg", "alt": "Gallery 1" },
+      { "src": "/images/gallery/image-2.jpg", "alt": "Gallery 2" },
+      { "src": "/images/gallery/image-3.jpg", "alt": "Gallery 3" },
+      { "src": "/images/instagram/insta-1.jpg", "alt": "Gallery 4" },
+      { "src": "/images/instagram/insta-2.jpg", "alt": "Gallery 5" },
+      { "src": "/images/instagram/insta-3.jpg", "alt": "Gallery 6" }
+    ]
+  },
+  "faq": {
+    "items": [
+      {
+        "question": "Turpis adipiscing mi tincidunt ultricies nunc. At enim metus quis?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "question": "Morbi mauris pharetra nisi sed massa. Nec sit lobortis bibendum?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "question": "Nibh diam amet nulla consectetur nulla id pulvinar enim?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "question": "Fringilla dictumst mauris laoreet ac aliquam integer consectetur?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "question": "Nunc odio ut magna lectus eget accumsan turpis. Bibendum neque?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "question": "In pharetra scelerisque sem aliquam risus turpis suscipit donec?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "question": "Cras rhoncus fermentum ac at risus quam est. Urna convallis mauris?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "question": "Elit vel suspendisse nulla gravida at proin placerat amet. Elementum et?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      },
+      {
+        "question": "Orci at fermentum netus donec nisi in in bibendum odio?",
+        "answer": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+      }
+    ]
+  },
+  "instagram": {
+    "title": "Inspiration is everywhere",
+    "handle": "@nomadwynwood",
+    "handleUrl": "https://instagram.com/nomadwynwood",
+    "images": [
+      { "src": "/images/instagram/insta-1.jpg", "alt": "Instagram post 1" },
+      { "src": "/images/instagram/insta-2.jpg", "alt": "Instagram post 2" },
+      { "src": "/images/instagram/insta-3.jpg", "alt": "Instagram post 3" },
+      { "src": "/images/instagram/insta-4.jpg", "alt": "Instagram post 4" }
+    ]
+  }
+}

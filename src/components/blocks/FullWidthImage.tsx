@@ -11,11 +11,10 @@ interface FullWidthImageProps {
 export function FullWidthImage({
   src,
   alt = "",
-  height = 840,
   className,
 }: FullWidthImageProps) {
   return (
-    <section className={cn("relative w-full", className)} style={{ height }}>
+    <section className={cn("relative w-full h-[400px] md:h-[600px] lg:h-[840px]", className)}>
       <Image
         src={src}
         alt={alt}

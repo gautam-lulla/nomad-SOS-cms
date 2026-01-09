@@ -7,10 +7,11 @@ import { ArrowRightIcon } from "@/components/icons";
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   showArrow?: boolean;
   variant?: "light" | "dark";
+  inputStyle?: "form" | "newsletter";
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, showArrow = true, variant = "dark", ...props }, ref) => {
+  ({ className, showArrow = true, variant = "dark", inputStyle = "newsletter", ...props }, ref) => {
     return (
       <div
         className={cn(
@@ -24,7 +25,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           className={cn(
             "flex-1 bg-transparent outline-none",
-            "font-gotham font-bold text-h5 uppercase tracking-wide-h5",
+            inputStyle === "newsletter" && "font-gotham font-bold text-h5 uppercase tracking-wide-h5",
+            inputStyle === "form" && "font-sabon text-body-s italic",
             variant === "dark" && "text-black-900 placeholder:text-black-900/70",
             variant === "light" && "text-off-white-100 placeholder:text-off-white-100/70",
             className

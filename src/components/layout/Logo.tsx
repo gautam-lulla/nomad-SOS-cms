@@ -4,7 +4,7 @@ import Link from "next/link";
 
 interface LogoProps {
   variant?: "light" | "dark";
-  size?: "small" | "medium" | "large";
+  size?: "small" | "medium" | "large" | "footer";
   className?: string;
 }
 
@@ -13,6 +13,7 @@ export function Logo({ variant = "light", size = "medium", className }: LogoProp
     small: 80,
     medium: 110,
     large: 272,
+    footer: 180,
   };
 
   const dimension = sizeMap[size];
@@ -29,7 +30,7 @@ export function Logo({ variant = "light", size = "medium", className }: LogoProp
       {/* Logo group */}
       <div className="absolute inset-[15%_15.38%_17.46%_15.38%]">
         <Image
-          src={variant === "light" ? "/images/logo-mark-group.png" : "/images/logo-mark-dark.png"}
+          src={variant === "light" ? "/images/logo-mark-group.svg" : "/images/logo-mark-footer.svg"}
           alt="NoMad Wynwood"
           fill
           className="object-contain"
@@ -39,7 +40,7 @@ export function Logo({ variant = "light", size = "medium", className }: LogoProp
       {/* Logo vector/text */}
       <div className="absolute inset-[66.97%_44.97%_15%_44.97%]">
         <Image
-          src={variant === "light" ? "/images/logo-vector.png" : "/images/logo-vector-dark.png"}
+          src={variant === "light" ? "/images/logo-vector.svg" : "/images/logo-vector-dark.svg"}
           alt=""
           fill
           className="object-contain"
@@ -53,7 +54,7 @@ export function LogoHorizontal({ className }: { className?: string }) {
   return (
     <div className={cn("relative h-[96px] w-full", className)}>
       <Image
-        src="/images/nomad-wynwood-mark-horizontal.png"
+        src="/images/nomad-wynwood-mark-horizontal.svg"
         alt="The NoMad Bar"
         fill
         className="object-contain"

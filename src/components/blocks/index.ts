@@ -6,3 +6,4 @@ export { TextSection } from "./TextSection";
 export { FAQAccordion } from "./FAQAccordion";
 export { TeamGrid } from "./TeamGrid";
 export { FullWidthImage } from "./FullWidthImage";
+export { AwardsCarousel } from "./AwardsCarousel";
