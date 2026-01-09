@@ -10,9 +10,10 @@ import {
 } from "@/components/blocks";
 import Image from "next/image";
 import aboutContent from "@/content/pages/about.json";
+import instagramContent from "@/content/global/instagram.json";
 
 export default function AboutPage() {
-  const { hero, heritage, quote, team, awards, faq, instagram } = aboutContent;
+  const { hero, heritage, quote, team, awards, faq } = aboutContent;
 
   return (
     <main className="bg-black-900 min-h-screen">
@@ -91,10 +92,10 @@ export default function AboutPage() {
 
       {/* Instagram Feed */}
       <InstagramFeed
-        title={instagram.title}
-        handle={instagram.handle}
-        handleUrl={instagram.handleUrl}
-        images={instagram.images}
+        title={instagramContent.title}
+        handle={instagramContent.handle}
+        handleUrl={instagramContent.handleUrl}
+        images={instagramContent.images}
       />
 
       {/* Footer */}

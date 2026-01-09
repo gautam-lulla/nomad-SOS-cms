@@ -50,15 +50,3 @@ export function Logo({ variant = "light", size = "medium", className }: LogoProp
   );
 }
 
-export function LogoHorizontal({ className }: { className?: string }) {
-  return (
-    <div className={cn("relative h-[96px] w-full", className)}>
-      <Image
-        src="/images/nomad-wynwood-mark-horizontal.svg"
-        alt="The NoMad Bar"
-        fill
-        className="object-contain"
-      />
-    </div>
-  );
-}

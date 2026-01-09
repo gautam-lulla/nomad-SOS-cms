@@ -1,11 +1,11 @@
-import { Navigation, Footer } from "@/components/layout";
+import { Navigation, Footer, Logo } from "@/components/layout";
 import { FAQAccordion, InstagramFeed, Gallery } from "@/components/blocks";
-import { Logo } from "@/components/layout/Logo";
 import Link from "next/link";
 import contactContent from "@/content/pages/contact.json";
+import instagramContent from "@/content/global/instagram.json";
 
 export default function ContactPage() {
-  const { hero, info, gallery, faq, instagram } = contactContent;
+  const { hero, info, gallery, faq } = contactContent;
 
   return (
     <main className="bg-black-900 min-h-screen">
@@ -101,10 +101,10 @@ export default function ContactPage() {
 
       {/* Instagram Feed */}
       <InstagramFeed
-        title={instagram.title}
-        handle={instagram.handle}
-        handleUrl={instagram.handleUrl}
-        images={instagram.images}
+        title={instagramContent.title}
+        handle={instagramContent.handle}
+        handleUrl={instagramContent.handleUrl}
+        images={instagramContent.images}
       />
 
       {/* Footer */}

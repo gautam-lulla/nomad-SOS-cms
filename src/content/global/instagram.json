@@ -1,0 +1,11 @@
+{
+  "title": "Inspiration is everywhere",
+  "handle": "@nomadwynwood",
+  "handleUrl": "https://instagram.com/nomadwynwood",
+  "images": [
+    { "src": "/images/instagram/insta-1.jpg", "alt": "Instagram post 1" },
+    { "src": "/images/instagram/insta-2.jpg", "alt": "Instagram post 2" },
+    { "src": "/images/instagram/insta-3.jpg", "alt": "Instagram post 3" },
+    { "src": "/images/instagram/insta-4.jpg", "alt": "Instagram post 4" }
+  ]
+}

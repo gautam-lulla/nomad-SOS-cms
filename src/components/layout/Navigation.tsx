@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui";
 import { HamburgerIcon, CloseIcon } from "@/components/icons";
 import { Logo } from "./Logo";
@@ -18,10 +18,38 @@ const menuLinks = [
   { href: "/private-events", label: "Private Events" },
   { href: "/programming", label: "Programming" },
   { href: "/about", label: "About" },
+  { href: "/getting-here", label: "Getting Here" },
+  { href: "/test-404", label: "404 (test only)", isTest: true },
 ];
 
 export function Navigation({ className }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
+
+  // Handle Escape key to close menu
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isMenuOpen) {
+        closeMenu();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isMenuOpen, closeMenu]);
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
 
   return (
     <>
@@ -36,9 +64,12 @@ export function Navigation({ className }: NavigationProps) {
         {/* Hamburger Menu */}
         <button
           onClick={() => setIsMenuOpen(true)}
+          aria-expanded={isMenuOpen}
+          aria-controls="main-menu"
+          aria-label="Open navigation menu"
           className="absolute left-4 md:left-5 top-[24px] md:top-[30px] lg:top-[34px] flex items-center gap-2 md:gap-4 text-off-white-100 cursor-pointer"
         >
-          <HamburgerIcon />
+          <HamburgerIcon aria-hidden={true} />
           <span className="hidden md:inline font-gotham font-bold text-cta uppercase tracking-wide-cta">
             menu
           </span>
@@ -57,7 +88,13 @@ export function Navigation({ className }: NavigationProps) {
 
       {/* Expanded Menu Overlay */}
       {isMenuOpen && (
-        <div className="fixed inset-0 z-[100] bg-black-900">
+        <div
+          id="main-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation menu"
+          className="fixed inset-0 z-[100] bg-black-900"
+        >
           {/* Background Image */}
           <div className="absolute right-0 top-0 w-[720px] h-[840px] hidden lg:block">
             <Image
@@ -70,10 +107,11 @@ export function Navigation({ className }: NavigationProps) {
 
           {/* Close Button */}
           <button
-            onClick={() => setIsMenuOpen(false)}
+            onClick={closeMenu}
+            aria-label="Close navigation menu"
             className="absolute left-4 md:left-5 top-6 md:top-7 flex items-center gap-2 md:gap-2.5 text-off-white-100 cursor-pointer z-10"
           >
-            <CloseIcon />
+            <CloseIcon aria-hidden={true} />
             <span className="hidden md:inline font-gotham font-bold text-cta uppercase tracking-wide-cta">
               Close
             </span>
@@ -90,17 +128,23 @@ export function Navigation({ className }: NavigationProps) {
           </div>
 
           {/* Menu Links */}
-          <nav className="absolute left-4 md:left-[60px] top-[120px] md:top-[160px] lg:top-[190px]">
-            <ul className="space-y-[3px]">
+          <nav
+            aria-label="Main navigation"
+            className="absolute left-4 md:left-[60px] top-[120px] md:top-[160px] lg:top-[190px]"
+          >
+            <ul className="space-y-[3px]" role="list">
               {menuLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={closeMenu}
                     className={cn(
-                      "font-sabon text-[28px] md:text-[32px] lg:text-[36px] leading-[1.2] tracking-tight-h2",
+                      "leading-[1.2] tracking-tight-h2",
                       "text-off-white-100 hover:text-pink-500 hover:italic",
-                      "transition-all duration-200"
+                      "transition-all duration-200",
+                      link.isTest
+                        ? "font-gotham text-[12px] md:text-[14px] opacity-60"
+                        : "font-sabon text-[28px] md:text-[32px] lg:text-[36px]"
                     )}
                   >
                     {link.label}

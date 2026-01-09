@@ -3,9 +3,10 @@ import { FAQAccordion, InstagramFeed } from "@/components/blocks";
 import { Button } from "@/components/ui";
 import Image from "next/image";
 import programmingContent from "@/content/pages/programming.json";
+import instagramContent from "@/content/global/instagram.json";
 
 export default function ProgrammingPage() {
-  const { hero, intro, events, pagination, faq, instagram } = programmingContent;
+  const { hero, intro, events, pagination, faq } = programmingContent;
 
   return (
     <main className="bg-black-900 min-h-screen">
@@ -111,10 +112,10 @@ export default function ProgrammingPage() {
 
       {/* Instagram Feed */}
       <InstagramFeed
-        title={instagram.title}
-        handle={instagram.handle}
-        handleUrl={instagram.handleUrl}
-        images={instagram.images}
+        title={instagramContent.title}
+        handle={instagramContent.handle}
+        handleUrl={instagramContent.handleUrl}
+        images={instagramContent.images}
       />
 
       {/* Footer */}

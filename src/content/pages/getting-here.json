@@ -1,0 +1,70 @@
+{
+  "hero": {
+    "title": "Say hi!",
+    "subtitle": "Find your way to NoMad Wynwood"
+  },
+  "location": {
+    "name": "The NoMad Bar",
+    "address": [
+      "2700 NW 2nd Ave,",
+      "Miami, FL 33127,",
+      "United States"
+    ],
+    "phone": "+1-877-666-2312",
+    "mapImage": "/images/getting-here/map.jpg"
+  },
+  "info": {
+    "hours": {
+      "label": "Working Hours",
+      "times": [
+        "Tue-Fri 11 AM — 10 PM",
+        "Sat-Sun 12 PM — 10 PM",
+        "Mon (Closed)"
+      ]
+    },
+    "directions": {
+      "label": "Directions",
+      "content": [
+        "Located in the heart of Wynwood, Miami's vibrant arts district.",
+        "Street parking available on NW 2nd Ave.",
+        "Valet parking available during dinner service."
+      ]
+    },
+    "transit": {
+      "label": "Public Transit",
+      "content": [
+        "Bus routes 2, 9, and 10 stop nearby.",
+        "Brightline Aventura station is a 10-minute ride."
+      ]
+    }
+  },
+  "gallery": [
+    { "src": "/images/gallery/image-1.jpg", "alt": "NoMad Wynwood" },
+    { "src": "/images/gallery/image-2.jpg", "alt": "NoMad Wynwood" },
+    { "src": "/images/gallery/image-3.jpg", "alt": "NoMad Wynwood" },
+    { "src": "/images/instagram/insta-1.jpg", "alt": "NoMad Wynwood" },
+    { "src": "/images/instagram/insta-2.jpg", "alt": "NoMad Wynwood" },
+    { "src": "/images/instagram/insta-3.jpg", "alt": "NoMad Wynwood" }
+  ],
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "items": [
+      {
+        "question": "Is there parking available?",
+        "answer": "Yes, street parking is available on NW 2nd Ave and surrounding streets. Valet parking is also available during dinner service hours."
+      },
+      {
+        "question": "Are you accessible by public transit?",
+        "answer": "Yes, bus routes 2, 9, and 10 have stops within walking distance. The Brightline Aventura station is approximately a 10-minute ride away."
+      },
+      {
+        "question": "Do you have wheelchair accessibility?",
+        "answer": "Yes, NoMad Wynwood is fully wheelchair accessible with ramp access at the main entrance."
+      },
+      {
+        "question": "Can I make a reservation?",
+        "answer": "Yes, reservations can be made online through our Reserve a Table button or by calling +1-877-666-2312."
+      }
+    ]
+  }
+}

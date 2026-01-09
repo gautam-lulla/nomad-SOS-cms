@@ -27,6 +27,8 @@ export function Gallery({ images, className }: GalleryProps) {
             alt={image.alt || ""}
             fill
             className="object-cover"
+            loading="lazy"
+            sizes="(max-width: 768px) 100vw, 33vw"
           />
         </div>
       ))}

@@ -1,15 +1,24 @@
+"use client";
+
 import { Navigation, Footer } from "@/components/layout";
 import {
   Gallery,
   FAQAccordion,
   InstagramFeed,
 } from "@/components/blocks";
-import { Button, Input, RadioButton } from "@/components/ui";
+import { Button, Input, TextArea, RadioButton } from "@/components/ui";
 import Link from "next/link";
 import privateEventsContent from "@/content/pages/private-events.json";
+import instagramContent from "@/content/global/instagram.json";
+import type { FormEvent } from "react";
 
 export default function PrivateEventsPage() {
-  const { hero, gallery, form, faq, instagram } = privateEventsContent;
+  const { hero, gallery, form, faq } = privateEventsContent;
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Form submission logic will be implemented
+  };
 
   return (
     <main className="bg-black-900 min-h-screen">
@@ -52,7 +61,7 @@ export default function PrivateEventsPage() {
           {form.title}
         </h2>
 
-        <form className="max-w-[877px] mx-auto">
+        <form className="max-w-[877px] mx-auto" onSubmit={handleSubmit}>
           {/* Form Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 lg:gap-x-3m gap-y-6 lg:gap-y-m">
             {/* First Name */}
@@ -185,9 +194,9 @@ export default function PrivateEventsPage() {
             <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
               {form.additionalInfo.label}
             </label>
-            <textarea
+            <TextArea
               placeholder={form.additionalInfo.placeholder}
-              className="w-full bg-transparent border-b border-t-0 border-l-0 border-r-0 border-off-white-100 text-off-white-100 placeholder:text-off-white-100/70 font-sabon text-body-s py-3xs min-h-[150px] resize-y outline-none focus:border-pink-500 transition-colors"
+              variant="light"
             />
           </div>
 
@@ -212,10 +221,10 @@ export default function PrivateEventsPage() {
 
       {/* Instagram Feed */}
       <InstagramFeed
-        title={instagram.title}
-        handle={instagram.handle}
-        handleUrl={instagram.handleUrl}
-        images={instagram.images}
+        title={instagramContent.title}
+        handle={instagramContent.handle}
+        handleUrl={instagramContent.handleUrl}
+        images={instagramContent.images}
       />
 
       {/* Footer */}

@@ -2,9 +2,10 @@ import { Navigation, Footer } from "@/components/layout";
 import { Gallery, InstagramFeed } from "@/components/blocks";
 import Image from "next/image";
 import menuContent from "@/content/pages/menu.json";
+import instagramContent from "@/content/global/instagram.json";
 
 export default function MenuPage() {
-  const { hero, categories, menuTitle, menuSubtitle, sections, gallery, instagram } = menuContent;
+  const { hero, categories, menuTitle, menuSubtitle, sections, gallery } = menuContent;
 
   return (
     <main className="bg-black-900 min-h-screen relative">
@@ -103,10 +104,10 @@ export default function MenuPage() {
 
       {/* Instagram Feed */}
       <InstagramFeed
-        title={instagram.title}
-        handle={instagram.handle}
-        handleUrl={instagram.handleUrl}
-        images={instagram.images}
+        title={instagramContent.title}
+        handle={instagramContent.handle}
+        handleUrl={instagramContent.handleUrl}
+        images={instagramContent.images}
       />
 
       {/* Footer */}

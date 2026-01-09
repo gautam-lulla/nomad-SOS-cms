@@ -8,6 +8,7 @@ import {
 } from "@/components/blocks";
 import { Button } from "@/components/ui";
 import homepageContent from "@/content/pages/homepage.json";
+import instagramContent from "@/content/global/instagram.json";
 
 export default function HomePage() {
   const {
@@ -17,7 +18,6 @@ export default function HomePage() {
     menuSection,
     eventsSection,
     contactSection,
-    instagram,
   } = homepageContent;
 
   return (
@@ -130,7 +130,6 @@ export default function HomePage() {
           <FullWidthImage
             src="/images/about/dining-table.jpg"
             alt="Dining experience"
-            height={840}
           />
         </div>
       </section>
@@ -157,10 +156,10 @@ export default function HomePage() {
 
       {/* Instagram Feed */}
       <InstagramFeed
-        title={instagram.title}
-        handle={instagram.handle}
-        handleUrl={instagram.handleUrl}
-        images={instagram.images}
+        title={instagramContent.title}
+        handle={instagramContent.handle}
+        handleUrl={instagramContent.handleUrl}
+        images={instagramContent.images}
       />
 
       {/* Footer */}

@@ -46,6 +46,8 @@ export function InstagramFeed({
               alt={image.alt || `Instagram post ${index + 1}`}
               fill
               className="object-cover"
+              loading="lazy"
+              sizes="(max-width: 768px) 50vw, 25vw"
             />
           </div>
         ))}
