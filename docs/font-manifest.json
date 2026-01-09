@@ -1,0 +1,60 @@
+{
+  "fonts": [
+    {
+      "family": "Sabon",
+      "source": "custom",
+      "status": "available",
+      "weights": ["400", "700"],
+      "styles": ["normal", "italic"],
+      "files": [
+        { "file": "Sabon/Sabon.ttf", "weight": "400", "style": "normal" },
+        { "file": "Sabon/SabonItalic.ttf", "weight": "400", "style": "italic" },
+        { "file": "Sabon/SabonBold.ttf", "weight": "700", "style": "normal" },
+        { "file": "Sabon/SabonBoldItalic.ttf", "weight": "700", "style": "italic" }
+      ],
+      "usage": ["h2", "h3", "body"]
+    },
+    {
+      "family": "Gotham",
+      "source": "custom",
+      "status": "available",
+      "weights": ["100", "200", "300", "400", "500", "700", "800", "900"],
+      "styles": ["normal", "italic"],
+      "files": [
+        { "file": "gotham/Gotham-Thin.otf", "weight": "100", "style": "normal" },
+        { "file": "gotham/Gotham-ThinItalic.otf", "weight": "100", "style": "italic" },
+        { "file": "gotham/Gotham-XLight.otf", "weight": "200", "style": "normal" },
+        { "file": "gotham/Gotham-XLightItalic.otf", "weight": "200", "style": "italic" },
+        { "file": "gotham/Gotham-Light.otf", "weight": "300", "style": "normal" },
+        { "file": "gotham/Gotham-LightItalic.otf", "weight": "300", "style": "italic" },
+        { "file": "gotham/Gotham-Book.otf", "weight": "400", "style": "normal" },
+        { "file": "gotham/Gotham-BookItalic.otf", "weight": "400", "style": "italic" },
+        { "file": "gotham/Gotham-Medium.otf", "weight": "500", "style": "normal" },
+        { "file": "gotham/Gotham-MediumItalic.otf", "weight": "500", "style": "italic" },
+        { "file": "gotham/Gotham-Bold.otf", "weight": "700", "style": "normal" },
+        { "file": "gotham/Gotham-BoldItalic.otf", "weight": "700", "style": "italic" },
+        { "file": "gotham/Gotham-Black.otf", "weight": "800", "style": "normal" },
+        { "file": "gotham/Gotham-BlackItalic.otf", "weight": "800", "style": "italic" },
+        { "file": "gotham/Gotham-Ultra.otf", "weight": "900", "style": "normal" },
+        { "file": "gotham/Gotham-UltraItalic.otf", "weight": "900", "style": "italic" }
+      ],
+      "usage": ["cta", "h5", "navigation"]
+    }
+  ],
+  "missingFonts": [],
+  "fontHandling": "STRICT",
+  "canProceed": true,
+  "designUsage": {
+    "headings": {
+      "h2": { "font": "Sabon", "weight": "400", "size": "36px", "lineHeight": "1.3", "letterSpacing": "-0.72px" },
+      "h3": { "font": "Sabon", "weight": "400", "size": "24px", "lineHeight": "1.3", "letterSpacing": "-0.48px" },
+      "h5": { "font": "Gotham", "weight": "700", "size": "14px", "lineHeight": "1.6", "letterSpacing": "0.42px" }
+    },
+    "body": {
+      "body-s": { "font": "Sabon", "weight": "400", "size": "16px", "lineHeight": "1.6", "letterSpacing": "-0.32px" }
+    },
+    "cta": {
+      "cta": { "font": "Gotham", "weight": "700", "size": "12px", "lineHeight": "1.3", "letterSpacing": "0.36px" }
+    }
+  }
+}
