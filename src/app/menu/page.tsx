@@ -3,6 +3,8 @@ import { Gallery, InstagramFeed } from "@/components/blocks";
 import Image from "next/image";
 import { getPageContent, getMenuContent, getInstagramContent } from "@/lib/content";
 
+export const dynamic = 'force-dynamic';
+
 export default async function MenuPage() {
   // Fetch content from CMS
   const pageContent = await getPageContent('menu');

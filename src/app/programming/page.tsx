@@ -4,6 +4,8 @@ import { Button } from "@/components/ui";
 import Image from "next/image";
 import { getPageContent, getInstagramContent } from "@/lib/content";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ProgrammingPage() {
   // Fetch content from CMS
   const programmingContent = await getPageContent('programming');

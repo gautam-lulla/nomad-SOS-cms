@@ -11,6 +11,8 @@ import {
 import Image from "next/image";
 import { getPageContent, getInstagramContent } from "@/lib/content";
 
+export const dynamic = 'force-dynamic';
+
 export default async function AboutPage() {
   // Fetch content from CMS
   const aboutContent = await getPageContent('about');

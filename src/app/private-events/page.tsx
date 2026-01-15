@@ -8,6 +8,8 @@ import Link from "next/link";
 import { getPageContent, getInstagramContent } from "@/lib/content";
 import { PrivateEventsForm } from "./private-events-form";
 
+export const dynamic = 'force-dynamic';
+
 export default async function PrivateEventsPage() {
   // Fetch content from CMS
   const privateEventsContent = await getPageContent('private-events');

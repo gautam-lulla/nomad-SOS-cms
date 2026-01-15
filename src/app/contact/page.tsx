@@ -3,6 +3,8 @@ import { FAQAccordion, InstagramFeed, Gallery } from "@/components/blocks";
 import Link from "next/link";
 import { getPageContent, getInstagramContent } from "@/lib/content";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ContactPage() {
   // Fetch content from CMS
   const contactContent = await getPageContent('contact');

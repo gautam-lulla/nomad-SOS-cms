@@ -3,6 +3,8 @@ import { FAQAccordion, InstagramFeed } from "@/components/blocks";
 import Image from "next/image";
 import { getPageContent, getInstagramContent } from "@/lib/content";
 
+export const dynamic = 'force-dynamic';
+
 export default async function GettingHerePage() {
   // Fetch content from CMS
   const gettingHereContent = await getPageContent('getting-here');

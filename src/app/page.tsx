@@ -9,6 +9,9 @@ import {
 import { Button } from "@/components/ui";
 import { getPageContent, getInstagramContent } from "@/lib/content";
 
+// Force dynamic rendering - content comes from CMS at request time
+export const dynamic = 'force-dynamic';
+
 export default async function HomePage() {
   // Fetch content from CMS
   const homepageContent = await getPageContent('homepage');
