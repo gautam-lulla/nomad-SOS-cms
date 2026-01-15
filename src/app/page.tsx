@@ -7,10 +7,13 @@ import {
   FullWidthImage,
 } from "@/components/blocks";
 import { Button } from "@/components/ui";
-import homepageContent from "@/content/pages/homepage.json";
-import instagramContent from "@/content/global/instagram.json";
+import { getPageContent, getInstagramContent } from "@/lib/content";
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Fetch content from CMS
+  const homepageContent = await getPageContent('homepage');
+  const instagramContent = await getInstagramContent();
+
   const {
     hero,
     introSection,
@@ -18,7 +21,32 @@ export default function HomePage() {
     menuSection,
     eventsSection,
     contactSection,
-  } = homepageContent;
+  } = homepageContent as {
+    hero: { leftImage: string; rightImage: string; logoSrc: string };
+    introSection: {
+      heading: string;
+      paragraph: string;
+      buttonText: string;
+      location: { address: string; phone: string };
+      hours: { times: string[] };
+    };
+    gallery: Array<{ src: string; alt: string }>;
+    menuSection: { heading: string; paragraph: string; buttonText: string };
+    eventsSection: {
+      heading: string;
+      paragraph: string;
+      buttonText: string;
+      buttonHref: string;
+      imageSrc: string;
+    };
+    contactSection: {
+      heading: string;
+      paragraph: string;
+      buttonText: string;
+      buttonHref: string;
+      imageSrc: string;
+    };
+  };
 
   return (
     <main className="bg-black-900 min-h-screen">

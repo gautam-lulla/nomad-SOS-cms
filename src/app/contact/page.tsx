@@ -1,11 +1,23 @@
 import { Navigation, Footer, Logo } from "@/components/layout";
 import { FAQAccordion, InstagramFeed, Gallery } from "@/components/blocks";
 import Link from "next/link";
-import contactContent from "@/content/pages/contact.json";
-import instagramContent from "@/content/global/instagram.json";
+import { getPageContent, getInstagramContent } from "@/lib/content";
 
-export default function ContactPage() {
-  const { hero, info, gallery, faq } = contactContent;
+export default async function ContactPage() {
+  // Fetch content from CMS
+  const contactContent = await getPageContent('contact');
+  const instagramContent = await getInstagramContent();
+
+  const { hero, info, gallery, faq } = contactContent as {
+    hero: { title: string; phone: string };
+    info: {
+      hours: { label: string; times: string[] };
+      location: { label: string; address: string[] };
+      socials: { label: string; links: Array<{ name: string; url: string }> };
+    };
+    gallery: Array<{ src: string; alt: string }>;
+    faq: { title: string; items: Array<{ question: string; answer: string }> };
+  };
 
   return (
     <main className="bg-black-900 min-h-screen">

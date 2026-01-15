@@ -1,11 +1,22 @@
 import { Navigation, Footer } from "@/components/layout";
 import { Gallery, InstagramFeed } from "@/components/blocks";
 import Image from "next/image";
-import menuContent from "@/content/pages/menu.json";
-import instagramContent from "@/content/global/instagram.json";
+import { getPageContent, getMenuContent, getInstagramContent } from "@/lib/content";
 
-export default function MenuPage() {
-  const { hero, categories, menuTitle, menuSubtitle, sections, gallery } = menuContent;
+export default async function MenuPage() {
+  // Fetch content from CMS
+  const pageContent = await getPageContent('menu');
+  const menuData = await getMenuContent();
+  const instagramContent = await getInstagramContent();
+
+  // Get page-specific content
+  const { hero, gallery } = pageContent as {
+    hero: { images: Array<{ src: string; alt: string }> };
+    gallery: Array<{ src: string; alt: string }>;
+  };
+
+  // Get menu-specific content
+  const { categories, menuTitle, menuSubtitle, sections } = menuData;
 
   return (
     <main className="bg-black-900 min-h-screen relative">

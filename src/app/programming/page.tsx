@@ -2,11 +2,20 @@ import { Navigation, Footer } from "@/components/layout";
 import { FAQAccordion, InstagramFeed } from "@/components/blocks";
 import { Button } from "@/components/ui";
 import Image from "next/image";
-import programmingContent from "@/content/pages/programming.json";
-import instagramContent from "@/content/global/instagram.json";
+import { getPageContent, getInstagramContent } from "@/lib/content";
 
-export default function ProgrammingPage() {
-  const { hero, intro, events, pagination, faq } = programmingContent;
+export default async function ProgrammingPage() {
+  // Fetch content from CMS
+  const programmingContent = await getPageContent('programming');
+  const instagramContent = await getInstagramContent();
+
+  const { hero, intro, events, pagination, faq } = programmingContent as {
+    hero: { heading: string; imageSrc: string };
+    intro: { columns: string[]; buttonText: string };
+    events: Array<{ title: string; description: string; imageSrc: string }>;
+    pagination: { current: number; total: number };
+    faq: { title: string; items: Array<{ question: string; answer: string }> };
+  };
 
   return (
     <main className="bg-black-900 min-h-screen">

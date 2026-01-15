@@ -1,11 +1,17 @@
 import { Navigation, Footer } from "@/components/layout";
 import { FAQAccordion, InstagramFeed } from "@/components/blocks";
 import Image from "next/image";
-import faqContent from "@/content/pages/faq.json";
-import instagramContent from "@/content/global/instagram.json";
+import { getPageContent, getInstagramContent } from "@/lib/content";
 
-export default function FAQPage() {
-  const { hero, faq } = faqContent;
+export default async function FAQPage() {
+  // Fetch content from CMS
+  const faqContent = await getPageContent('faq');
+  const instagramContent = await getInstagramContent();
+
+  const { hero, faq } = faqContent as {
+    hero: { heading: string; images: Array<{ src: string; alt: string }> };
+    faq: { items: Array<{ question: string; answer: string }> };
+  };
 
   return (
     <main className="bg-black-900 min-h-screen">

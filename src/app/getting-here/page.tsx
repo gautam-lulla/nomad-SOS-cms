@@ -1,11 +1,23 @@
 import { Navigation, Footer } from "@/components/layout";
 import { FAQAccordion, InstagramFeed } from "@/components/blocks";
 import Image from "next/image";
-import gettingHereContent from "@/content/pages/getting-here.json";
-import instagramContent from "@/content/global/instagram.json";
+import { getPageContent, getInstagramContent } from "@/lib/content";
 
-export default function GettingHerePage() {
-  const { hero, location, info, gallery, faq } = gettingHereContent;
+export default async function GettingHerePage() {
+  // Fetch content from CMS
+  const gettingHereContent = await getPageContent('getting-here');
+  const instagramContent = await getInstagramContent();
+
+  const { hero, location, info, gallery, faq } = gettingHereContent as {
+    hero: { title: string; subtitle?: string };
+    location: { phone: string; address: string[] };
+    info: {
+      hours: { label: string; times: string[] };
+      transit: { label: string; content: string[] };
+    };
+    gallery: Array<{ src: string; alt?: string }>;
+    faq: { title: string; items: Array<{ question: string; answer: string }> };
+  };
 
   return (
     <main className="bg-black-900 min-h-screen">

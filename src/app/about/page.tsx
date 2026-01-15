@@ -9,11 +9,21 @@ import {
   FullWidthImage,
 } from "@/components/blocks";
 import Image from "next/image";
-import aboutContent from "@/content/pages/about.json";
-import instagramContent from "@/content/global/instagram.json";
+import { getPageContent, getInstagramContent } from "@/lib/content";
 
-export default function AboutPage() {
-  const { hero, heritage, quote, team, awards, faq } = aboutContent;
+export default async function AboutPage() {
+  // Fetch content from CMS
+  const aboutContent = await getPageContent('about');
+  const instagramContent = await getInstagramContent();
+
+  const { hero, heritage, quote, team, awards, faq } = aboutContent as {
+    hero: { heading: string; imageSrc: string };
+    heritage: { title: string; paragraph: string; imageSrc: string };
+    quote: { heading: string; paragraph: string };
+    team: Array<{ name: string; title: string; description: string; imageSrc: string }>;
+    awards: { title: string; logos: Array<{ src: string; alt: string }> };
+    faq: { title: string; items: Array<{ question: string; answer: string }> };
+  };
 
   return (
     <main className="bg-black-900 min-h-screen">
