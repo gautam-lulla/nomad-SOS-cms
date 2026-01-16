@@ -168,7 +168,7 @@ export default async function GettingHerePage() {
           {/* Pin Card */}
           <div className="bg-pink-500 px-2xs py-2xs">
             <Image
-              src="/images/nomad-wynwood-wordmark-footer.svg"
+              src="https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/nomad-wynwood-wordmark-footer.svg"
               alt="The NoMad Bar"
               width={185}
               height={14}

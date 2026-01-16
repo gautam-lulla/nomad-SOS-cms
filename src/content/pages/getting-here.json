@@ -11,7 +11,7 @@
       "United States"
     ],
     "phone": "+1-877-666-2312",
-    "mapImage": "/images/getting-here/map.jpg"
+    "mapImage": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/gallery/image-1.jpg"
   },
   "info": {
     "hours": {
@@ -39,12 +39,30 @@
     }
   },
   "gallery": [
-    { "src": "/images/gallery/image-1.jpg", "alt": "NoMad Wynwood" },
-    { "src": "/images/gallery/image-2.jpg", "alt": "NoMad Wynwood" },
-    { "src": "/images/gallery/image-3.jpg", "alt": "NoMad Wynwood" },
-    { "src": "/images/instagram/insta-1.jpg", "alt": "NoMad Wynwood" },
-    { "src": "/images/instagram/insta-2.jpg", "alt": "NoMad Wynwood" },
-    { "src": "/images/instagram/insta-3.jpg", "alt": "NoMad Wynwood" }
+    {
+      "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/gallery/image-1.jpg",
+      "alt": "NoMad Wynwood"
+    },
+    {
+      "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/gallery/image-2.jpg",
+      "alt": "NoMad Wynwood"
+    },
+    {
+      "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/gallery/image-3.jpg",
+      "alt": "NoMad Wynwood"
+    },
+    {
+      "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/instagram/insta-1.jpg",
+      "alt": "NoMad Wynwood"
+    },
+    {
+      "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/instagram/insta-2.jpg",
+      "alt": "NoMad Wynwood"
+    },
+    {
+      "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/instagram/insta-3.jpg",
+      "alt": "NoMad Wynwood"
+    }
   ],
   "faq": {
     "title": "Frequently Asked Questions",

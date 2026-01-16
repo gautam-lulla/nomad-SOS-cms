@@ -159,7 +159,7 @@ export default async function HomePage() {
         {/* Full Width Menu Image */}
         <div className="mt-10 md:mt-16 lg:mt-xl">
           <FullWidthImage
-            src="/images/about/dining-table.jpg"
+            src="https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/about/dining-table.jpg"
             alt="Dining experience"
           />
         </div>

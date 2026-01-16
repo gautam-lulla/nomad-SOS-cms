@@ -30,7 +30,7 @@ export function Logo({ variant = "light", size = "medium", className }: LogoProp
       {/* Logo group */}
       <div className="absolute inset-[15%_15.38%_17.46%_15.38%]">
         <Image
-          src={variant === "light" ? "/images/logo-mark-group.svg" : "/images/logo-mark-footer.svg"}
+          src={variant === "light" ? "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/logo-mark-group.svg" : "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/logo-mark-footer.svg"}
           alt="NoMad Wynwood"
           fill
           className="object-contain"
@@ -40,7 +40,7 @@ export function Logo({ variant = "light", size = "medium", className }: LogoProp
       {/* Logo vector/text */}
       <div className="absolute inset-[66.97%_44.97%_15%_44.97%]">
         <Image
-          src={variant === "light" ? "/images/logo-vector.svg" : "/images/logo-vector-dark.svg"}
+          src={variant === "light" ? "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/logo-vector.svg" : "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/logo-vector-dark.svg"}
           alt=""
           fill
           className="object-contain"

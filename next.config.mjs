@@ -7,6 +7,11 @@ const nextConfig = {
         hostname: "www.figma.com",
         pathname: "/api/mcp/asset/**",
       },
+      {
+        protocol: "https",
+        hostname: "pub-21daddc5e64940d8bfac214df111cd0c.r2.dev",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -3,12 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 const galleryImages = [
-  { src: "/images/gallery/image-1.jpg", alt: "Gallery 1" },
-  { src: "/images/gallery/image-2.jpg", alt: "Gallery 2" },
-  { src: "/images/gallery/image-3.jpg", alt: "Gallery 3" },
-  { src: "/images/instagram/insta-1.jpg", alt: "Gallery 4" },
-  { src: "/images/instagram/insta-2.jpg", alt: "Gallery 5" },
-  { src: "/images/instagram/insta-3.jpg", alt: "Gallery 6" },
+  { src: "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/gallery/image-1.jpg", alt: "Gallery 1" },
+  { src: "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/gallery/image-2.jpg", alt: "Gallery 2" },
+  { src: "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/gallery/image-3.jpg", alt: "Gallery 3" },
+  { src: "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/instagram/insta-1.jpg", alt: "Gallery 4" },
+  { src: "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/instagram/insta-2.jpg", alt: "Gallery 5" },
+  { src: "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/instagram/insta-3.jpg", alt: "Gallery 6" },
 ];
 
 export default function NotFound() {

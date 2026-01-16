@@ -15,7 +15,7 @@ export function HeroSplitScreen({
   rightImage,
   showGradients = true,
   showLogo = true,
-  logoSrc = "/images/nomad-wynwood-mark-svg.svg",
+  logoSrc = "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/nomad-wynwood-mark-svg.svg",
   className,
 }: HeroSplitScreenProps) {
   return (

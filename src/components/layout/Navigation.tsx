@@ -98,7 +98,7 @@ export function Navigation({ className }: NavigationProps) {
           {/* Background Image */}
           <div className="absolute right-0 top-0 w-[720px] h-[840px] hidden lg:block">
             <Image
-              src="/images/hero/nav-background.jpg"
+              src="https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/hero/nav-background.jpg"
               alt=""
               fill
               className="object-cover"
