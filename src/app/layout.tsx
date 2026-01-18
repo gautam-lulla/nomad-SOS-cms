@@ -86,7 +86,7 @@ export default function RootLayout({
           <InlineEditorLoader
             orgSlug="spherical-hospitality"
             apiBase={process.env.NEXT_PUBLIC_CMS_URL || "https://backend-production-162b.up.railway.app"}
-            adminBase={process.env.NEXT_PUBLIC_CMS_ADMIN_URL || "https://admin-gules-psi-18.vercel.app"}
+            adminBase={process.env.NEXT_PUBLIC_CMS_ADMIN_URL || "https://sphereos.vercel.app"}
           />
         </Suspense>
       </body>
