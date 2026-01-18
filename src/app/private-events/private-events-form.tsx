@@ -28,9 +28,21 @@ interface FormConfig {
 
 interface PrivateEventsFormProps {
   form: FormConfig;
+  cmsEntry?: string;
+  cmsFieldPrefix?: string;
 }
 
-export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
+export function PrivateEventsForm({ form, cmsEntry, cmsFieldPrefix }: PrivateEventsFormProps) {
+  const cmsAttrs = (field: string, type: "text" | "image" = "text", label?: string) => {
+    if (!cmsEntry) return {};
+    const prefix = cmsFieldPrefix ? `${cmsFieldPrefix}.` : "";
+    return {
+      "data-cms-entry": cmsEntry,
+      "data-cms-field": `${prefix}${field}`,
+      "data-cms-type": type,
+      "data-cms-label": label || field,
+    };
+  };
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Form submission logic will be implemented
@@ -38,7 +50,10 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
 
   return (
     <section id="contact-form" className="pt-10 md:pt-16 lg:pt-xl px-4 md:px-6 lg:px-3m">
-      <h2 className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l">
+      <h2
+        className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
+        {...cmsAttrs("title", "text", "Form Title")}
+      >
         {form.title}
       </h2>
 
@@ -47,7 +62,10 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 lg:gap-x-3m gap-y-6 lg:gap-y-m">
           {/* First Name */}
           <div>
-            <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
+            <label
+              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs"
+              {...cmsAttrs("fields.firstName.label", "text", "First Name Label")}
+            >
               {form.fields.firstName.label}
             </label>
             <Input
@@ -61,7 +79,10 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
 
           {/* Last Name */}
           <div>
-            <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
+            <label
+              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs"
+              {...cmsAttrs("fields.lastName.label", "text", "Last Name Label")}
+            >
               {form.fields.lastName.label}
             </label>
             <Input
@@ -75,7 +96,10 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
 
           {/* Email */}
           <div>
-            <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
+            <label
+              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs"
+              {...cmsAttrs("fields.email.label", "text", "Email Label")}
+            >
               {form.fields.email.label}
             </label>
             <Input
@@ -89,7 +113,10 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
 
           {/* Phone */}
           <div>
-            <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
+            <label
+              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs"
+              {...cmsAttrs("fields.phone.label", "text", "Phone Label")}
+            >
               {form.fields.phone.label}
             </label>
             <Input
@@ -103,7 +130,10 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
 
           {/* Country */}
           <div>
-            <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
+            <label
+              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs"
+              {...cmsAttrs("fields.country.label", "text", "Country Label")}
+            >
               {form.fields.country.label}
             </label>
             <Input
@@ -117,7 +147,10 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
 
           {/* Event Type */}
           <div>
-            <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
+            <label
+              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs"
+              {...cmsAttrs("fields.eventType.label", "text", "Event Type Label")}
+            >
               {form.fields.eventType.label}
             </label>
             <Input
@@ -131,7 +164,10 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
 
           {/* Number of Guests */}
           <div>
-            <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
+            <label
+              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs"
+              {...cmsAttrs("fields.guests.label", "text", "Guests Label")}
+            >
               {form.fields.guests.label}
             </label>
             <Input
@@ -145,7 +181,10 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
 
           {/* Start Time */}
           <div>
-            <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
+            <label
+              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs"
+              {...cmsAttrs("fields.startTime.label", "text", "Start Time Label")}
+            >
               {form.fields.startTime.label}
             </label>
             <Input
@@ -160,19 +199,27 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
 
         {/* Additional Options */}
         <div className="mt-6 lg:mt-m">
-          <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
+          <label
+            className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs"
+            {...cmsAttrs("additionalOptions.label", "text", "Additional Options Label")}
+          >
             {form.additionalOptions.label}
           </label>
           <div className="flex flex-col sm:flex-row flex-wrap gap-4 sm:gap-6 lg:gap-m">
             {form.additionalOptions.options.map((option, index) => (
-              <RadioButton key={index} name="additionalOption" label={option} variant="light" />
+              <span key={index} {...cmsAttrs(`additionalOptions.options[${index}]`, "text", `Option ${index + 1}`)}>
+                <RadioButton name="additionalOption" label={option} variant="light" />
+              </span>
             ))}
           </div>
         </div>
 
         {/* Additional Information */}
         <div className="mt-6 lg:mt-m">
-          <label className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs">
+          <label
+            className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 block mb-3xs"
+            {...cmsAttrs("additionalInfo.label", "text", "Additional Info Label")}
+          >
             {form.additionalInfo.label}
           </label>
           <TextArea
@@ -183,7 +230,7 @@ export function PrivateEventsForm({ form }: PrivateEventsFormProps) {
 
         {/* Submit Button */}
         <div className="flex justify-center mt-6 lg:mt-3s">
-          <Button type="submit" variant="filled">
+          <Button type="submit" variant="filled" {...cmsAttrs("submitText", "text", "Submit Button Text")}>
             {form.submitText}
           </Button>
         </div>

@@ -40,7 +40,11 @@
     "heading": "Every dish tells a story of spice, care, and heritage.",
     "paragraph": "Risus pretium massa et eu dignissim. Non non ligula lacus velit mi aliquet neque. Enim a commodo lacus cras adipiscing aliquam enim. Consectetur aliquet nibh metus morbi viverra aliquam. Etiam nascetur urna faucibus platea placerat nunc placerat.",
     "buttonText": "see our menu",
-    "buttonHref": "/menu"
+    "buttonHref": "/menu",
+    "fullWidthImage": {
+      "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/about/dining-table.jpg",
+      "alt": "Dining experience"
+    }
   },
   "eventsSection": {
     "heading": "Risus viverra enim vitae commodo. Cras natoque sollicitudin urna.",

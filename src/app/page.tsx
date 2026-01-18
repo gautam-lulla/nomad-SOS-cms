@@ -1,4 +1,4 @@
-import { Navigation, Footer } from "@/components/layout";
+import { SiteNavigation, SiteFooter } from "@/components/layout";
 import {
   HeroSplitScreen,
   Gallery,
@@ -7,6 +7,7 @@ import {
   FullWidthImage,
 } from "@/components/blocks";
 import { Button } from "@/components/ui";
+import Link from "next/link";
 import { getPageContent, getInstagramContent } from "@/lib/content";
 
 // Force dynamic rendering - content comes from CMS at request time
@@ -34,7 +35,7 @@ export default async function HomePage() {
       hours: { times: string[] };
     };
     gallery: Array<{ src: string; alt: string }>;
-    menuSection: { heading: string; paragraph: string; buttonText: string };
+    menuSection: { heading: string; paragraph: string; buttonText: string; buttonHref: string; fullWidthImage?: { src: string; alt: string } };
     eventsSection: {
       heading: string;
       paragraph: string;
@@ -54,7 +55,7 @@ export default async function HomePage() {
   return (
     <main className="bg-black-900 min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      <SiteNavigation />
 
       {/* Hero Section */}
       <HeroSplitScreen
@@ -63,6 +64,7 @@ export default async function HomePage() {
         logoSrc={hero.logoSrc}
         showGradients={true}
         showLogo={true}
+        cmsEntry="homepage"
       />
 
       {/* Intro Section with Location & Hours */}
@@ -70,7 +72,12 @@ export default async function HomePage() {
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
           {/* Heading */}
           <div className="lg:w-1/2">
-            <h2 className="font-sabon text-h2 text-off-white-100 max-w-[544px]">
+            <h2
+              className="font-sabon text-h2 text-off-white-100 max-w-[544px]"
+              data-cms-entry="homepage"
+              data-cms-field="intro.heading"
+              data-cms-label="Intro Heading"
+            >
               {introSection.heading}
             </h2>
           </div>
@@ -78,12 +85,24 @@ export default async function HomePage() {
           {/* Content */}
           <div className="lg:w-[715px] lg:ml-auto">
             <div className="max-w-[433px]">
-              <p className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s">
+              <p
+                className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s"
+                data-cms-entry="homepage"
+                data-cms-field="intro.paragraph"
+                data-cms-type="textarea"
+                data-cms-label="Intro Paragraph"
+              >
                 {introSection.paragraph}
               </p>
 
               <Button variant="outline" className="mb-8 lg:mb-3m">
-                {introSection.buttonText}
+                <span
+                  data-cms-entry="homepage"
+                  data-cms-field="intro.buttonText"
+                  data-cms-label="Intro Button Text"
+                >
+                  {introSection.buttonText}
+                </span>
               </Button>
 
               {/* Location & Hours */}
@@ -99,8 +118,20 @@ export default async function HomePage() {
                     </span>
                   </div>
                   <div className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body">
-                    <p>{introSection.location.address}</p>
-                    <p>{introSection.location.phone}</p>
+                    <p
+                      data-cms-entry="homepage"
+                      data-cms-field="intro.location.address"
+                      data-cms-label="Address"
+                    >
+                      {introSection.location.address}
+                    </p>
+                    <p
+                      data-cms-entry="homepage"
+                      data-cms-field="intro.location.phone"
+                      data-cms-label="Phone"
+                    >
+                      {introSection.location.phone}
+                    </p>
                   </div>
                 </div>
 
@@ -114,7 +145,13 @@ export default async function HomePage() {
                       hours
                     </span>
                   </div>
-                  <div className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body">
+                  <div
+                    className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body"
+                    data-cms-entry="homepage"
+                    data-cms-field="intro.hours.times"
+                    data-cms-type="array"
+                    data-cms-label="Hours"
+                  >
                     {introSection.hours.times.map((time, index) => (
                       <p key={index}>{time}</p>
                     ))}
@@ -137,7 +174,12 @@ export default async function HomePage() {
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
             {/* Heading */}
             <div className="lg:w-1/2">
-              <h2 className="font-sabon text-h2 text-off-white-100 max-w-[544px]">
+              <h2
+                className="font-sabon text-h2 text-off-white-100 max-w-[544px]"
+                data-cms-entry="homepage"
+                data-cms-field="menu.heading"
+                data-cms-label="Menu Heading"
+              >
                 {menuSection.heading}
               </h2>
             </div>
@@ -145,24 +187,40 @@ export default async function HomePage() {
             {/* Content */}
             <div className="lg:w-[715px] lg:ml-auto">
               <div className="max-w-[433px]">
-                <p className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s">
+                <p
+                  className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s"
+                  data-cms-entry="homepage"
+                  data-cms-field="menu.paragraph"
+                  data-cms-type="textarea"
+                  data-cms-label="Menu Paragraph"
+                >
                   {menuSection.paragraph}
                 </p>
-                <Button variant="outline">
-                  {menuSection.buttonText}
-                </Button>
+                <Link href={menuSection.buttonHref}>
+                  <Button variant="outline">
+                    <span
+                      data-cms-entry="homepage"
+                      data-cms-field="menu.buttonText"
+                      data-cms-label="Menu Button Text"
+                    >
+                      {menuSection.buttonText}
+                    </span>
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
         {/* Full Width Menu Image */}
-        <div className="mt-10 md:mt-16 lg:mt-xl">
-          <FullWidthImage
-            src="https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/about/dining-table.jpg"
-            alt="Dining experience"
-          />
-        </div>
+        {menuSection.fullWidthImage && (
+          <div className="mt-10 md:mt-16 lg:mt-xl">
+            <FullWidthImage
+              src={menuSection.fullWidthImage.src}
+              alt={menuSection.fullWidthImage.alt}
+            />
+          </div>
+        )}
       </section>
 
       {/* Events Section - Image Right */}
@@ -173,6 +231,8 @@ export default async function HomePage() {
         buttonHref={eventsSection.buttonHref}
         imageSrc={eventsSection.imageSrc}
         variant="image-right"
+        cmsEntry="homepage"
+        cmsFieldPrefix="events"
       />
 
       {/* Contact Section - Image Left */}
@@ -183,6 +243,8 @@ export default async function HomePage() {
         buttonHref={contactSection.buttonHref}
         imageSrc={contactSection.imageSrc}
         variant="image-left"
+        cmsEntry="homepage"
+        cmsFieldPrefix="contact"
       />
 
       {/* Instagram Feed */}
@@ -194,7 +256,7 @@ export default async function HomePage() {
       />
 
       {/* Footer */}
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }

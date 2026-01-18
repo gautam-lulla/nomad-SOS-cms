@@ -6,6 +6,9 @@ interface FullWidthImageProps {
   alt?: string;
   className?: string;
   priority?: boolean;
+  cmsEntry?: string;
+  cmsField?: string;
+  cmsLabel?: string;
 }
 
 export function FullWidthImage({
@@ -13,9 +16,24 @@ export function FullWidthImage({
   alt = "",
   className,
   priority = false,
+  cmsEntry,
+  cmsField,
+  cmsLabel,
 }: FullWidthImageProps) {
+  const cmsAttrs = cmsEntry
+    ? {
+        "data-cms-entry": cmsEntry,
+        "data-cms-field": cmsField || "image",
+        "data-cms-type": "image",
+        "data-cms-label": cmsLabel || "Full Width Image",
+      }
+    : {};
+
   return (
-    <section className={cn("relative w-full h-[400px] md:h-[600px] lg:h-[840px]", className)}>
+    <section
+      className={cn("relative w-full h-[400px] md:h-[600px] lg:h-[840px]", className)}
+      {...cmsAttrs}
+    >
       <Image
         src={src}
         alt={alt}

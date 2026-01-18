@@ -1,0 +1,61 @@
+{
+  "siteName": "NoMad Wynwood",
+  "siteDescription": "The NoMad Bar in Miami",
+  "navigation": {
+    "menuLabel": "menu",
+    "closeLabel": "Close",
+    "reserveButtonText": "Reserve a Table",
+    "reserveButtonUrl": "#",
+    "backgroundImage": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/hero/nav-background.jpg",
+    "links": [
+      { "href": "/", "label": "Home" },
+      { "href": "/menu", "label": "Menu" },
+      { "href": "/private-events", "label": "Private Events" },
+      { "href": "/programming", "label": "Programming" },
+      { "href": "/about", "label": "About" },
+      { "href": "/getting-here", "label": "Getting Here" }
+    ]
+  },
+  "location": {
+    "name": "the nomad bar",
+    "address": "280 NW 27th St, Miami, FL 33127, United States",
+    "phone": "+1-877-666-2312"
+  },
+  "hours": [
+    { "days": "Tue-Fri", "time": "11 AM — 10 PM" },
+    { "days": "Sat-Sun", "time": "12 PM — 10 PM" },
+    { "days": "Mon", "time": "(Closed)" }
+  ],
+  "footer": {
+    "wordmarkImage": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/nomad-wynwood-wordmark-footer.svg",
+    "wordmarkAlt": "The NoMad Bar",
+    "newsletterPlaceholder": "Please enter your email",
+    "newsletterConsentText": "I agree to the Privacy Policy",
+    "links": [
+      { "href": "/gift-cards", "label": "Gift Cards" },
+      { "href": "/contact", "label": "Contact us" },
+      { "href": "/faq", "label": "FAQ" }
+    ],
+    "legalLinks": [
+      { "href": "#", "label": "Copyright © 2025" },
+      { "href": "/accessibility", "label": "accessibility" },
+      { "href": "/terms", "label": "Terms & Conditions" },
+      { "href": "/privacy", "label": "Privacy policy" },
+      { "href": "/careers", "label": "careers" }
+    ]
+  },
+  "notFound": {
+    "title": "404",
+    "message": "Lost? Must Be the Cocktails",
+    "buttonText": "Take Me Home",
+    "buttonHref": "/",
+    "galleryImages": [
+      { "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/gallery/image-1.jpg", "alt": "Gallery 1" },
+      { "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/gallery/image-2.jpg", "alt": "Gallery 2" },
+      { "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/gallery/image-3.jpg", "alt": "Gallery 3" },
+      { "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/instagram/insta-1.jpg", "alt": "Gallery 4" },
+      { "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/instagram/insta-2.jpg", "alt": "Gallery 5" },
+      { "src": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/instagram/insta-3.jpg", "alt": "Gallery 6" }
+    ]
+  }
+}

@@ -8,6 +8,8 @@ interface HeroSplitScreenProps {
   showLogo?: boolean;
   logoSrc?: string;
   className?: string;
+  // CMS inline editing props
+  cmsEntry?: string;
 }
 
 export function HeroSplitScreen({
@@ -17,11 +19,26 @@ export function HeroSplitScreen({
   showLogo = true,
   logoSrc = "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/nomad-wynwood-mark-svg.svg",
   className,
+  cmsEntry,
 }: HeroSplitScreenProps) {
+  // Helper to create CMS data attributes
+  const cmsAttrs = (field: string, label?: string) => {
+    if (!cmsEntry) return {};
+    return {
+      "data-cms-entry": cmsEntry,
+      "data-cms-field": `hero.${field}`,
+      "data-cms-type": "image",
+      "data-cms-label": label || field,
+    };
+  };
+
   return (
     <section className={cn("relative h-[500px] md:h-[700px] lg:h-[840px] overflow-hidden", className)}>
       {/* Left Image - Full width on mobile, half on desktop */}
-      <div className="absolute left-0 top-0 w-full lg:w-1/2 h-full">
+      <div
+        className="absolute left-0 top-0 w-full lg:w-1/2 h-full"
+        {...cmsAttrs("leftImage", "Hero Left Image")}
+      >
         <Image
           src={leftImage}
           alt=""
@@ -32,7 +49,10 @@ export function HeroSplitScreen({
       </div>
 
       {/* Right Image - Hidden on mobile, visible on desktop */}
-      <div className="absolute right-0 top-0 w-1/2 h-full hidden lg:block">
+      <div
+        className="absolute right-0 top-0 w-1/2 h-full hidden lg:block"
+        {...cmsAttrs("rightImage", "Hero Right Image")}
+      >
         <Image
           src={rightImage}
           alt=""

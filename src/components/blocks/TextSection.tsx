@@ -9,6 +9,9 @@ interface TextSectionProps {
   layout?: "left-right" | "centered";
   showLocationHours?: boolean;
   className?: string;
+  // CMS inline editing props
+  cmsEntry?: string;
+  cmsFieldPrefix?: string;
 }
 
 export function TextSection({
@@ -19,15 +22,33 @@ export function TextSection({
   layout = "left-right",
   showLocationHours = false,
   className,
+  cmsEntry,
+  cmsFieldPrefix,
 }: TextSectionProps) {
+  // Helper to create CMS data attributes
+  const cmsAttrs = (field: string, type?: string, label?: string) => {
+    if (!cmsEntry || !cmsFieldPrefix) return {};
+    return {
+      "data-cms-entry": cmsEntry,
+      "data-cms-field": `${cmsFieldPrefix}.${field}`,
+      ...(type && { "data-cms-type": type }),
+      ...(label && { "data-cms-label": label }),
+    };
+  };
   if (layout === "centered") {
     return (
       <section className={cn("max-w-[454px] mx-auto text-center px-4 md:px-6", className)}>
-        <h2 className="font-sabon text-h2 text-off-white-100 mb-4 lg:mb-3s">
+        <h2
+          className="font-sabon text-h2 text-off-white-100 mb-4 lg:mb-3s"
+          {...cmsAttrs("heading", undefined, "Heading")}
+        >
           {heading}
         </h2>
         {paragraph && (
-          <p className="font-sabon text-body-s text-off-white-100 leading-relaxed">
+          <p
+            className="font-sabon text-body-s text-off-white-100 leading-relaxed"
+            {...cmsAttrs("paragraph", "textarea", "Paragraph")}
+          >
             {paragraph}
           </p>
         )}
@@ -40,7 +61,10 @@ export function TextSection({
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
         {/* Heading */}
         <div className="lg:w-1/2">
-          <h2 className="font-sabon text-h2 text-off-white-100 max-w-[544px]">
+          <h2
+            className="font-sabon text-h2 text-off-white-100 max-w-[544px]"
+            {...cmsAttrs("heading", undefined, "Heading")}
+          >
             {heading}
           </h2>
         </div>
@@ -48,7 +72,10 @@ export function TextSection({
         {/* Content */}
         <div className="lg:w-[715px] lg:ml-auto">
           {paragraph && (
-            <p className="font-sabon text-body-s text-off-white-100 leading-relaxed max-w-[433px] mb-6 lg:mb-3s">
+            <p
+              className="font-sabon text-body-s text-off-white-100 leading-relaxed max-w-[433px] mb-6 lg:mb-3s"
+              {...cmsAttrs("paragraph", "textarea", "Paragraph")}
+            >
               {paragraph}
             </p>
           )}

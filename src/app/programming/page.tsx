@@ -1,4 +1,4 @@
-import { Navigation, Footer } from "@/components/layout";
+import { SiteNavigation, SiteFooter } from "@/components/layout";
 import { FAQAccordion, InstagramFeed } from "@/components/blocks";
 import { Button } from "@/components/ui";
 import Image from "next/image";
@@ -22,12 +22,18 @@ export default async function ProgrammingPage() {
   return (
     <main className="bg-black-900 min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      <SiteNavigation />
 
       {/* Hero Section */}
       <section className="relative">
         {/* Hero Image */}
-        <div className="relative h-[400px] md:h-[600px] lg:h-[840px] w-full">
+        <div
+          className="relative h-[400px] md:h-[600px] lg:h-[840px] w-full"
+          data-cms-entry="programming"
+          data-cms-field="hero.imageSrc"
+          data-cms-type="image"
+          data-cms-label="Hero Image"
+        >
           <Image
             src={hero.imageSrc}
             alt=""
@@ -41,7 +47,12 @@ export default async function ProgrammingPage() {
 
         {/* Hero Content */}
         <div className="absolute top-[120px] md:top-[130px] lg:top-[140px] left-4 right-4 md:left-6 md:right-6 lg:left-3m lg:right-3m">
-          <h1 className="font-sabon text-h2 text-off-white-100 max-w-[544px]">
+          <h1
+            className="font-sabon text-h2 text-off-white-100 max-w-[544px]"
+            data-cms-entry="programming"
+            data-cms-field="hero.heading"
+            data-cms-label="Hero Heading"
+          >
             {hero.heading}
           </h1>
         </div>
@@ -52,15 +63,35 @@ export default async function ProgrammingPage() {
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-xl">
           {/* Left Column with Button */}
           <div className="lg:w-1/2">
-            <p className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s max-w-[433px]">
+            <p
+              className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s max-w-[433px]"
+              data-cms-entry="programming"
+              data-cms-field="intro.columns.0"
+              data-cms-type="textarea"
+              data-cms-label="Intro Column 1"
+            >
               {intro.columns[0]}
             </p>
-            <Button variant="outline">{intro.buttonText}</Button>
+            <Button variant="outline">
+              <span
+                data-cms-entry="programming"
+                data-cms-field="intro.buttonText"
+                data-cms-label="Intro Button Text"
+              >
+                {intro.buttonText}
+              </span>
+            </Button>
           </div>
 
           {/* Right Column */}
           <div className="lg:w-1/2">
-            <p className="font-sabon text-body-s text-off-white-100 leading-relaxed max-w-[433px]">
+            <p
+              className="font-sabon text-body-s text-off-white-100 leading-relaxed max-w-[433px]"
+              data-cms-entry="programming"
+              data-cms-field="intro.columns.1"
+              data-cms-type="textarea"
+              data-cms-label="Intro Column 2"
+            >
               {intro.columns[1]}
             </p>
           </div>
@@ -73,7 +104,13 @@ export default async function ProgrammingPage() {
           {events.map((event, index) => (
             <div key={index} className="flex flex-col">
               {/* Event Image */}
-              <div className="relative h-[350px] md:h-[500px] lg:h-[700px]">
+              <div
+                className="relative h-[350px] md:h-[500px] lg:h-[700px]"
+                data-cms-entry="programming"
+                data-cms-field={`events[${index}].imageSrc`}
+                data-cms-type="image"
+                data-cms-label={`Event ${index + 1} Image`}
+              >
                 <Image
                   src={event.imageSrc}
                   alt={event.title}
@@ -84,10 +121,22 @@ export default async function ProgrammingPage() {
 
               {/* Event Content */}
               <div className="px-4 md:px-6 lg:px-m pt-6 lg:pt-m pb-6 lg:pb-3s">
-                <h3 className="font-gotham font-bold text-[16px] uppercase tracking-[0.48px] text-off-white-100 mb-xs">
+                <h3
+                  className="font-gotham font-bold text-[16px] uppercase tracking-[0.48px] text-off-white-100 mb-xs"
+                  data-cms-entry="programming"
+                  data-cms-field={`events[${index}].title`}
+                  data-cms-type="text"
+                  data-cms-label={`Event ${index + 1} Title`}
+                >
                   {event.title}
                 </h3>
-                <p className="font-sabon text-body-s text-off-white-100 leading-relaxed">
+                <p
+                  className="font-sabon text-body-s text-off-white-100 leading-relaxed"
+                  data-cms-entry="programming"
+                  data-cms-field={`events[${index}].description`}
+                  data-cms-type="textarea"
+                  data-cms-label={`Event ${index + 1} Description`}
+                >
                   {event.description}
                 </p>
               </div>
@@ -114,10 +163,15 @@ export default async function ProgrammingPage() {
       {/* FAQ Section */}
       <section className="pb-6 lg:pb-3m">
         <div className="max-w-[877px] mx-auto px-4 md:px-6 lg:px-3m">
-          <h2 className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l">
+          <h2
+            className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
+            data-cms-entry="programming"
+            data-cms-field="faq.title"
+            data-cms-label="FAQ Title"
+          >
             {faq.title}
           </h2>
-          <FAQAccordion items={faq.items} />
+          <FAQAccordion items={faq.items} cmsEntry="programming" cmsFieldPrefix="faq" />
         </div>
       </section>
 
@@ -130,7 +184,7 @@ export default async function ProgrammingPage() {
       />
 
       {/* Footer */}
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }

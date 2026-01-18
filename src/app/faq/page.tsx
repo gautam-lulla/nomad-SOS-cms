@@ -1,4 +1,4 @@
-import { Navigation, Footer } from "@/components/layout";
+import { SiteNavigation, SiteFooter } from "@/components/layout";
 import { FAQAccordion, InstagramFeed } from "@/components/blocks";
 import Image from "next/image";
 import { getPageContent, getInstagramContent } from "@/lib/content";
@@ -18,7 +18,7 @@ export default async function FAQPage() {
   return (
     <main className="bg-black-900 min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      <SiteNavigation />
 
       {/* Hero Gallery */}
       <section className="pt-[100px] md:pt-[105px] lg:pt-[110px]">
@@ -40,7 +40,12 @@ export default async function FAQPage() {
       {/* Hero Heading */}
       <section className="pt-10 md:pt-16 lg:pt-xl pb-10 md:pb-16 lg:pb-xl">
         <div className="max-w-[544px] mx-auto text-center px-4 md:px-6 lg:px-3m">
-          <h1 className="font-sabon text-h2 text-off-white-100">
+          <h1
+            className="font-sabon text-h2 text-off-white-100"
+            data-cms-entry="faq"
+            data-cms-field="hero.heading"
+            data-cms-label="Hero Heading"
+          >
             {hero.heading}
           </h1>
         </div>
@@ -49,7 +54,7 @@ export default async function FAQPage() {
       {/* FAQ Section */}
       <section className="pb-10 md:pb-16 lg:pb-xl">
         <div className="max-w-[877px] mx-auto px-4 md:px-6 lg:px-3m">
-          <FAQAccordion items={faq.items} />
+          <FAQAccordion items={faq.items} cmsEntry="faq" cmsFieldPrefix="faq" />
         </div>
       </section>
 
@@ -62,7 +67,7 @@ export default async function FAQPage() {
       />
 
       {/* Footer */}
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }

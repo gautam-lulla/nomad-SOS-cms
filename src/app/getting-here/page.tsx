@@ -1,7 +1,7 @@
-import { Navigation, Footer } from "@/components/layout";
+import { SiteNavigation, SiteFooter } from "@/components/layout";
 import { FAQAccordion, InstagramFeed } from "@/components/blocks";
 import Image from "next/image";
-import { getPageContent, getInstagramContent } from "@/lib/content";
+import { getPageContent, getInstagramContent, getSiteSettings } from "@/lib/content";
 
 export const dynamic = 'force-dynamic';
 
@@ -9,8 +9,9 @@ export default async function GettingHerePage() {
   // Fetch content from CMS
   const gettingHereContent = await getPageContent('getting-here');
   const instagramContent = await getInstagramContent();
+  const siteSettings = await getSiteSettings();
 
-  const { hero, location, info, gallery, faq } = gettingHereContent as {
+  const { hero, location, info, gallery, map, faq } = gettingHereContent as {
     hero: { title: string; subtitle?: string };
     location: { phone: string; address: string[] };
     info: {
@@ -18,13 +19,19 @@ export default async function GettingHerePage() {
       transit: { label: string; content: string[] };
     };
     gallery: Array<{ src: string; alt?: string }>;
+    map?: {
+      labels: Array<{
+        text: string;
+        position: { top?: string; bottom?: string; left?: string; right?: string };
+      }>;
+    };
     faq: { title: string; items: Array<{ question: string; answer: string }> };
   };
 
   return (
     <main className="bg-black-900 min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      <SiteNavigation />
 
       {/* Hero Gallery - 2 rows on mobile, 1 row on tablet+ */}
       <section className="pt-[100px] md:pt-[105px] lg:pt-[110px]">
@@ -132,44 +139,28 @@ export default async function GettingHerePage() {
         />
 
         {/* Neighborhood labels */}
-        <div className="absolute top-[15%] left-[8%] font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest">
-          Hialeah
-        </div>
-        <div className="absolute top-[25%] left-[5%] font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest">
-          Brownsville
-        </div>
-        <div className="absolute top-[45%] left-[12%] font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest">
-          Little Havana
-        </div>
-        <div className="absolute top-[65%] left-[8%] font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest">
-          Coral Gables
-        </div>
-        <div className="absolute top-[35%] left-[35%] font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest">
-          Wynwood
-        </div>
-        <div className="absolute top-[55%] left-[30%] font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest">
-          Downtown
-        </div>
-        <div className="absolute top-[20%] right-[15%] font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest">
-          North Beach
-        </div>
-        <div className="absolute top-[35%] right-[10%] font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest">
-          Miami Beach
-        </div>
-        <div className="absolute top-[55%] right-[12%] font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest">
-          South Beach
-        </div>
-        <div className="absolute bottom-[20%] right-[25%] font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest">
-          Key Biscayne
-        </div>
+        {map?.labels?.map((label, index) => (
+          <div
+            key={index}
+            className="absolute font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest"
+            style={{
+              top: label.position.top,
+              bottom: label.position.bottom,
+              left: label.position.left,
+              right: label.position.right,
+            }}
+          >
+            {label.text}
+          </div>
+        ))}
 
         {/* Location Pin - Centered */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-10">
           {/* Pin Card */}
           <div className="bg-pink-500 px-2xs py-2xs">
             <Image
-              src="https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/nomad-wynwood-wordmark-footer.svg"
-              alt="The NoMad Bar"
+              src={siteSettings.footer.wordmarkImage}
+              alt={siteSettings.footer.wordmarkAlt}
               width={185}
               height={14}
               className="h-[14px] w-auto"
@@ -199,7 +190,7 @@ export default async function GettingHerePage() {
       />
 
       {/* Footer */}
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }

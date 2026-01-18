@@ -12,6 +12,9 @@ interface SectionHalfScreenProps {
   variant?: "image-left" | "image-right";
   headingSize?: "h1" | "h2";
   className?: string;
+  // CMS inline editing props
+  cmsEntry?: string;
+  cmsFieldPrefix?: string;
 }
 
 export function SectionHalfScreen({
@@ -24,8 +27,21 @@ export function SectionHalfScreen({
   variant = "image-right",
   headingSize = "h2",
   className,
+  cmsEntry,
+  cmsFieldPrefix,
 }: SectionHalfScreenProps) {
   const isImageLeft = variant === "image-left";
+
+  // Helper to create CMS data attributes
+  const cmsAttrs = (field: string, type?: string, label?: string) => {
+    if (!cmsEntry || !cmsFieldPrefix) return {};
+    return {
+      "data-cms-entry": cmsEntry,
+      "data-cms-field": `${cmsFieldPrefix}.${field}`,
+      ...(type && { "data-cms-type": type }),
+      ...(label && { "data-cms-label": label }),
+    };
+  };
 
   return (
     <section
@@ -37,7 +53,10 @@ export function SectionHalfScreen({
       )}
     >
       {/* Image */}
-      <div className="relative w-full lg:w-1/2 h-[400px] lg:h-[840px]">
+      <div
+        className="relative w-full lg:w-1/2 h-[400px] lg:h-[840px]"
+        {...cmsAttrs("imageSrc", "image", "Image")}
+      >
         <Image
           src={imageSrc}
           alt={imageAlt}
@@ -55,6 +74,7 @@ export function SectionHalfScreen({
             headingSize === "h1" && "text-[56px] leading-tight tracking-[-1.12px]",
             headingSize === "h2" && "text-h2"
           )}
+          {...cmsAttrs("heading", undefined, "Heading")}
         >
           {heading}
         </h2>
@@ -66,6 +86,7 @@ export function SectionHalfScreen({
               <p
                 key={index}
                 className="font-sabon text-body-s text-off-white-100 leading-relaxed"
+                {...(paragraphs.length === 1 ? cmsAttrs("paragraph", "textarea", "Paragraph") : {})}
               >
                 {paragraph}
               </p>
@@ -86,7 +107,9 @@ export function SectionHalfScreen({
                 "w-fit"
               )}
             >
-              {buttonText}
+              <span {...cmsAttrs("buttonText", undefined, "Button Text")}>
+                {buttonText}
+              </span>
             </Link>
           )}
         </div>

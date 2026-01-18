@@ -1,4 +1,4 @@
-import { Navigation, Footer } from "@/components/layout";
+import { SiteNavigation, SiteFooter } from "@/components/layout";
 import {
   SectionHalfScreen,
   TextSection,
@@ -18,10 +18,11 @@ export default async function AboutPage() {
   const aboutContent = await getPageContent('about');
   const instagramContent = await getInstagramContent();
 
-  const { hero, heritage, quote, team, awards, faq } = aboutContent as {
+  const { hero, heritage, quote, fullWidthImage, team, awards, faq } = aboutContent as {
     hero: { heading: string; imageSrc: string };
     heritage: { title: string; paragraph: string; imageSrc: string };
     quote: { heading: string; paragraph: string };
+    fullWidthImage?: { src: string; alt: string };
     team: Array<{ name: string; title: string; description: string; imageSrc: string }>;
     awards: { title: string; logos: Array<{ src: string; alt: string }> };
     faq: { title: string; items: Array<{ question: string; answer: string }> };
@@ -30,13 +31,18 @@ export default async function AboutPage() {
   return (
     <main className="bg-black-900 min-h-screen">
       {/* Navigation */}
-      <Navigation />
+      <SiteNavigation />
 
       {/* Hero Section with Heading Overlay */}
       <section className="relative">
         {/* Heading */}
         <div className="pt-[140px] md:pt-[180px] lg:pt-[210px] pb-6 lg:pb-3m px-4 md:px-6 lg:px-3m">
-          <h1 className="font-sabon text-h2 text-off-white-100 max-w-[544px]">
+          <h1
+            className="font-sabon text-h2 text-off-white-100 max-w-[544px]"
+            data-cms-entry="about"
+            data-cms-field="hero.heading"
+            data-cms-label="Hero Heading"
+          >
             {hero.heading}
           </h1>
         </div>
@@ -60,6 +66,8 @@ export default async function AboutPage() {
         imageSrc={heritage.imageSrc}
         variant="image-right"
         headingSize="h1"
+        cmsEntry="about"
+        cmsFieldPrefix="heritage"
       />
 
       {/* Quote Section */}
@@ -68,6 +76,8 @@ export default async function AboutPage() {
           heading={quote.heading}
           paragraph={quote.paragraph}
           layout="centered"
+          cmsEntry="about"
+          cmsFieldPrefix="quote"
         />
       </section>
 
@@ -77,12 +87,14 @@ export default async function AboutPage() {
       </section>
 
       {/* Full Width Image */}
-      <section className="mt-10 md:mt-16 lg:mt-xl">
-        <FullWidthImage
-          src="https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/about/dining-table.jpg"
-          alt="Dining experience"
-        />
-      </section>
+      {fullWidthImage && (
+        <section className="mt-10 md:mt-16 lg:mt-xl">
+          <FullWidthImage
+            src={fullWidthImage.src}
+            alt={fullWidthImage.alt}
+          />
+        </section>
+      )}
 
       {/* Awards Section */}
       <section className="pt-16 md:pt-24 lg:pt-[160px]">
@@ -95,10 +107,15 @@ export default async function AboutPage() {
       {/* FAQ Section */}
       <section className="pt-16 md:pt-24 lg:pt-[160px] pb-6 lg:pb-3m">
         <div className="max-w-[877px] mx-auto px-4 md:px-6 lg:px-3m">
-          <h2 className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l">
+          <h2
+            className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
+            data-cms-entry="about"
+            data-cms-field="faq.title"
+            data-cms-label="FAQ Title"
+          >
             {faq.title}
           </h2>
-          <FAQAccordion items={faq.items} />
+          <FAQAccordion items={faq.items} cmsEntry="about" cmsFieldPrefix="faq" />
         </div>
       </section>
 
@@ -111,7 +128,7 @@ export default async function AboutPage() {
       />
 
       {/* Footer */}
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }

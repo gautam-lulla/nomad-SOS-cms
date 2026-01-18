@@ -64,6 +64,20 @@
       "alt": "NoMad Wynwood"
     }
   ],
+  "map": {
+    "labels": [
+      { "text": "Hialeah", "position": { "top": "15%", "left": "8%" } },
+      { "text": "Brownsville", "position": { "top": "25%", "left": "5%" } },
+      { "text": "Little Havana", "position": { "top": "45%", "left": "12%" } },
+      { "text": "Coral Gables", "position": { "top": "65%", "left": "8%" } },
+      { "text": "Wynwood", "position": { "top": "35%", "left": "35%" } },
+      { "text": "Downtown", "position": { "top": "55%", "left": "30%" } },
+      { "text": "North Beach", "position": { "top": "20%", "right": "15%" } },
+      { "text": "Miami Beach", "position": { "top": "35%", "right": "10%" } },
+      { "text": "South Beach", "position": { "top": "55%", "right": "12%" } },
+      { "text": "Key Biscayne", "position": { "bottom": "20%", "right": "25%" } }
+    ]
+  },
   "faq": {
     "title": "Frequently Asked Questions",
     "items": [

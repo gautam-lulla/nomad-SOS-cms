@@ -6,6 +6,41 @@
  */
 
 import { getServerClient } from '../apollo-client';
+
+// Cloudflare R2 CDN base URL
+const CDN_BASE_URL = 'https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad';
+
+/**
+ * Transform local /images/ paths to Cloudflare CDN URLs
+ * Recursively processes objects and arrays
+ */
+function transformImageUrls<T>(data: T): T {
+  if (data === null || data === undefined) {
+    return data;
+  }
+
+  if (typeof data === 'string') {
+    // Transform /images/... paths to CDN URLs
+    if (data.startsWith('/images/')) {
+      return data.replace('/images/', `${CDN_BASE_URL}/`) as T;
+    }
+    return data;
+  }
+
+  if (Array.isArray(data)) {
+    return data.map(item => transformImageUrls(item)) as T;
+  }
+
+  if (typeof data === 'object') {
+    const result: Record<string, unknown> = {};
+    for (const [key, value] of Object.entries(data as Record<string, unknown>)) {
+      result[key] = transformImageUrls(value);
+    }
+    return result as T;
+  }
+
+  return data;
+}
 import {
   GET_PAGE_CONTENT,
   GET_ALL_ENTRIES_BY_TYPE,
@@ -17,6 +52,58 @@ const CMS_ORG_ID = process.env.CMS_ORGANIZATION_ID || '';
 
 // Cache for content type IDs (populated on first use)
 const typeIdCache: Map<string, string> = new Map();
+
+// Type definitions for site settings
+export interface NavigationLink {
+  href: string;
+  label: string;
+}
+
+export interface HoursEntry {
+  days: string;
+  time: string;
+}
+
+export interface ImageItem {
+  src: string;
+  alt: string;
+}
+
+export interface NotFoundContent {
+  title: string;
+  message: string;
+  buttonText: string;
+  buttonHref: string;
+  galleryImages: ImageItem[];
+}
+
+export interface SiteSettings {
+  siteName: string;
+  siteDescription: string;
+  navigation: {
+    menuLabel: string;
+    closeLabel: string;
+    reserveButtonText: string;
+    reserveButtonUrl: string;
+    backgroundImage: string;
+    links: NavigationLink[];
+  };
+  location: {
+    name: string;
+    address: string;
+    phone: string;
+  };
+  hours: HoursEntry[];
+  footer: {
+    wordmarkImage: string;
+    wordmarkAlt: string;
+    newsletterPlaceholder: string;
+    newsletterConsentText: string;
+    links: NavigationLink[];
+    legalLinks: NavigationLink[];
+  };
+  notFound: NotFoundContent;
+}
 
 // Type definitions for GraphQL responses
 interface ContentTypeResponse {
@@ -89,7 +176,7 @@ export async function getPageContent(pageSlug: string): Promise<Record<string, u
     return {};
   }
 
-  const rawData = data.contentEntryBySlug.data || {};
+  const rawData = transformImageUrls(data.contentEntryBySlug.data || {});
   const mappedData: Record<string, unknown> = { ...rawData };
 
   // Only remap fields for the homepage, which uses *Section suffixed field names
@@ -144,7 +231,7 @@ export async function getInstagramContent(): Promise<{
     };
   }
 
-  const entryData = data.contentEntryBySlug.data as {
+  const entryData = transformImageUrls(data.contentEntryBySlug.data) as {
     title: string;
     handle: string;
     handleUrl: string;
@@ -156,16 +243,25 @@ export async function getInstagramContent(): Promise<{
 
 /**
  * Fetch menu content with full hierarchy
- * Returns data matching the original menu.json structure
+ * Returns data matching the original menu.json structure, with entry IDs for inline editing
  */
 export async function getMenuContent(): Promise<{
-  categories: string[];
+  categories: Array<{
+    id: string;
+    slug: string;
+    name: string;
+  }>;
   activeCategory: string;
+  activeCategoryId: string;
   menuTitle: string;
   menuSubtitle: string;
   sections: Array<{
+    id: string;
+    slug: string;
     name: string;
     items: Array<{
+      id: string;
+      slug: string;
       name: string;
       price: string;
       description: string;
@@ -236,7 +332,7 @@ export async function getMenuContent(): Promise<{
 
   const allItems = itemsData?.contentEntries?.items || [];
 
-  // Build sections with their items
+  // Build sections with their items, including IDs for inline editing
   const sectionsWithItems = sections.map(section => {
     const sectionItems = [...allItems]
       .filter(item => item.data.sectionSlug === section.slug)
@@ -244,20 +340,29 @@ export async function getMenuContent(): Promise<{
         ((a.data.sortOrder as number) || 0) - ((b.data.sortOrder as number) || 0)
       )
       .map(item => ({
+        id: item.id,
+        slug: item.slug,
         name: item.data.name as string,
         price: item.data.price as string,
         description: (item.data.description as string) || '',
       }));
 
     return {
+      id: section.id,
+      slug: section.slug,
       name: section.data.name as string,
       items: sectionItems,
     };
   });
 
   return {
-    categories: categories.map(c => c.data.name as string),
+    categories: categories.map(c => ({
+      id: c.id,
+      slug: c.slug,
+      name: c.data.name as string,
+    })),
     activeCategory: (activeCategory?.data.name as string) || '',
+    activeCategoryId: activeCategory?.id || '',
     menuTitle: (activeCategory?.data.name as string) || '',
     menuSubtitle: (activeCategory?.data.subtitle as string) || '',
     sections: sectionsWithItems,
@@ -308,12 +413,15 @@ export async function getTeamMembers(): Promise<
     },
   });
 
-  return (data?.contentEntries?.items || []).map(item => ({
-    name: item.data.name as string,
-    title: item.data.title as string,
-    description: (item.data.description as string) || '',
-    imageSrc: (item.data.imageSrc as string) || '',
-  }));
+  return (data?.contentEntries?.items || []).map(item => {
+    const transformed = transformImageUrls(item.data);
+    return {
+      name: transformed.name as string,
+      title: transformed.title as string,
+      description: (transformed.description as string) || '',
+      imageSrc: (transformed.imageSrc as string) || '',
+    };
+  });
 }
 
 /**
@@ -336,11 +444,14 @@ export async function getEvents(): Promise<
     },
   });
 
-  return (data?.contentEntries?.items || []).map(item => ({
-    title: item.data.title as string,
-    description: (item.data.description as string) || '',
-    imageSrc: (item.data.imageSrc as string) || '',
-  }));
+  return (data?.contentEntries?.items || []).map(item => {
+    const transformed = transformImageUrls(item.data);
+    return {
+      title: transformed.title as string,
+      description: (transformed.description as string) || '',
+      imageSrc: (transformed.imageSrc as string) || '',
+    };
+  });
 }
 
 // Helper function
@@ -349,4 +460,102 @@ function slugify(text: string): string {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '');
+}
+
+/**
+ * Fetch site-wide settings (navigation, footer, location, hours)
+ */
+export async function getSiteSettings(): Promise<SiteSettings> {
+  const client = getServerClient();
+
+  try {
+    const typeId = await getContentTypeId('site-settings');
+
+    const { data, error } = await client.query<ContentEntryResponse>({
+      query: GET_PAGE_CONTENT,
+      variables: {
+        contentTypeId: typeId,
+        organizationId: CMS_ORG_ID,
+        slug: 'global-settings',
+      },
+    });
+
+    if (error || !data?.contentEntryBySlug) {
+      console.warn('Site settings not found in CMS, using defaults');
+      return getDefaultSiteSettings();
+    }
+
+    const settings = transformImageUrls(data.contentEntryBySlug.data) as unknown as SiteSettings;
+    return settings;
+  } catch (e) {
+    console.warn('Failed to fetch site settings from CMS:', e);
+    return getDefaultSiteSettings();
+  }
+}
+
+/**
+ * Default site settings fallback
+ */
+function getDefaultSiteSettings(): SiteSettings {
+  return {
+    siteName: "NoMad Wynwood",
+    siteDescription: "The NoMad Bar in Miami",
+    navigation: {
+      menuLabel: "menu",
+      closeLabel: "Close",
+      reserveButtonText: "Reserve a Table",
+      reserveButtonUrl: "#",
+      backgroundImage: `${CDN_BASE_URL}/hero/nav-background.jpg`,
+      links: [
+        { href: "/", label: "Home" },
+        { href: "/menu", label: "Menu" },
+        { href: "/private-events", label: "Private Events" },
+        { href: "/programming", label: "Programming" },
+        { href: "/about", label: "About" },
+        { href: "/getting-here", label: "Getting Here" },
+      ],
+    },
+    location: {
+      name: "the nomad bar",
+      address: "280 NW 27th St, Miami, FL 33127, United States",
+      phone: "+1-877-666-2312",
+    },
+    hours: [
+      { days: "Tue-Fri", time: "11 AM — 10 PM" },
+      { days: "Sat-Sun", time: "12 PM — 10 PM" },
+      { days: "Mon", time: "(Closed)" },
+    ],
+    footer: {
+      wordmarkImage: `${CDN_BASE_URL}/nomad-wynwood-wordmark-footer.svg`,
+      wordmarkAlt: "The NoMad Bar",
+      newsletterPlaceholder: "Please enter your email",
+      newsletterConsentText: "I agree to the Privacy Policy",
+      links: [
+        { href: "/gift-cards", label: "Gift Cards" },
+        { href: "/contact", label: "Contact us" },
+        { href: "/faq", label: "FAQ" },
+      ],
+      legalLinks: [
+        { href: "#", label: "Copyright © 2025" },
+        { href: "/accessibility", label: "accessibility" },
+        { href: "/terms", label: "Terms & Conditions" },
+        { href: "/privacy", label: "Privacy policy" },
+        { href: "/careers", label: "careers" },
+      ],
+    },
+    notFound: {
+      title: "404",
+      message: "Lost? Must Be the Cocktails",
+      buttonText: "Take Me Home",
+      buttonHref: "/",
+      galleryImages: [
+        { src: `${CDN_BASE_URL}/gallery/image-1.jpg`, alt: "Gallery 1" },
+        { src: `${CDN_BASE_URL}/gallery/image-2.jpg`, alt: "Gallery 2" },
+        { src: `${CDN_BASE_URL}/gallery/image-3.jpg`, alt: "Gallery 3" },
+        { src: `${CDN_BASE_URL}/instagram/insta-1.jpg`, alt: "Gallery 4" },
+        { src: `${CDN_BASE_URL}/instagram/insta-2.jpg`, alt: "Gallery 5" },
+        { src: `${CDN_BASE_URL}/instagram/insta-3.jpg`, alt: "Gallery 6" },
+      ],
+    },
+  };
 }

@@ -7,22 +7,35 @@ import { HamburgerIcon, CloseIcon } from "@/components/icons";
 import { Logo } from "./Logo";
 import Image from "next/image";
 import Link from "next/link";
+import type { NavigationLink, HoursEntry } from "@/lib/content";
 
 interface NavigationProps {
   className?: string;
+  links: NavigationLink[];
+  location: {
+    name: string;
+    address: string;
+    phone: string;
+  };
+  hours: HoursEntry[];
+  menuLabel: string;
+  closeLabel: string;
+  reserveButtonText: string;
+  reserveButtonUrl: string;
+  backgroundImage: string;
 }
 
-const menuLinks = [
-  { href: "/", label: "Home" },
-  { href: "/menu", label: "Menu" },
-  { href: "/private-events", label: "Private Events" },
-  { href: "/programming", label: "Programming" },
-  { href: "/about", label: "About" },
-  { href: "/getting-here", label: "Getting Here" },
-  { href: "/test-404", label: "404 (test only)", isTest: true },
-];
-
-export function Navigation({ className }: NavigationProps) {
+export function Navigation({
+  className,
+  links,
+  location,
+  hours,
+  menuLabel,
+  closeLabel,
+  reserveButtonText,
+  reserveButtonUrl,
+  backgroundImage,
+}: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = useCallback(() => setIsMenuOpen(false), []);
@@ -70,8 +83,13 @@ export function Navigation({ className }: NavigationProps) {
           className="absolute left-4 md:left-5 top-[24px] md:top-[30px] lg:top-[34px] flex items-center gap-2 md:gap-4 text-off-white-100 cursor-pointer"
         >
           <HamburgerIcon aria-hidden={true} />
-          <span className="hidden md:inline font-gotham font-bold text-cta uppercase tracking-wide-cta">
-            menu
+          <span
+            className="hidden md:inline font-gotham font-bold text-cta uppercase tracking-wide-cta"
+            data-cms-entry="global-settings"
+            data-cms-field="navigation.menuLabel"
+            data-cms-label="Menu Label"
+          >
+            {menuLabel}
           </span>
         </button>
 
@@ -82,7 +100,19 @@ export function Navigation({ className }: NavigationProps) {
 
         {/* Reserve Button */}
         <div className="absolute right-4 md:right-5 top-4 md:top-5">
-          <Button variant="filled" className="text-[10px] md:text-cta px-3 md:px-s">Reserve a Table</Button>
+          <Button
+            variant="filled"
+            className="text-[10px] md:text-cta px-3 md:px-s"
+            {...(reserveButtonUrl && reserveButtonUrl !== "#" ? { as: "a", href: reserveButtonUrl } : {})}
+          >
+            <span
+              data-cms-entry="global-settings"
+              data-cms-field="navigation.reserveButtonText"
+              data-cms-label="Reserve Button Text"
+            >
+              {reserveButtonText}
+            </span>
+          </Button>
         </div>
       </header>
 
@@ -96,9 +126,15 @@ export function Navigation({ className }: NavigationProps) {
           className="fixed inset-0 z-[100] bg-black-900"
         >
           {/* Background Image */}
-          <div className="absolute right-0 top-0 w-[720px] h-[840px] hidden lg:block">
+          <div
+            className="absolute right-0 top-0 w-[720px] h-[840px] hidden lg:block"
+            data-cms-entry="global-settings"
+            data-cms-field="navigation.backgroundImage"
+            data-cms-type="image"
+            data-cms-label="Navigation Background Image"
+          >
             <Image
-              src="https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad/hero/nav-background.jpg"
+              src={backgroundImage}
               alt=""
               fill
               className="object-cover"
@@ -112,14 +148,31 @@ export function Navigation({ className }: NavigationProps) {
             className="absolute left-4 md:left-5 top-6 md:top-7 flex items-center gap-2 md:gap-2.5 text-off-white-100 cursor-pointer z-10"
           >
             <CloseIcon aria-hidden={true} />
-            <span className="hidden md:inline font-gotham font-bold text-cta uppercase tracking-wide-cta">
-              Close
+            <span
+              className="hidden md:inline font-gotham font-bold text-cta uppercase tracking-wide-cta"
+              data-cms-entry="global-settings"
+              data-cms-field="navigation.closeLabel"
+              data-cms-label="Close Label"
+            >
+              {closeLabel}
             </span>
           </button>
 
           {/* Reserve Button */}
           <div className="absolute right-4 md:right-5 top-4 md:top-5 z-10">
-            <Button variant="filled" className="text-[10px] md:text-cta px-3 md:px-s">Reserve a Table</Button>
+            <Button
+              variant="filled"
+              className="text-[10px] md:text-cta px-3 md:px-s"
+              {...(reserveButtonUrl && reserveButtonUrl !== "#" ? { as: "a", href: reserveButtonUrl } : {})}
+            >
+              <span
+                data-cms-entry="global-settings"
+                data-cms-field="navigation.reserveButtonText"
+                data-cms-label="Reserve Button Text"
+              >
+                {reserveButtonText}
+              </span>
+            </Button>
           </div>
 
           {/* Center Logo */}
@@ -133,7 +186,7 @@ export function Navigation({ className }: NavigationProps) {
             className="absolute left-4 md:left-[60px] top-[120px] md:top-[160px] lg:top-[190px]"
           >
             <ul className="space-y-[3px]" role="list">
-              {menuLinks.map((link) => (
+              {links.map((link, index) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -142,10 +195,12 @@ export function Navigation({ className }: NavigationProps) {
                       "leading-[1.2] tracking-tight-h2",
                       "text-off-white-100 hover:text-pink-500 hover:italic",
                       "transition-all duration-200",
-                      link.isTest
-                        ? "font-gotham text-[12px] md:text-[14px] opacity-60"
-                        : "font-sabon text-[28px] md:text-[32px] lg:text-[36px]"
+                      "font-sabon text-[28px] md:text-[32px] lg:text-[36px]"
                     )}
+                    data-cms-entry="global-settings"
+                    data-cms-field={`navigation.links[${index}].label`}
+                    data-cms-type="text"
+                    data-cms-label={`Nav Link ${index + 1}`}
                   >
                     {link.label}
                   </Link>
@@ -168,8 +223,20 @@ export function Navigation({ className }: NavigationProps) {
                   </span>
                 </div>
                 <div className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body">
-                  <p>280 NW 27th St, Miami, FL 33127, United States</p>
-                  <p>+1-877-666-2312</p>
+                  <p
+                    data-cms-entry="global-settings"
+                    data-cms-field="location.address"
+                    data-cms-label="Address"
+                  >
+                    {location.address}
+                  </p>
+                  <p
+                    data-cms-entry="global-settings"
+                    data-cms-field="location.phone"
+                    data-cms-label="Phone"
+                  >
+                    {location.phone}
+                  </p>
                 </div>
               </div>
 
@@ -183,10 +250,18 @@ export function Navigation({ className }: NavigationProps) {
                     hours
                   </span>
                 </div>
-                <div className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body">
-                  <p>Tue-Fri 11 AM — 10 PM</p>
-                  <p>Sat-Sun 12 PM — 10 PM</p>
-                  <p>Mon (Closed)</p>
+                <div
+                  className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body"
+                  data-cms-entry="global-settings"
+                  data-cms-field="hours"
+                  data-cms-type="array"
+                  data-cms-label="Hours"
+                >
+                  {hours.map((entry, index) => (
+                    <p key={index}>
+                      {entry.days} {entry.time}
+                    </p>
+                  ))}
                 </div>
               </div>
             </div>

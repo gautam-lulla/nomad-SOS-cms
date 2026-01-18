@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { Suspense } from "react";
+import { InlineEditorLoader } from "@/components/InlineEditorLoader";
 import "./globals.css";
 
 const sabon = localFont({
@@ -80,6 +82,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${sabon.variable} ${gotham.variable} antialiased`}>
         {children}
+        <Suspense fallback={null}>
+          <InlineEditorLoader
+            orgSlug="spherical-hospitality"
+            apiBase={process.env.NEXT_PUBLIC_CMS_URL || "https://cms.sphereos.dev"}
+            adminBase={process.env.NEXT_PUBLIC_CMS_ADMIN_URL}
+          />
+        </Suspense>
       </body>
     </html>
   );

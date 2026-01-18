@@ -24,7 +24,12 @@ export function InstagramFeed({
     <section className={cn("bg-black-900 pt-3l", className)}>
       {/* Title */}
       <div className="flex flex-col items-center gap-2xxs mb-3l px-6">
-        <h2 className="font-sabon text-h2 text-off-white-100 text-center">
+        <h2
+          className="font-sabon text-h2 text-off-white-100 text-center"
+          data-cms-entry="global-instagram"
+          data-cms-field="title"
+          data-cms-label="Instagram Title"
+        >
           {title}
         </h2>
         <Link
@@ -32,6 +37,9 @@ export function InstagramFeed({
           target="_blank"
           rel="noopener noreferrer"
           className="font-sabon text-h3 text-off-white-100 hover:text-pink-500 transition-colors"
+          data-cms-entry="global-instagram"
+          data-cms-field="handle"
+          data-cms-label="Instagram Handle"
         >
           {handle}
         </Link>

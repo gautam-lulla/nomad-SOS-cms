@@ -1,4 +1,4 @@
-import { Navigation, Footer } from "@/components/layout";
+import { SiteNavigation, SiteFooter } from "@/components/layout";
 import { Gallery, InstagramFeed } from "@/components/blocks";
 import Image from "next/image";
 import { getPageContent, getMenuContent, getInstagramContent } from "@/lib/content";
@@ -18,12 +18,12 @@ export default async function MenuPage() {
   };
 
   // Get menu-specific content
-  const { categories, menuTitle, menuSubtitle, sections } = menuData;
+  const { categories, activeCategoryId, menuTitle, menuSubtitle, sections } = menuData;
 
   return (
     <main className="bg-black-900 min-h-screen relative">
       {/* Navigation */}
-      <Navigation />
+      <SiteNavigation />
 
       {/* Hero Gallery */}
       <section className="absolute top-0 left-0 right-0 z-0">
@@ -50,14 +50,17 @@ export default async function MenuPage() {
             <nav className="flex flex-row flex-wrap lg:flex-col gap-3 lg:gap-2xxs lg:sticky lg:top-[100px]">
               {categories.map((category, index) => (
                 <button
-                  key={index}
+                  key={category.id}
                   className={`font-sabon text-[18px] md:text-[20px] lg:text-h3 tracking-tight-h3 text-left transition-colors whitespace-nowrap ${
                     index === 0
                       ? "text-pink-500 italic"
                       : "text-off-white-100 hover:text-pink-500"
                   }`}
+                  data-cms-entry={category.slug}
+                  data-cms-field="name"
+                  data-cms-label="Category Name"
                 >
-                  {category}
+                  {category.name}
                 </button>
               ))}
             </nav>
@@ -67,38 +70,65 @@ export default async function MenuPage() {
           <div className="flex-1">
             {/* Menu Header */}
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-6 lg:mb-m border-b border-off-white-100 pb-xs">
-              <h1 className="font-sabon text-[36px] md:text-[48px] lg:text-[56px] leading-tight text-off-white-100">
+              <h1
+                className="font-sabon text-[36px] md:text-[48px] lg:text-[56px] leading-tight text-off-white-100"
+                data-cms-entry={categories.find(c => c.id === activeCategoryId)?.slug}
+                data-cms-field="name"
+                data-cms-label="Menu Title"
+              >
                 {menuTitle}
               </h1>
-              <span className="font-sabon text-body-s text-off-white-100 italic mt-2 sm:mt-0">
+              <span
+                className="font-sabon text-body-s text-off-white-100 italic mt-2 sm:mt-0"
+                data-cms-entry={categories.find(c => c.id === activeCategoryId)?.slug}
+                data-cms-field="subtitle"
+                data-cms-label="Menu Subtitle"
+              >
                 {menuSubtitle}
               </span>
             </div>
 
             {/* Menu Sections */}
-            {sections.map((section, sectionIndex) => (
-              <div key={sectionIndex} className="mb-10 lg:mb-l">
+            {sections.map((section) => (
+              <div key={section.id} className="mb-10 lg:mb-l">
                 {/* Section Title */}
-                <h2 className="font-gotham font-bold text-h5 uppercase tracking-wide-h5 text-off-white-100 mb-6 lg:mb-m border-b border-off-white-100 pb-3xs">
+                <h2
+                  className="font-gotham font-bold text-h5 uppercase tracking-wide-h5 text-off-white-100 mb-6 lg:mb-m border-b border-off-white-100 pb-3xs"
+                  data-cms-entry={section.slug}
+                  data-cms-field="name"
+                  data-cms-label="Section Name"
+                >
                   {section.name}
                 </h2>
 
                 {/* Menu Items Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 lg:gap-x-xl gap-y-4 lg:gap-y-m">
-                  {section.items.map((item, itemIndex) => (
+                  {section.items.map((item) => (
                     <div
-                      key={itemIndex}
+                      key={item.id}
                       className="flex justify-between items-start border-b border-off-white-100/20 pb-xs"
+                      data-cms-entry={item.slug}
+                      data-cms-type="menu-item"
+                      data-cms-label={item.name}
                     >
                       <div className="flex-1">
-                        <h3 className="font-gotham font-bold text-[14px] uppercase tracking-[0.42px] text-off-white-100">
+                        <h3
+                          className="font-gotham font-bold text-[14px] uppercase tracking-[0.42px] text-off-white-100"
+                          data-cms-field="name"
+                        >
                           {item.name}
                         </h3>
-                        <p className="font-sabon text-body-s text-off-white-100/70 italic">
+                        <p
+                          className="font-sabon text-body-s text-off-white-100/70 italic"
+                          data-cms-field="description"
+                        >
                           {item.description}
                         </p>
                       </div>
-                      <span className="font-gotham font-bold text-[14px] text-off-white-100 ml-4 lg:ml-m">
+                      <span
+                        className="font-gotham font-bold text-[14px] text-off-white-100 ml-4 lg:ml-m"
+                        data-cms-field="price"
+                      >
                         {item.price}
                       </span>
                     </div>
@@ -124,7 +154,7 @@ export default async function MenuPage() {
       />
 
       {/* Footer */}
-      <Footer />
+      <SiteFooter />
     </main>
   );
 }
