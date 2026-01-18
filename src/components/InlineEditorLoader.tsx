@@ -17,7 +17,7 @@ interface InlineEditorLoaderProps {
 export function InlineEditorLoader({
   orgSlug,
   apiBase = 'https://backend-production-162b.up.railway.app',
-  adminBase = 'https://admin-gules-psi-18.vercel.app',
+  adminBase = 'https://sphereos.vercel.app',
 }: InlineEditorLoaderProps) {
   const searchParams = useSearchParams();
   const isEditMode = searchParams.get('edit') === 'true';
