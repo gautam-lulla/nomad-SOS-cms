@@ -11,8 +11,21 @@ import { getServerClient } from '../apollo-client';
 const CDN_BASE_URL = 'https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad';
 
 /**
- * Transform local /images/ paths to Cloudflare CDN URLs
- * Recursively processes objects and arrays
+ * Check if an object is an image object from the CMS inline editor.
+ * Image objects have url/src and typically id, alt, filename.
+ */
+function isImageObject(obj: unknown): obj is { url?: string; src?: string } {
+  if (typeof obj !== 'object' || obj === null) return false;
+  const o = obj as Record<string, unknown>;
+  // Must have url or src, and should have typical image fields
+  return (typeof o.url === 'string' || typeof o.src === 'string') &&
+    (o.id !== undefined || o.filename !== undefined || o.alt !== undefined);
+}
+
+/**
+ * Transform local /images/ paths to Cloudflare CDN URLs.
+ * Also extracts URL strings from image objects saved by the inline editor.
+ * Recursively processes objects and arrays.
  */
 function transformImageUrls<T>(data: T): T {
   if (data === null || data === undefined) {
@@ -32,6 +45,13 @@ function transformImageUrls<T>(data: T): T {
   }
 
   if (typeof data === 'object') {
+    // Check if this is an image object - extract URL directly
+    if (isImageObject(data)) {
+      const imageUrl = (data as { url?: string; src?: string }).url ||
+                       (data as { url?: string; src?: string }).src || '';
+      return imageUrl as T;
+    }
+
     const result: Record<string, unknown> = {};
     for (const [key, value] of Object.entries(data as Record<string, unknown>)) {
       result[key] = transformImageUrls(value);
