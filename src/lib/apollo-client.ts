@@ -4,13 +4,24 @@ import { setContext } from '@apollo/client/link/context';
 const CMS_GRAPHQL_URL = process.env.NEXT_PUBLIC_CMS_GRAPHQL_URL || 'http://localhost:3000/graphql';
 
 /**
+ * Custom fetch that disables Next.js Data Cache
+ * This ensures fresh data is fetched on every request
+ */
+const uncachedFetch: typeof fetch = (input, init) => {
+  return fetch(input, {
+    ...init,
+    cache: 'no-store',
+  });
+};
+
+/**
  * Create Apollo Client for server-side rendering
  * Used in React Server Components with async/await
  */
 export function getServerClient(token?: string) {
   const httpLink = new HttpLink({
     uri: CMS_GRAPHQL_URL,
-    fetch,
+    fetch: uncachedFetch,
   });
 
   const authLink = setContext((_, { headers }) => ({
@@ -38,7 +49,7 @@ export function getServerClient(token?: string) {
 export function getPublicClient() {
   const httpLink = new HttpLink({
     uri: CMS_GRAPHQL_URL,
-    fetch,
+    fetch: uncachedFetch,
   });
 
   return new ApolloClient({
