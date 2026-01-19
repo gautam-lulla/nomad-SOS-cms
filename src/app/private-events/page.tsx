@@ -10,16 +10,10 @@ import { PrivateEventsForm } from "./private-events-form";
 
 export const dynamic = 'force-dynamic';
 
-interface PageProps {
-  searchParams: { edit?: string };
-}
-
-export default async function PrivateEventsPage({ searchParams }: PageProps) {
-  const isEditMode = searchParams.edit === 'true';
-
-  // Fetch content from CMS (bypass cache in edit mode)
-  const privateEventsContent = await getPageContent('private-events', { noCache: isEditMode });
-  const instagramContent = await getInstagramContent({ noCache: isEditMode });
+export default async function PrivateEventsPage() {
+  // Fetch content from CMS
+  const privateEventsContent = await getPageContent('private-events');
+  const instagramContent = await getInstagramContent();
 
   const { hero, gallery, form, faq } = privateEventsContent as {
     hero: { heading: string; paragraph: string; buttonText: string };

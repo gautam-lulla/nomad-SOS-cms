@@ -5,17 +5,11 @@ import { getPageContent, getMenuContent, getInstagramContent } from "@/lib/conte
 
 export const dynamic = 'force-dynamic';
 
-interface PageProps {
-  searchParams: { edit?: string };
-}
-
-export default async function MenuPage({ searchParams }: PageProps) {
-  const isEditMode = searchParams.edit === 'true';
-
-  // Fetch content from CMS (bypass cache in edit mode)
-  const pageContent = await getPageContent('menu', { noCache: isEditMode });
-  const menuData = await getMenuContent({ noCache: isEditMode });
-  const instagramContent = await getInstagramContent({ noCache: isEditMode });
+export default async function MenuPage() {
+  // Fetch content from CMS
+  const pageContent = await getPageContent('menu');
+  const menuData = await getMenuContent();
+  const instagramContent = await getInstagramContent();
 
   // Get page-specific content
   const { hero, gallery } = pageContent as {

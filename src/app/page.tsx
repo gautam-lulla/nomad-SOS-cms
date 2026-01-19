@@ -13,16 +13,10 @@ import { getPageContent, getInstagramContent } from "@/lib/content";
 // Force dynamic rendering - content comes from CMS at request time
 export const dynamic = 'force-dynamic';
 
-interface PageProps {
-  searchParams: { edit?: string };
-}
-
-export default async function HomePage({ searchParams }: PageProps) {
-  const isEditMode = searchParams.edit === 'true';
-
-  // Fetch content from CMS (bypass cache in edit mode)
-  const homepageContent = await getPageContent('homepage', { noCache: isEditMode });
-  const instagramContent = await getInstagramContent({ noCache: isEditMode });
+export default async function HomePage() {
+  // Fetch content from CMS
+  const homepageContent = await getPageContent('homepage');
+  const instagramContent = await getInstagramContent();
 
   const {
     hero,
