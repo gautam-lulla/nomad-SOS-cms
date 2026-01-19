@@ -5,10 +5,16 @@ import { getPageContent, getInstagramContent } from "@/lib/content";
 
 export const dynamic = 'force-dynamic';
 
-export default async function ContactPage() {
-  // Fetch content from CMS
-  const contactContent = await getPageContent('contact');
-  const instagramContent = await getInstagramContent();
+interface PageProps {
+  searchParams: { edit?: string };
+}
+
+export default async function ContactPage({ searchParams }: PageProps) {
+  const isEditMode = searchParams.edit === 'true';
+
+  // Fetch content from CMS (bypass cache in edit mode)
+  const contactContent = await getPageContent('contact', { noCache: isEditMode });
+  const instagramContent = await getInstagramContent({ noCache: isEditMode });
 
   const { hero, info, gallery, faq } = contactContent as {
     hero: { title: string; phone: string };

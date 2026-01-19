@@ -5,10 +5,16 @@ import { getPageContent, getInstagramContent } from "@/lib/content";
 
 export const dynamic = 'force-dynamic';
 
-export default async function FAQPage() {
-  // Fetch content from CMS
-  const faqContent = await getPageContent('faq');
-  const instagramContent = await getInstagramContent();
+interface PageProps {
+  searchParams: { edit?: string };
+}
+
+export default async function FAQPage({ searchParams }: PageProps) {
+  const isEditMode = searchParams.edit === 'true';
+
+  // Fetch content from CMS (bypass cache in edit mode)
+  const faqContent = await getPageContent('faq', { noCache: isEditMode });
+  const instagramContent = await getInstagramContent({ noCache: isEditMode });
 
   const { hero, faq } = faqContent as {
     hero: { heading: string; images: Array<{ src: string; alt: string }> };

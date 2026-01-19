@@ -73,6 +73,12 @@ const CMS_ORG_ID = process.env.CMS_ORGANIZATION_ID || '';
 // Cache for content type IDs (populated on first use)
 const typeIdCache: Map<string, string> = new Map();
 
+/** Options for content fetching functions */
+export interface ContentOptions {
+  /** Set to true in edit mode to bypass Next.js Data Cache */
+  noCache?: boolean;
+}
+
 // Type definitions for site settings
 export interface NavigationLink {
   href: string;
@@ -155,12 +161,12 @@ interface ContentEntriesResponse {
 /**
  * Get content type ID by slug (with caching)
  */
-async function getContentTypeId(slug: string): Promise<string> {
+async function getContentTypeId(slug: string, noCache = false): Promise<string> {
   if (typeIdCache.has(slug)) {
     return typeIdCache.get(slug)!;
   }
 
-  const client = getServerClient();
+  const client = getServerClient({ noCache });
   const { data } = await client.query<ContentTypeResponse>({
     query: GET_CONTENT_TYPE_BY_SLUG,
     variables: { slug, organizationId: CMS_ORG_ID },
@@ -178,9 +184,10 @@ async function getContentTypeId(slug: string): Promise<string> {
  * Fetch page content by slug
  * Returns data matching the original JSON structure
  */
-export async function getPageContent(pageSlug: string): Promise<Record<string, unknown>> {
-  const client = getServerClient();
-  const typeId = await getContentTypeId('nomad-page');
+export async function getPageContent(pageSlug: string, options: ContentOptions = {}): Promise<Record<string, unknown>> {
+  const { noCache = false } = options;
+  const client = getServerClient({ noCache });
+  const typeId = await getContentTypeId('nomad-page', noCache);
 
   const { data, error } = await client.query<ContentEntryResponse>({
     query: GET_PAGE_CONTENT,
@@ -223,14 +230,15 @@ export async function getPageContent(pageSlug: string): Promise<Record<string, u
 /**
  * Fetch Instagram feed content
  */
-export async function getInstagramContent(): Promise<{
+export async function getInstagramContent(options: ContentOptions = {}): Promise<{
   title: string;
   handle: string;
   handleUrl: string;
   images: Array<{ src: string; alt: string }>;
 }> {
-  const client = getServerClient();
-  const typeId = await getContentTypeId('instagram-feed');
+  const { noCache = false } = options;
+  const client = getServerClient({ noCache });
+  const typeId = await getContentTypeId('instagram-feed', noCache);
 
   const { data, error } = await client.query<ContentEntryResponse>({
     query: GET_PAGE_CONTENT,
@@ -265,7 +273,7 @@ export async function getInstagramContent(): Promise<{
  * Fetch menu content with full hierarchy
  * Returns data matching the original menu.json structure, with entry IDs for inline editing
  */
-export async function getMenuContent(): Promise<{
+export async function getMenuContent(options: ContentOptions = {}): Promise<{
   categories: Array<{
     id: string;
     slug: string;
@@ -288,13 +296,14 @@ export async function getMenuContent(): Promise<{
     }>;
   }>;
 }> {
-  const client = getServerClient();
+  const { noCache = false } = options;
+  const client = getServerClient({ noCache });
 
   // Fetch all content types we need
   const [categoryTypeId, sectionTypeId, itemTypeId] = await Promise.all([
-    getContentTypeId('menu-category'),
-    getContentTypeId('menu-section'),
-    getContentTypeId('menu-item'),
+    getContentTypeId('menu-category', noCache),
+    getContentTypeId('menu-section', noCache),
+    getContentTypeId('menu-item', noCache),
   ]);
 
   // Fetch all categories
@@ -392,9 +401,10 @@ export async function getMenuContent(): Promise<{
 /**
  * Fetch FAQ items
  */
-export async function getFaqItems(): Promise<Array<{ question: string; answer: string }>> {
-  const client = getServerClient();
-  const typeId = await getContentTypeId('faq-item');
+export async function getFaqItems(options: ContentOptions = {}): Promise<Array<{ question: string; answer: string }>> {
+  const { noCache = false } = options;
+  const client = getServerClient({ noCache });
+  const typeId = await getContentTypeId('faq-item', noCache);
 
   const { data } = await client.query<ContentEntriesResponse>({
     query: GET_ALL_ENTRIES_BY_TYPE,
@@ -416,11 +426,12 @@ export async function getFaqItems(): Promise<Array<{ question: string; answer: s
 /**
  * Fetch team members
  */
-export async function getTeamMembers(): Promise<
+export async function getTeamMembers(options: ContentOptions = {}): Promise<
   Array<{ name: string; title: string; description: string; imageSrc: string }>
 > {
-  const client = getServerClient();
-  const typeId = await getContentTypeId('team-member');
+  const { noCache = false } = options;
+  const client = getServerClient({ noCache });
+  const typeId = await getContentTypeId('team-member', noCache);
 
   const { data } = await client.query<ContentEntriesResponse>({
     query: GET_ALL_ENTRIES_BY_TYPE,
@@ -447,11 +458,12 @@ export async function getTeamMembers(): Promise<
 /**
  * Fetch events
  */
-export async function getEvents(): Promise<
+export async function getEvents(options: ContentOptions = {}): Promise<
   Array<{ title: string; description: string; imageSrc: string }>
 > {
-  const client = getServerClient();
-  const typeId = await getContentTypeId('event');
+  const { noCache = false } = options;
+  const client = getServerClient({ noCache });
+  const typeId = await getContentTypeId('event', noCache);
 
   const { data } = await client.query<ContentEntriesResponse>({
     query: GET_ALL_ENTRIES_BY_TYPE,
@@ -485,11 +497,12 @@ function slugify(text: string): string {
 /**
  * Fetch site-wide settings (navigation, footer, location, hours)
  */
-export async function getSiteSettings(): Promise<SiteSettings> {
-  const client = getServerClient();
+export async function getSiteSettings(options: ContentOptions = {}): Promise<SiteSettings> {
+  const { noCache = false } = options;
+  const client = getServerClient({ noCache });
 
   try {
-    const typeId = await getContentTypeId('site-settings');
+    const typeId = await getContentTypeId('site-settings', noCache);
 
     const { data, error } = await client.query<ContentEntryResponse>({
       query: GET_PAGE_CONTENT,

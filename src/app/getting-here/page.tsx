@@ -5,11 +5,17 @@ import { getPageContent, getInstagramContent, getSiteSettings } from "@/lib/cont
 
 export const dynamic = 'force-dynamic';
 
-export default async function GettingHerePage() {
-  // Fetch content from CMS
-  const gettingHereContent = await getPageContent('getting-here');
-  const instagramContent = await getInstagramContent();
-  const siteSettings = await getSiteSettings();
+interface PageProps {
+  searchParams: { edit?: string };
+}
+
+export default async function GettingHerePage({ searchParams }: PageProps) {
+  const isEditMode = searchParams.edit === 'true';
+
+  // Fetch content from CMS (bypass cache in edit mode)
+  const gettingHereContent = await getPageContent('getting-here', { noCache: isEditMode });
+  const instagramContent = await getInstagramContent({ noCache: isEditMode });
+  const siteSettings = await getSiteSettings({ noCache: isEditMode });
 
   const { hero, location, info, gallery, map, faq } = gettingHereContent as {
     hero: { title: string; subtitle?: string };
