@@ -48,7 +48,7 @@ export default async function ProgrammingPage() {
         {/* Hero Content */}
         <div className="absolute top-[120px] md:top-[130px] lg:top-[140px] left-4 right-4 md:left-6 md:right-6 lg:left-3m lg:right-3m">
           <h1
-            className="font-sabon text-h2 text-off-white-100 max-w-[544px]"
+            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 max-w-[544px]"
             data-cms-entry="programming"
             data-cms-field="hero.heading"
             data-cms-label="Hero Heading"
@@ -59,7 +59,7 @@ export default async function ProgrammingPage() {
       </section>
 
       {/* Intro Section */}
-      <section className="pt-10 md:pt-16 lg:pt-xl px-4 md:px-6 lg:px-3m">
+      <section className="pt-10 md:pt-16 lg:pt-xl px-[30px] lg:px-3m">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-xl">
           {/* Left Column with Button */}
           <div className="lg:w-1/2">
@@ -162,9 +162,9 @@ export default async function ProgrammingPage() {
 
       {/* FAQ Section */}
       <section className="pb-6 lg:pb-3m">
-        <div className="max-w-[877px] mx-auto px-4 md:px-6 lg:px-3m">
+        <div className="max-w-[877px] mx-auto px-[30px] lg:px-3m">
           <h2
-            className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
+            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
             data-cms-entry="programming"
             data-cms-field="faq.title"
             data-cms-label="FAQ Title"

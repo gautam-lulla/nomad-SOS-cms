@@ -53,16 +53,16 @@ export default async function GettingHerePage() {
       </section>
 
       {/* Contact Info Section */}
-      <section className="pt-10 md:pt-16 lg:pt-xl pb-10 md:pb-16 lg:pb-2l px-4 md:px-6 lg:px-3m">
+      <section className="pt-10 md:pt-16 lg:pt-xl pb-10 md:pb-16 lg:pb-2l px-[30px] lg:px-3m">
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 lg:gap-xl">
           {/* Left - Title & Phone */}
           <div className="lg:w-[433px]">
-            <h1 className="font-sabon text-h2 text-off-white-100 mb-2xxs">
+            <h1 className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 mb-2xxs">
               {hero.title}
             </h1>
             <a
               href={`tel:${location.phone}`}
-              className="font-sabon text-h2 text-off-white-100 hover:text-pink-500 transition-colors"
+              className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 hover:text-pink-500 transition-colors"
             >
               {location.phone}
             </a>
@@ -173,8 +173,8 @@ export default async function GettingHerePage() {
 
       {/* FAQ Section */}
       <section className="pt-10 md:pt-16 lg:pt-xl pb-6 lg:pb-3m">
-        <div className="max-w-[877px] mx-auto px-4 md:px-6 lg:px-3m">
-          <h2 className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l">
+        <div className="max-w-[877px] mx-auto px-[30px] lg:px-3m">
+          <h2 className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center mb-10 lg:mb-l">
             {faq.title}
           </h2>
           <FAQAccordion items={faq.items} />

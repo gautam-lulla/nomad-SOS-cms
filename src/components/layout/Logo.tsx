@@ -23,6 +23,7 @@ export function Logo({ variant = "light", size = "medium", className }: LogoProp
       href="/"
       className={cn(
         "relative block overflow-hidden",
+        "transition-opacity duration-300 ease-out hover:opacity-80",
         className
       )}
       style={{ width: dimension, height: dimension }}

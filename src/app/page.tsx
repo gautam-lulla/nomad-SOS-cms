@@ -68,12 +68,12 @@ export default async function HomePage() {
       />
 
       {/* Intro Section with Location & Hours */}
-      <section className="pt-10 md:pt-16 lg:pt-3l px-4 md:px-6 lg:px-3m">
+      <section className="pt-10 md:pt-16 lg:pt-3l px-[30px] lg:px-3m">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
           {/* Heading */}
           <div className="lg:w-1/2">
             <h2
-              className="font-sabon text-h2 text-off-white-100 max-w-[544px]"
+              className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 max-w-[544px]"
               data-cms-entry="homepage"
               data-cms-field="intro.heading"
               data-cms-label="Intro Heading"
@@ -170,12 +170,12 @@ export default async function HomePage() {
 
       {/* Menu Section */}
       <section className="pt-10 md:pt-16 lg:pt-3l">
-        <div className="px-4 md:px-6 lg:px-3m">
+        <div className="px-[30px] lg:px-3m">
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
             {/* Heading */}
             <div className="lg:w-1/2">
               <h2
-                className="font-sabon text-h2 text-off-white-100 max-w-[544px]"
+                className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 max-w-[544px]"
                 data-cms-entry="homepage"
                 data-cms-field="menu.heading"
                 data-cms-label="Menu Heading"

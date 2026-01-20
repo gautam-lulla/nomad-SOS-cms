@@ -43,7 +43,7 @@ export default async function MenuPage() {
       </section>
 
       {/* Menu Content */}
-      <section className="relative z-10 pt-[450px] md:pt-[680px] lg:pt-[940px] px-4 md:px-6 lg:px-3m pb-10 lg:pb-xl">
+      <section className="relative z-10 pt-[450px] md:pt-[680px] lg:pt-[940px] px-[30px] lg:px-3m pb-10 lg:pb-xl">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-xl">
           {/* Sidebar Categories */}
           <div className="lg:w-[320px] shrink-0">

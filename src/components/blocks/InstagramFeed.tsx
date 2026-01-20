@@ -25,7 +25,7 @@ export function InstagramFeed({
       {/* Title */}
       <div className="flex flex-col items-center gap-2xxs mb-3l px-6">
         <h2
-          className="font-sabon text-h2 text-off-white-100 text-center"
+          className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center"
           data-cms-entry="global-instagram"
           data-cms-field="title"
           data-cms-label="Instagram Title"

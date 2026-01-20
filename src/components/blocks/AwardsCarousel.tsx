@@ -34,10 +34,10 @@ export function AwardsCarousel({
   };
 
   return (
-    <section className={cn("px-4 md:px-6 lg:px-3m", className)}>
+    <section className={cn("px-[30px] lg:px-3m", className)}>
       {/* Title */}
       <h2
-        className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
+        className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
         {...cmsAttrs("title", "text", "Awards Section Title")}
       >
         {title}

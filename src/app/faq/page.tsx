@@ -39,9 +39,9 @@ export default async function FAQPage() {
 
       {/* Hero Heading */}
       <section className="pt-10 md:pt-16 lg:pt-xl pb-10 md:pb-16 lg:pb-xl">
-        <div className="max-w-[544px] mx-auto text-center px-4 md:px-6 lg:px-3m">
+        <div className="max-w-[544px] mx-auto text-center px-[30px] lg:px-3m">
           <h1
-            className="font-sabon text-h2 text-off-white-100"
+            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100"
             data-cms-entry="faq"
             data-cms-field="hero.heading"
             data-cms-label="Hero Heading"
@@ -53,7 +53,7 @@ export default async function FAQPage() {
 
       {/* FAQ Section */}
       <section className="pb-10 md:pb-16 lg:pb-xl">
-        <div className="max-w-[877px] mx-auto px-4 md:px-6 lg:px-3m">
+        <div className="max-w-[877px] mx-auto px-[30px] lg:px-3m">
           <FAQAccordion items={faq.items} cmsEntry="faq" cmsFieldPrefix="faq" />
         </div>
       </section>

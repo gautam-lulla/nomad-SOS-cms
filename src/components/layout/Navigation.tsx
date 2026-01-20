@@ -80,7 +80,7 @@ export function Navigation({
             aria-expanded={isMenuOpen}
             aria-controls="main-menu"
             aria-label="Open navigation menu"
-            className="absolute left-4 md:left-5 top-[24px] md:top-[30px] lg:top-[34px] flex items-center gap-2 md:gap-4 text-off-white-100 cursor-pointer"
+            className="absolute left-4 md:left-5 top-[24px] md:top-[30px] lg:top-[34px] flex items-center gap-2 md:gap-4 text-off-white-100 cursor-pointer transition-colors duration-300 ease-out hover:text-pink-500"
           >
             <HamburgerIcon aria-hidden={true} />
             <span
@@ -147,7 +147,7 @@ export function Navigation({
             <button
               onClick={closeMenu}
               aria-label="Close navigation menu"
-              className="absolute left-4 md:left-5 top-6 md:top-7 flex items-center gap-2 md:gap-2.5 text-off-white-100 cursor-pointer z-10"
+              className="absolute left-4 md:left-5 top-6 md:top-7 flex items-center gap-2 md:gap-2.5 text-off-white-100 cursor-pointer z-10 transition-colors duration-300 ease-out hover:text-pink-500"
             >
               <CloseIcon aria-hidden={true} />
               <span

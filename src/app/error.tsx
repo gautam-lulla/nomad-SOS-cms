@@ -15,7 +15,7 @@ export default function Error({ reset }: ErrorProps) {
         <Logo variant="light" size="large" />
       </div>
 
-      <h1 className="font-sabon text-h2 text-off-white-100 text-center mb-xs">
+      <h1 className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center mb-xs">
         Something went wrong
       </h1>
 

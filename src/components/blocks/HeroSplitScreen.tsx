@@ -74,7 +74,7 @@ export function HeroSplitScreen({
 
       {/* Logo */}
       {showLogo && (
-        <div className="absolute bottom-0 left-0 right-0 px-4 md:px-6 lg:px-3m pb-4 md:pb-6 lg:pb-3m">
+        <div className="absolute bottom-0 left-0 right-0 px-[30px] lg:px-3m pb-4 md:pb-6 lg:pb-3m">
           <div className="relative h-[40px] md:h-[60px] lg:h-[96px] w-full max-w-[1320px] mx-auto">
             <Image
               src={logoSrc}

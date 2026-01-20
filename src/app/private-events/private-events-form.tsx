@@ -49,9 +49,9 @@ export function PrivateEventsForm({ form, cmsEntry, cmsFieldPrefix }: PrivateEve
   };
 
   return (
-    <section id="contact-form" className="pt-10 md:pt-16 lg:pt-xl px-4 md:px-6 lg:px-3m">
+    <section id="contact-form" className="pt-10 md:pt-16 lg:pt-xl px-[30px] lg:px-3m">
       <h2
-        className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
+        className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
         {...cmsAttrs("title", "text", "Form Title")}
       >
         {form.title}

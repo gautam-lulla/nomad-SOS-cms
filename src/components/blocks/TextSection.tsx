@@ -37,9 +37,9 @@ export function TextSection({
   };
   if (layout === "centered") {
     return (
-      <section className={cn("max-w-[454px] mx-auto text-center px-4 md:px-6", className)}>
+      <section className={cn("max-w-[454px] mx-auto text-center px-[30px]", className)}>
         <h2
-          className="font-sabon text-h2 text-off-white-100 mb-4 lg:mb-3s"
+          className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 mb-4 lg:mb-3s"
           {...cmsAttrs("heading", undefined, "Heading")}
         >
           {heading}
@@ -57,12 +57,12 @@ export function TextSection({
   }
 
   return (
-    <section className={cn("px-4 md:px-6 lg:px-3m pt-10 md:pt-16 lg:pt-3l pb-0", className)}>
+    <section className={cn("px-[30px] lg:px-3m pt-10 md:pt-16 lg:pt-3l pb-0", className)}>
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
         {/* Heading */}
         <div className="lg:w-1/2">
           <h2
-            className="font-sabon text-h2 text-off-white-100 max-w-[544px]"
+            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 max-w-[544px]"
             {...cmsAttrs("heading", undefined, "Heading")}
           >
             {heading}

@@ -27,7 +27,7 @@ export default async function ContactPage() {
       <SiteNavigation />
 
       {/* Hero Section */}
-      <section className="pt-[120px] md:pt-[130px] lg:pt-[140px] px-4 md:px-6 lg:px-3m">
+      <section className="pt-[120px] md:pt-[130px] lg:pt-[140px] px-[30px] lg:px-3m">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-xl">
           {/* Contact Info */}
           <div className="lg:w-1/2">
@@ -146,9 +146,9 @@ export default async function ContactPage() {
 
       {/* FAQ Section */}
       <section className="pt-10 md:pt-16 lg:pt-xl pb-6 lg:pb-3m">
-        <div className="max-w-[600px] mx-auto px-4 md:px-6 lg:px-3m">
+        <div className="max-w-[600px] mx-auto px-[30px] lg:px-3m">
           <h2
-            className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
+            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
             data-cms-entry="contact"
             data-cms-field="faq.title"
             data-cms-label="FAQ Title"

@@ -36,9 +36,9 @@ export default async function AboutPage() {
       {/* Hero Section with Heading Overlay */}
       <section className="relative">
         {/* Heading */}
-        <div className="pt-[140px] md:pt-[180px] lg:pt-[210px] pb-6 lg:pb-3m px-4 md:px-6 lg:px-3m">
+        <div className="pt-[140px] md:pt-[180px] lg:pt-[210px] pb-6 lg:pb-3m px-[30px] lg:px-3m">
           <h1
-            className="font-sabon text-h2 text-off-white-100 max-w-[544px]"
+            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 max-w-[544px]"
             data-cms-entry="about"
             data-cms-field="hero.heading"
             data-cms-label="Hero Heading"
@@ -106,9 +106,9 @@ export default async function AboutPage() {
 
       {/* FAQ Section */}
       <section className="pt-16 md:pt-24 lg:pt-[160px] pb-6 lg:pb-3m">
-        <div className="max-w-[877px] mx-auto px-4 md:px-6 lg:px-3m">
+        <div className="max-w-[877px] mx-auto px-[30px] lg:px-3m">
           <h2
-            className="font-sabon text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
+            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
             data-cms-entry="about"
             data-cms-field="faq.title"
             data-cms-label="FAQ Title"

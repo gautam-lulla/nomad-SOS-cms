@@ -120,7 +120,7 @@ export function Footer({
         </div>
 
         {/* Horizontal Wordmark - matches hero at 96px */}
-        <div className="px-4 md:px-6 lg:px-3m pb-8 md:pb-10 lg:pb-3m">
+        <div className="px-[30px] lg:px-3m pb-8 md:pb-10 lg:pb-3m">
           <div className="relative h-[40px] md:h-[70px] lg:h-[96px] w-full max-w-[1320px] mx-auto">
             <Image
               src={wordmarkImage}

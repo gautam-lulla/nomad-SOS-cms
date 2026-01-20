@@ -72,7 +72,7 @@ export function SectionHalfScreen({
           className={cn(
             "font-sabon text-off-white-100 max-w-[544px]",
             headingSize === "h1" && "text-[56px] leading-tight tracking-[-1.12px]",
-            headingSize === "h2" && "text-h2"
+            headingSize === "h2" && "text-h2-mobile md:text-h2"
           )}
           {...cmsAttrs("heading", undefined, "Heading")}
         >
