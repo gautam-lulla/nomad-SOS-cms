@@ -80,8 +80,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${sabon.variable} ${gotham.variable} antialiased`}>
-        {children}
+      <body className={`${sabon.variable} ${gotham.variable} antialiased bg-black-900`}>
+        <div className="max-w-page mx-auto">
+          {children}
+        </div>
         <Suspense fallback={null}>
           <InlineEditorLoader
             orgSlug="spherical-hospitality"

@@ -61,6 +61,9 @@ export default {
         xl: "120px",
         "2xxl": "210px",
       },
+      maxWidth: {
+        "page": "1920px",
+      },
 
       /* ==================== TYPOGRAPHY ==================== */
       fontFamily: {
