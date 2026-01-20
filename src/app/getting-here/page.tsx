@@ -69,7 +69,7 @@ export default async function GettingHerePage() {
           </div>
 
           {/* Right - Info Columns */}
-          <div className="flex flex-col sm:flex-row gap-8 lg:gap-[60px]">
+          <div className="flex flex-col sm:flex-row gap-8 lg:gap-3m">
             {/* Working Hours */}
             <div className="w-[180px]">
               <div className="flex items-center gap-xxs mb-3xs">
@@ -125,7 +125,7 @@ export default async function GettingHerePage() {
       </section>
 
       {/* Map Section - Stylized map design */}
-      <section className="relative h-[400px] md:h-[600px] lg:h-[720px] w-full overflow-hidden bg-[#1a1a2e]">
+      <section className="relative h-[400px] md:h-[600px] lg:h-[720px] w-full overflow-hidden bg-map-background">
         {/* Map grid lines */}
         <div
           className="absolute inset-0 opacity-20"
@@ -142,7 +142,7 @@ export default async function GettingHerePage() {
         {map?.labels?.map((label, index) => (
           <div
             key={index}
-            className="absolute font-gotham text-[10px] md:text-[12px] text-off-white-100/40 uppercase tracking-widest"
+            className="absolute font-gotham text-cta-small md:text-cta text-off-white-100/40 uppercase tracking-widest"
             style={{
               top: label.position.top,
               bottom: label.position.bottom,

@@ -41,7 +41,7 @@ export default async function ContactPage() {
             </h1>
             <a
               href={`tel:${hero.phone}`}
-              className="font-sabon text-[28px] md:text-h2 text-pink-500 hover:text-off-white-100 transition-colors"
+              className="font-sabon text-h2-mobile md:text-h2 text-pink-500 hover:text-off-white-100 transition-colors"
               data-cms-entry="contact"
               data-cms-field="hero.phone"
               data-cms-label="Phone Number"

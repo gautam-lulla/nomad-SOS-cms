@@ -22,6 +22,9 @@
   --color-typography-body: #f6f4eb;
   --color-typography-body-invert: #0e0e0e;
 
+  /* Special */
+  --color-map-background: #1a1a2e;
+
   /* ==================== SPACING ==================== */
   --spacing-4xxs: 0px;
   --spacing-2xxs: 8px;
@@ -38,15 +41,18 @@
   --spacing-2l: 80px;
   --spacing-3l: 100px;
   --spacing-xl: 120px;
+  --spacing-2xxl: 210px;
 
   /* ==================== TYPOGRAPHY ==================== */
 
   /* Font Sizes */
   --font-size-h2: 36px;
+  --font-size-h2-mobile: 28px;
   --font-size-h3: 24px;
   --font-size-h5: 14px;
   --font-size-body-s: 16px;
   --font-size-cta: 12px;
+  --font-size-cta-small: 10px;
 
   /* Font Weights */
   --font-weight-regular: 400;

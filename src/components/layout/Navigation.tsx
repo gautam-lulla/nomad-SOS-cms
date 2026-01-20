@@ -102,7 +102,7 @@ export function Navigation({
         <div className="absolute right-4 md:right-5 top-4 md:top-5">
           <Button
             variant="filled"
-            className="text-[10px] md:text-cta px-3 md:px-s"
+            className="text-cta-small md:text-cta px-3 md:px-s"
             {...(reserveButtonUrl && reserveButtonUrl !== "#" ? { as: "a", href: reserveButtonUrl } : {})}
           >
             <span
@@ -162,7 +162,7 @@ export function Navigation({
           <div className="absolute right-4 md:right-5 top-4 md:top-5 z-10">
             <Button
               variant="filled"
-              className="text-[10px] md:text-cta px-3 md:px-s"
+              className="text-cta-small md:text-cta px-3 md:px-s"
               {...(reserveButtonUrl && reserveButtonUrl !== "#" ? { as: "a", href: reserveButtonUrl } : {})}
             >
               <span
@@ -195,7 +195,7 @@ export function Navigation({
                       "leading-[1.2] tracking-tight-h2",
                       "text-off-white-100 hover:text-pink-500 hover:italic",
                       "transition-all duration-200",
-                      "font-sabon text-[28px] md:text-[32px] lg:text-[36px]"
+                      "font-sabon text-h2-mobile md:text-[32px] lg:text-h2"
                     )}
                     data-cms-entry="global-settings"
                     data-cms-field={`navigation.links[${index}].label`}
@@ -211,7 +211,7 @@ export function Navigation({
 
           {/* Location Info */}
           <div className="absolute left-4 md:left-[60px] bottom-[80px] md:bottom-[120px] lg:bottom-[178px]">
-            <div className="flex flex-col sm:flex-row gap-6 sm:gap-[60px]">
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-3m">
               {/* Location */}
               <div className="w-full sm:w-[187px]">
                 <div className="flex items-center gap-2.5 mb-3xs">

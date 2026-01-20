@@ -36,6 +36,10 @@ export default {
           body: "#f6f4eb",
           "body-invert": "#0e0e0e",
         },
+        // Special
+        map: {
+          background: "#1a1a2e",
+        },
       },
 
       /* ==================== SPACING ==================== */
@@ -55,6 +59,7 @@ export default {
         "2l": "80px",
         "3l": "100px",
         xl: "120px",
+        "2xxl": "210px",
       },
 
       /* ==================== TYPOGRAPHY ==================== */
@@ -64,10 +69,12 @@ export default {
       },
       fontSize: {
         h2: ["36px", { lineHeight: "1.3", letterSpacing: "-0.72px" }],
+        "h2-mobile": ["28px", { lineHeight: "1.3", letterSpacing: "-0.56px" }],
         h3: ["24px", { lineHeight: "1.3", letterSpacing: "-0.48px" }],
         h5: ["14px", { lineHeight: "1.6", letterSpacing: "0.42px" }],
         "body-s": ["16px", { lineHeight: "1.6", letterSpacing: "-0.32px" }],
         cta: ["12px", { lineHeight: "1.3", letterSpacing: "0.36px" }],
+        "cta-small": ["10px", { lineHeight: "1.3", letterSpacing: "0.3px" }],
       },
       letterSpacing: {
         "tight-h2": "-0.72px",

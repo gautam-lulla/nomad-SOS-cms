@@ -33,12 +33,12 @@ export default async function NotFound() {
 
       {/* 404 Content - positioned at bottom */}
       <section className="absolute bottom-0 left-0 right-0 p-[30px] lg:p-[60px]">
-        <div className="flex flex-col gap-[8px]">
-          <h1 className="font-sabon text-[28px] lg:text-h2 text-off-white-100 leading-[1.3] tracking-tight-h2">
+        <div className="flex flex-col gap-2xxs">
+          <h1 className="font-sabon text-h2-mobile lg:text-h2 text-off-white-100 leading-tight tracking-tight-h2">
             {notFound.title}
           </h1>
           <div className="flex flex-col gap-3s">
-            <p className="font-sabon text-[28px] lg:text-h2 text-off-white-100 leading-[1.3] tracking-tight-h2">
+            <p className="font-sabon text-h2-mobile lg:text-h2 text-off-white-100 leading-tight tracking-tight-h2">
               {notFound.message}
             </p>
             <Link
