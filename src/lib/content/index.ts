@@ -175,8 +175,356 @@ async function getContentTypeId(slug: string): Promise<string> {
 }
 
 /**
+ * Transform flat CMS data back to nested structure for components
+ * This allows the CMS to use individual fields while keeping the component API stable
+ */
+function transformFlatToNested(flat: Record<string, unknown>): Record<string, unknown> {
+  const nested: Record<string, unknown> = {};
+
+  // Title
+  if (flat.title) nested.title = flat.title;
+
+  // Hero section - homepage variant (logo + two images)
+  if (flat.heroLogoSrc || flat.heroLeftImage || flat.heroRightImage) {
+    nested.hero = {
+      logoSrc: flat.heroLogoSrc,
+      leftImage: flat.heroLeftImage,
+      rightImage: flat.heroRightImage,
+    };
+  }
+  // Hero section - other pages variant (heading + single image)
+  if (flat.heroHeading || flat.heroImageSrc || flat.heroParagraph || flat.heroButtonText) {
+    nested.hero = {
+      ...(nested.hero as object || {}),
+      heading: flat.heroHeading,
+      imageSrc: flat.heroImageSrc,
+      paragraph: flat.heroParagraph || '',
+      buttonText: flat.heroButtonText || '',
+    };
+  }
+
+  // Intro section -> introSection for homepage, intro for programming page
+  if (flat.introHeading || flat.introParagraph || flat.introButtonText) {
+    nested.introSection = {
+      heading: flat.introHeading,
+      paragraph: flat.introParagraph,
+      buttonText: flat.introButtonText,
+      location: {
+        label: flat.introLocationLabel,
+        address: flat.introLocationAddress,
+        phone: flat.introLocationPhone,
+      },
+      hours: {
+        label: flat.introHoursLabel,
+        times: flat.introHoursTimes,
+      },
+    };
+  }
+
+  // Intro for programming page (columns format)
+  if (flat.introButtonText || flat.introColumn1 || flat.introColumn2) {
+    nested.intro = {
+      columns: [
+        (flat.introColumn1 as string) || '',
+        (flat.introColumn2 as string) || '',
+      ].filter(Boolean),
+      buttonText: flat.introButtonText,
+    };
+    // If no intro columns, provide defaults
+    if (!nested.intro || !(nested.intro as { columns: string[] }).columns?.length) {
+      (nested.intro as { columns: string[] }).columns = [
+        'The NoMad Wynwood transforms every visit into an experience, from intimate dinners to unforgettable celebrations.',
+        'Our culinary team crafts seasonal menus that honor tradition while embracing innovation.',
+      ];
+    }
+  }
+
+  // Menu section -> menuSection for components
+  if (flat.menuHeading || flat.menuParagraph) {
+    nested.menuSection = {
+      heading: flat.menuHeading,
+      paragraph: flat.menuParagraph,
+      buttonText: flat.menuButtonText,
+      buttonHref: flat.menuButtonHref,
+    };
+  }
+
+  // Events section -> eventsSection for homepage, events array for programming
+  if (flat.eventsHeading || flat.eventsParagraph) {
+    nested.eventsSection = {
+      heading: flat.eventsHeading,
+      paragraph: flat.eventsParagraph,
+      imageSrc: flat.eventsImageSrc,
+      buttonText: flat.eventsButtonText,
+      buttonHref: flat.eventsButtonHref,
+    };
+  }
+  // Events array (for programming page)
+  if (flat.events) {
+    nested.events = flat.events;
+  } else if (flat.heroHeading && !nested.events) {
+    // Provide default events for programming page
+    nested.events = [
+      {
+        title: 'Live Music',
+        description: 'Join us for live performances featuring local and international artists.',
+        imageSrc: `${CDN_BASE_URL}/events/event-1.jpg`,
+      },
+      {
+        title: 'Chef\'s Table',
+        description: 'An exclusive dining experience with our executive chef.',
+        imageSrc: `${CDN_BASE_URL}/events/event-2.jpg`,
+      },
+      {
+        title: 'Wine Tastings',
+        description: 'Explore curated selections from renowned vineyards.',
+        imageSrc: `${CDN_BASE_URL}/events/event-3.jpg`,
+      },
+    ];
+  }
+
+  // Contact section -> contactSection for components
+  if (flat.contactHeading || flat.contactParagraph) {
+    nested.contactSection = {
+      heading: flat.contactHeading,
+      paragraph: flat.contactParagraph,
+      imageSrc: flat.contactImageSrc,
+      buttonText: flat.contactButtonText,
+      buttonHref: flat.contactButtonHref,
+    };
+  }
+
+  // Gallery - already array, pass through directly
+  if (flat.gallery) {
+    nested.gallery = flat.gallery;
+  }
+
+  // Instagram section
+  if (flat.instagramTitle || flat.instagramHandle) {
+    nested.instagram = {
+      title: flat.instagramTitle,
+      handle: flat.instagramHandle,
+      handleUrl: flat.instagramHandleUrl,
+      images: flat.instagramImages,
+    };
+  }
+
+  // FAQ section
+  if (flat.faqTitle || flat.faqItems) {
+    nested.faq = {
+      title: flat.faqTitle,
+      items: flat.faqItems,
+    };
+  }
+
+  // Heritage section
+  if (flat.heritageTitle || flat.heritageParagraph) {
+    nested.heritage = {
+      title: flat.heritageTitle,
+      paragraph: flat.heritageParagraph,
+      imageSrc: flat.heritageImageSrc,
+    };
+  }
+
+  // Team - already array
+  if (flat.team) nested.team = flat.team;
+
+  // Quote section
+  if (flat.quoteHeading || flat.quoteParagraph) {
+    nested.quote = {
+      heading: flat.quoteHeading,
+      paragraph: flat.quoteParagraph,
+    };
+  }
+
+  // Awards section
+  if (flat.awardsTitle || flat.awardsLogos) {
+    nested.awards = {
+      title: flat.awardsTitle,
+      logos: flat.awardsLogos,
+    };
+  }
+
+  // Info section
+  if (flat.infoTitle || flat.infoParagraph || flat.infoAddress) {
+    nested.info = {
+      title: flat.infoTitle,
+      paragraph: flat.infoParagraph,
+      address: flat.infoAddress,
+      phone: flat.infoPhone,
+      email: flat.infoEmail,
+      hours: flat.infoHours,
+      mapUrl: flat.infoMapUrl,
+    };
+  }
+
+  // Location section
+  if (flat.locationTitle || flat.locationParagraph) {
+    nested.location = {
+      title: flat.locationTitle,
+      paragraph: flat.locationParagraph,
+      imageSrc: flat.locationImageSrc,
+    };
+  }
+
+  // Form section
+  if (flat.formTitle || flat.formParagraph) {
+    nested.form = {
+      title: flat.formTitle,
+      paragraph: flat.formParagraph,
+      fields: flat.formFields,
+    };
+  }
+
+  // Menu page specific fields (pass through)
+  if (flat.menuTitle) nested.menuTitle = flat.menuTitle;
+  if (flat.menuSubtitle) nested.menuSubtitle = flat.menuSubtitle;
+  if (flat.categories) nested.categories = flat.categories;
+  if (flat.sections) nested.sections = flat.sections;
+  if (flat.activeCategory) nested.activeCategory = flat.activeCategory;
+
+  // Hero for menu/faq pages (uses gallery images as hero images)
+  if (flat.gallery && !nested.hero) {
+    const galleryImages = flat.gallery as Array<{ src: string; alt: string }>;
+    if (galleryImages.length > 0) {
+      nested.hero = {
+        images: galleryImages.slice(0, 3), // Use first 3 gallery images for hero
+        heading: flat.heroHeading || flat.title || '',
+      };
+    }
+  }
+
+  // Hero with heading but no images (FAQ page) - provide default images
+  if ((flat.heroHeading || flat.title) && nested.hero && !(nested.hero as { images?: unknown }).images) {
+    (nested.hero as { images: Array<{ src: string; alt: string }>; heading?: string }).images = [
+      { src: `${CDN_BASE_URL}/gallery/image-1.jpg`, alt: 'NoMad Gallery 1' },
+      { src: `${CDN_BASE_URL}/gallery/image-2.jpg`, alt: 'NoMad Gallery 2' },
+      { src: `${CDN_BASE_URL}/gallery/image-3.jpg`, alt: 'NoMad Gallery 3' },
+    ];
+    (nested.hero as { heading?: string }).heading = (flat.heroHeading || flat.title) as string;
+  }
+
+  // If hero has heading but no images, add default images (for pages like FAQ)
+  if (flat.heroHeading && !nested.hero) {
+    nested.hero = {
+      heading: flat.heroHeading as string,
+      images: [
+        { src: `${CDN_BASE_URL}/gallery/image-1.jpg`, alt: 'NoMad Gallery 1' },
+        { src: `${CDN_BASE_URL}/gallery/image-2.jpg`, alt: 'NoMad Gallery 2' },
+        { src: `${CDN_BASE_URL}/gallery/image-3.jpg`, alt: 'NoMad Gallery 3' },
+      ],
+    };
+  }
+
+  // Form section for private-events page
+  if (flat.formTitle || flat.formFields) {
+    nested.form = {
+      title: flat.formTitle,
+      fields: flat.formFields,
+      // Provide defaults for additional form options
+      additionalOptions: (flat.formAdditionalOptions as { label: string; options: string[] }) || {
+        label: 'Additional options',
+        options: ['Catering', 'Bar service', 'Live music', 'AV equipment'],
+      },
+      additionalInfo: (flat.formAdditionalInfo as { label: string; placeholder: string }) || {
+        label: 'Anything else we should know?',
+        placeholder: 'Tell us more about your event...',
+      },
+      submitText: (flat.formSubmitText as string) || 'Submit Request',
+    };
+  }
+
+  // Info section for getting-here page
+  if (flat.infoHours) {
+    const infoHoursData = flat.infoHours as { label?: string; times?: string[] };
+    nested.info = {
+      ...(nested.info as object || {}),
+      hours: infoHoursData,
+      // Provide default transit info
+      transit: {
+        label: 'Public Transit',
+        content: ['Bus routes 2, 9, and 10 have stops within walking distance.'],
+      },
+    };
+  }
+
+  // Hero for getting-here and contact pages (uses title field)
+  if (flat.title && !nested.hero) {
+    nested.hero = {
+      title: flat.title as string,
+      subtitle: '',
+      phone: '+1-877-666-2312', // Default phone for contact page
+    };
+  }
+
+  // Info for contact page (needs hours, location, socials)
+  if (flat.infoHours && !flat.infoAddress) {
+    const infoHoursData = flat.infoHours as { label?: string; times?: string[] };
+    nested.info = {
+      ...(nested.info as object || {}),
+      hours: infoHoursData,
+      location: {
+        label: '02. location',
+        address: ['280 NW 27th St', 'Miami, FL 33127'],
+      },
+      socials: {
+        label: '03. follow us',
+        links: [
+          { name: 'Instagram', url: 'https://instagram.com/nomadwynwood' },
+          { name: 'Facebook', url: 'https://facebook.com/nomadwynwood' },
+        ],
+      },
+    };
+  }
+
+  // Location for getting-here page (defaults)
+  if (!nested.location && flat.infoHours) {
+    nested.location = {
+      phone: '+1-877-666-2312',
+      address: ['280 NW 27th St', 'Miami, FL 33127'],
+    };
+  }
+
+  // Pagination - provide defaults for programming page
+  if (flat.paginationItemsPerPage || flat.paginationCurrent || flat.paginationTotal) {
+    nested.pagination = {
+      itemsPerPage: flat.paginationItemsPerPage,
+      current: (flat.paginationCurrent as number) || 1,
+      total: (flat.paginationTotal as number) || 3,
+    };
+  } else if (nested.events) {
+    // Provide default pagination for programming page
+    nested.pagination = { current: 1, total: 3 };
+  }
+
+  return nested;
+}
+
+/**
+ * Check if data is in flat CMS format (has flat field names like heroLogoSrc)
+ * Also returns true for pages that need transformation (even if not strictly "flat")
+ */
+function isFlatFormat(data: Record<string, unknown>): boolean {
+  const flatIndicators = [
+    // Homepage fields
+    'heroLogoSrc', 'heroLeftImage', 'heroHeading', 'introHeading', 'menuHeading',
+    // Common flat fields
+    'instagramTitle', 'faqTitle', 'faqItems',
+    // Menu page (has gallery but no hero)
+    'menuTitle', 'menuSubtitle', 'categories', 'sections',
+    // Private events page
+    'formTitle', 'formFields',
+    // Getting here page
+    'infoHours',
+    // About page
+    'heritageTitle', 'quoteHeading',
+  ];
+  return flatIndicators.some(key => key in data);
+}
+
+/**
  * Fetch page content by slug
- * Returns data matching the original JSON structure
+ * Returns data matching the original JSON structure (nested) for components
  */
 export async function getPageContent(pageSlug: string): Promise<Record<string, unknown>> {
   const client = getServerClient();
@@ -197,10 +545,15 @@ export async function getPageContent(pageSlug: string): Promise<Record<string, u
   }
 
   const rawData = transformImageUrls(data.contentEntryBySlug.data || {});
+
+  // Transform flat CMS data to nested format for components
+  if (isFlatFormat(rawData)) {
+    return transformFlatToNested(rawData);
+  }
+
+  // Legacy: handle old nested format (shouldn't be needed after migration)
   const mappedData: Record<string, unknown> = { ...rawData };
 
-  // Only remap fields for the homepage, which uses *Section suffixed field names
-  // Other pages (programming, private-events, etc.) use the direct field names
   if (pageSlug === 'homepage') {
     const fieldMappings: Record<string, string> = {
       intro: 'introSection',
@@ -483,6 +836,70 @@ function slugify(text: string): string {
 }
 
 /**
+ * Transform flat site-settings data to nested format expected by components
+ */
+function transformFlatSiteSettings(flat: Record<string, unknown>): SiteSettings {
+  const defaults = getDefaultSiteSettings();
+
+  // Build navigation object
+  const navigation = {
+    menuLabel: (flat.navMenuLabel as string) || defaults.navigation.menuLabel,
+    closeLabel: (flat.navCloseLabel as string) || defaults.navigation.closeLabel,
+    reserveButtonText: (flat.navReserveButtonText as string) || defaults.navigation.reserveButtonText,
+    reserveButtonUrl: (flat.navReserveButtonUrl as string) || defaults.navigation.reserveButtonUrl,
+    backgroundImage: (flat.navBackgroundImage as string) || defaults.navigation.backgroundImage,
+    links: (flat.navLinks as NavigationLink[]) || defaults.navigation.links,
+  };
+
+  // Build location object
+  const location = {
+    name: (flat.locationName as string) || defaults.location.name,
+    address: (flat.locationAddress as string) || defaults.location.address,
+    phone: (flat.locationPhone as string) || defaults.location.phone,
+  };
+
+  // Build footer object
+  const footer = {
+    wordmarkImage: (flat.footerWordmarkImage as string) || defaults.footer.wordmarkImage,
+    wordmarkAlt: (flat.footerWordmarkAlt as string) || defaults.footer.wordmarkAlt,
+    newsletterPlaceholder: (flat.footerNewsletterPlaceholder as string) || defaults.footer.newsletterPlaceholder,
+    newsletterConsentText: (flat.footerNewsletterConsentText as string) || defaults.footer.newsletterConsentText,
+    links: (flat.footerLinks as NavigationLink[]) || defaults.footer.links,
+    legalLinks: (flat.footerLegalLinks as NavigationLink[]) || defaults.footer.legalLinks,
+  };
+
+  // Build notFound object with fallback to defaults
+  const notFoundGalleryImages = (flat.notFoundGalleryImages as ImageItem[]);
+  const notFound = {
+    title: (flat.notFoundTitle as string) || defaults.notFound.title,
+    message: (flat.notFoundMessage as string) || defaults.notFound.message,
+    buttonText: (flat.notFoundButtonText as string) || defaults.notFound.buttonText,
+    buttonHref: (flat.notFoundButtonHref as string) || defaults.notFound.buttonHref,
+    galleryImages: (notFoundGalleryImages && notFoundGalleryImages.length > 0)
+      ? notFoundGalleryImages
+      : defaults.notFound.galleryImages,
+  };
+
+  return {
+    siteName: (flat.siteName as string) || defaults.siteName,
+    siteDescription: (flat.siteDescription as string) || defaults.siteDescription,
+    navigation,
+    location,
+    hours: (flat.hours as HoursEntry[]) || defaults.hours,
+    footer,
+    notFound,
+  };
+}
+
+/**
+ * Check if site-settings data is in flat format
+ */
+function isFlatSiteSettings(data: Record<string, unknown>): boolean {
+  const flatIndicators = ['navMenuLabel', 'navLinks', 'footerLinks', 'notFoundTitle', 'locationName'];
+  return flatIndicators.some(key => key in data);
+}
+
+/**
  * Fetch site-wide settings (navigation, footer, location, hours)
  */
 export async function getSiteSettings(): Promise<SiteSettings> {
@@ -505,7 +922,25 @@ export async function getSiteSettings(): Promise<SiteSettings> {
       return getDefaultSiteSettings();
     }
 
-    const settings = transformImageUrls(data.contentEntryBySlug.data) as unknown as SiteSettings;
+    const rawSettings = transformImageUrls(data.contentEntryBySlug.data);
+
+    // Transform flat data to nested format if needed
+    if (isFlatSiteSettings(rawSettings)) {
+      return transformFlatSiteSettings(rawSettings);
+    }
+
+    // Legacy: already nested format
+    const settings = rawSettings as unknown as SiteSettings;
+
+    // Ensure notFound has galleryImages fallback
+    if (!settings.notFound?.galleryImages?.length) {
+      const defaults = getDefaultSiteSettings();
+      settings.notFound = {
+        ...settings.notFound,
+        galleryImages: defaults.notFound.galleryImages,
+      };
+    }
+
     return settings;
   } catch (e) {
     console.warn('Failed to fetch site settings from CMS:', e);
