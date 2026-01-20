@@ -1,0 +1,172 @@
+{
+  "homepage-hero-left": {
+    "url": "a51242f4-1bfe-4a1e-97b5-34a6ed57fce5/original.jpg",
+    "id": "a51242f4-1bfe-4a1e-97b5-34a6ed57fce5",
+    "page": "homepage"
+  },
+  "homepage-hero-right": {
+    "url": "0876b439-9637-4f73-a03e-699d0bf57d85/original.jpg",
+    "id": "0876b439-9637-4f73-a03e-699d0bf57d85",
+    "page": "homepage"
+  },
+  "homepage-logo-hero": {
+    "url": "e7a90011-d0ac-4ddd-84a3-3478c6050c35/original.svg",
+    "id": "e7a90011-d0ac-4ddd-84a3-3478c6050c35",
+    "page": "homepage"
+  },
+  "homepage-gallery-1": {
+    "url": "938f6549-57a8-4b6d-9f71-160ac411ff1e/original.jpg",
+    "id": "938f6549-57a8-4b6d-9f71-160ac411ff1e",
+    "page": "homepage"
+  },
+  "homepage-gallery-2": {
+    "url": "264580e4-ee52-4d71-8a7e-328f2bfff220/original.jpg",
+    "id": "264580e4-ee52-4d71-8a7e-328f2bfff220",
+    "page": "homepage"
+  },
+  "homepage-gallery-3": {
+    "url": "9df58133-b593-45f5-b8ed-43355f454d35/original.jpg",
+    "id": "9df58133-b593-45f5-b8ed-43355f454d35",
+    "page": "homepage"
+  },
+  "homepage-section-events": {
+    "url": "d763493e-a501-49fc-8094-3eaa335e6986/original.jpg",
+    "id": "d763493e-a501-49fc-8094-3eaa335e6986",
+    "page": "homepage"
+  },
+  "homepage-section-contact": {
+    "url": "e2a04d02-69d4-4413-b894-47e77807f34d/original.jpg",
+    "id": "e2a04d02-69d4-4413-b894-47e77807f34d",
+    "page": "homepage"
+  },
+  "instagram-1": {
+    "url": "6c6d8f14-ca09-4b95-9894-fc749a4dac99/original.jpg",
+    "id": "6c6d8f14-ca09-4b95-9894-fc749a4dac99",
+    "page": "homepage"
+  },
+  "instagram-2": {
+    "url": "fc7f23a5-f1c4-41de-84f0-7aebc4b388c4/original.jpg",
+    "id": "fc7f23a5-f1c4-41de-84f0-7aebc4b388c4",
+    "page": "homepage"
+  },
+  "instagram-3": {
+    "url": "bd641af7-a26f-45b0-a6fe-fae5a3a2fed6/original.png",
+    "id": "bd641af7-a26f-45b0-a6fe-fae5a3a2fed6",
+    "page": "homepage"
+  },
+  "instagram-4": {
+    "url": "bbe9b630-aee9-4651-a8d2-df6e1fb726ae/original.jpg",
+    "id": "bbe9b630-aee9-4651-a8d2-df6e1fb726ae",
+    "page": "homepage"
+  },
+  "nomad-logo-wide": {
+    "url": "36c7d8a0-bb34-4c7a-88ef-35b24296d54a/original.svg",
+    "id": "36c7d8a0-bb34-4c7a-88ef-35b24296d54a",
+    "page": "global"
+  },
+  "nomad-logo-mark-group": {
+    "url": "6a26ecb1-e539-44dd-9259-2d4717e67c8a/original.svg",
+    "id": "6a26ecb1-e539-44dd-9259-2d4717e67c8a",
+    "page": "global"
+  },
+  "nomad-logo-mark-vector": {
+    "url": "eb3bdbd0-6b6e-416a-85b4-0bf6cd451983/original.svg",
+    "id": "eb3bdbd0-6b6e-416a-85b4-0bf6cd451983",
+    "page": "global"
+  },
+  "about-heritage": {
+    "url": "7eb516f7-ac89-4dfa-afd0-6ca08f28cdf2/original.jpg",
+    "id": "7eb516f7-ac89-4dfa-afd0-6ca08f28cdf2",
+    "page": "about"
+  },
+  "about-team-chef": {
+    "url": "f8405809-1523-4b54-9571-f1e0e1515709/original.jpg",
+    "id": "f8405809-1523-4b54-9571-f1e0e1515709",
+    "page": "about"
+  },
+  "about-team-bar-director": {
+    "url": "bf35bc86-74a8-4a43-aeb2-7ff185493978/original.jpg",
+    "id": "bf35bc86-74a8-4a43-aeb2-7ff185493978",
+    "page": "about"
+  },
+  "about-team-wine-director": {
+    "url": "d50c06f4-99b7-41e5-b550-8433a9dadf72/original.jpg",
+    "id": "d50c06f4-99b7-41e5-b550-8433a9dadf72",
+    "page": "about"
+  },
+  "about-dining-table": {
+    "url": "9cafd70f-fccc-4c72-bcb7-5af385a56c54/original.jpg",
+    "id": "9cafd70f-fccc-4c72-bcb7-5af385a56c54",
+    "page": "about"
+  },
+  "award-iprefer": {
+    "url": "903f13e4-12be-4d3c-8806-1446842d969e/original.png",
+    "id": "903f13e4-12be-4d3c-8806-1446842d969e",
+    "page": "about"
+  },
+  "award-lifestyle": {
+    "url": "2c4b2d35-3994-4a39-be2d-ef2b1c68d58a/original.png",
+    "id": "2c4b2d35-3994-4a39-be2d-ef2b1c68d58a",
+    "page": "about"
+  },
+  "award-conde-nast": {
+    "url": "e47dd769-62cc-4ff9-ab84-3720db01b882/original.svg",
+    "id": "e47dd769-62cc-4ff9-ab84-3720db01b882",
+    "page": "about"
+  },
+  "award-curioso": {
+    "url": "ec07da82-a924-4d83-9752-bd8fd6506c84/original.png",
+    "id": "ec07da82-a924-4d83-9752-bd8fd6506c84",
+    "page": "about"
+  },
+  "private-events-gallery-1": {
+    "url": "94a29152-c674-4651-a734-deade7a29fb9/original.jpg",
+    "id": "94a29152-c674-4651-a734-deade7a29fb9",
+    "page": "private-events"
+  },
+  "private-events-gallery-2": {
+    "url": "8b9fc292-cafa-4843-b8c9-8ecfb79bc341/original.jpg",
+    "id": "8b9fc292-cafa-4843-b8c9-8ecfb79bc341",
+    "page": "private-events"
+  },
+  "private-events-gallery-3": {
+    "url": "fc65b46f-212f-4fc9-a3d3-3af11c0364c8/original.png",
+    "id": "fc65b46f-212f-4fc9-a3d3-3af11c0364c8",
+    "page": "private-events"
+  },
+  "private-events-gallery-4": {
+    "url": "11c0ab64-465b-4271-bdf1-f3644db9a277/original.jpg",
+    "id": "11c0ab64-465b-4271-bdf1-f3644db9a277",
+    "page": "private-events"
+  },
+  "menu-hero-left": {
+    "url": "9d46de20-a136-40b7-b0ee-c5992805baf0/original.jpg",
+    "id": "9d46de20-a136-40b7-b0ee-c5992805baf0",
+    "page": "menu"
+  },
+  "menu-hero-right": {
+    "url": "b70fbea6-d889-4f66-bbd3-d32878ffab35/original.jpg",
+    "id": "b70fbea6-d889-4f66-bbd3-d32878ffab35",
+    "page": "menu"
+  },
+  "menu-instagram-1": {
+    "url": "3da31192-0fd6-476f-9f42-12970f25bbb7/original.png",
+    "id": "3da31192-0fd6-476f-9f42-12970f25bbb7",
+    "page": "menu"
+  },
+  "menu-instagram-2": {
+    "url": "060eb7f0-a5b3-491d-a65b-12d736ac519c/original.jpg",
+    "id": "060eb7f0-a5b3-491d-a65b-12d736ac519c",
+    "page": "menu"
+  },
+  "menu-gallery-1": {
+    "url": "94ea9318-60cb-4293-89bb-269dffe51611/original.jpg",
+    "id": "94ea9318-60cb-4293-89bb-269dffe51611",
+    "page": "menu"
+  },
+  "menu-gallery-2": {
+    "url": "89229d71-8bbb-4681-b8ad-a2a2aaf8d7f7/original.jpg",
+    "id": "89229d71-8bbb-4681-b8ad-a2a2aaf8d7f7",
+    "page": "menu"
+  }
+}

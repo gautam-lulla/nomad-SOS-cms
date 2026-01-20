@@ -25,6 +25,7 @@ function isImageObject(obj: unknown): obj is { url?: string; src?: string } {
 /**
  * Transform local /images/ paths to Cloudflare CDN URLs.
  * Also extracts URL strings from image objects saved by the inline editor.
+ * Handles MEDIA fields which are arrays with single URL strings.
  * Recursively processes objects and arrays.
  */
 function transformImageUrls<T>(data: T): T {
@@ -41,6 +42,10 @@ function transformImageUrls<T>(data: T): T {
   }
 
   if (Array.isArray(data)) {
+    // Handle MEDIA fields: arrays with single URL string - extract the URL
+    if (data.length === 1 && typeof data[0] === 'string') {
+      return transformImageUrls(data[0]) as T;
+    }
     return data.map(item => transformImageUrls(item)) as T;
   }
 
