@@ -182,6 +182,38 @@ async function getContentTypeId(slug: string): Promise<string> {
 }
 
 /**
+ * Helper to extract URL from MEDIA field (which stores as single-element array)
+ */
+function extractMediaUrl(field: unknown): string | null {
+  if (Array.isArray(field) && field.length > 0 && typeof field[0] === 'string') {
+    return field[0];
+  }
+  if (typeof field === 'string') {
+    return field;
+  }
+  return null;
+}
+
+/**
+ * Helper to build image array from individual MEDIA fields
+ */
+function buildImageArray(
+  flat: Record<string, unknown>,
+  prefix: string,
+  count: number,
+  altPrefix: string
+): Array<{ src: string; alt: string }> {
+  const images: Array<{ src: string; alt: string }> = [];
+  for (let i = 1; i <= count; i++) {
+    const url = extractMediaUrl(flat[`${prefix}${i}`]);
+    if (url) {
+      images.push({ src: url, alt: `${altPrefix} ${i}` });
+    }
+  }
+  return images;
+}
+
+/**
  * Transform flat CMS data back to nested structure for components
  * This allows the CMS to use individual fields while keeping the component API stable
  */
@@ -312,18 +344,22 @@ function transformFlatToNested(flat: Record<string, unknown>): Record<string, un
     };
   }
 
-  // Gallery - already array, pass through directly
-  if (flat.gallery) {
+  // Gallery - build from individual MEDIA fields, fallback to legacy array
+  const galleryFromFields = buildImageArray(flat, 'galleryImage', 6, 'Gallery');
+  if (galleryFromFields.length > 0) {
+    nested.gallery = galleryFromFields;
+  } else if (flat.gallery) {
     nested.gallery = flat.gallery;
   }
 
-  // Instagram section
-  if (flat.instagramTitle || flat.instagramHandle) {
+  // Instagram section - build from individual MEDIA fields, fallback to legacy array
+  const instagramFromFields = buildImageArray(flat, 'instagramImage', 4, 'Instagram');
+  if (flat.instagramTitle || flat.instagramHandle || instagramFromFields.length > 0) {
     nested.instagram = {
       title: flat.instagramTitle,
       handle: flat.instagramHandle,
       handleUrl: flat.instagramHandleUrl,
-      images: flat.instagramImages,
+      images: instagramFromFields.length > 0 ? instagramFromFields : flat.instagramImages,
     };
   }
 
@@ -355,11 +391,12 @@ function transformFlatToNested(flat: Record<string, unknown>): Record<string, un
     };
   }
 
-  // Awards section
-  if (flat.awardsTitle || flat.awardsLogos) {
+  // Awards section - build from individual MEDIA fields, fallback to legacy array
+  const awardsFromFields = buildImageArray(flat, 'awardsLogo', 4, 'Award');
+  if (flat.awardsTitle || awardsFromFields.length > 0 || flat.awardsLogos) {
     nested.awards = {
       title: flat.awardsTitle,
-      logos: flat.awardsLogos,
+      logos: awardsFromFields.length > 0 ? awardsFromFields : flat.awardsLogos,
     };
   }
 
@@ -622,14 +659,18 @@ export async function getInstagramContent(): Promise<{
     };
   }
 
-  const entryData = transformImageUrls(data.contentEntryBySlug.data) as {
-    title: string;
-    handle: string;
-    handleUrl: string;
-    images: Array<{ src: string; alt: string }>;
-  };
+  const rawData = transformImageUrls(data.contentEntryBySlug.data) as Record<string, unknown>;
 
-  return entryData;
+  // Build images array from individual MEDIA fields, fallback to legacy array
+  const imagesFromFields = buildImageArray(rawData, 'image', 4, 'Instagram');
+  const legacyImages = rawData.images as Array<{ src: string; alt: string }> | undefined;
+
+  return {
+    title: (rawData.title as string) || '',
+    handle: (rawData.handle as string) || '',
+    handleUrl: (rawData.handleUrl as string) || '',
+    images: imagesFromFields.length > 0 ? imagesFromFields : (legacyImages || []),
+  };
 }
 
 /**
