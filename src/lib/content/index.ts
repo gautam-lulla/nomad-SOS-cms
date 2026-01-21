@@ -274,22 +274,27 @@ function transformFlatToNested(flat: Record<string, unknown>): Record<string, un
   if (flat.events) {
     nested.events = flat.events;
   } else if (flat.heroHeading && !nested.events) {
-    // Provide default events for programming page
+    // Provide default events for programming page (using permanent CDN URLs)
+    const CDN_EVENTS = {
+      card1: 'https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/f9b69cf9-c2ef-4609-81e0-c4187a571c53/original.jpg',
+      card2: 'https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/bef6acee-fa10-4817-b73b-9eed82b02902/original.jpg',
+      card3: 'https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/0c3ff6fc-71d1-4af9-be40-f701a9db1245/original.jpg',
+    };
     nested.events = [
       {
         title: 'Live Music',
         description: 'Join us for live performances featuring local and international artists.',
-        imageSrc: `${CDN_BASE_URL}/events/event-1.jpg`,
+        imageSrc: CDN_EVENTS.card1,
       },
       {
         title: 'Chef\'s Table',
         description: 'An exclusive dining experience with our executive chef.',
-        imageSrc: `${CDN_BASE_URL}/events/event-2.jpg`,
+        imageSrc: CDN_EVENTS.card2,
       },
       {
         title: 'Wine Tastings',
         description: 'Explore curated selections from renowned vineyards.',
-        imageSrc: `${CDN_BASE_URL}/events/event-3.jpg`,
+        imageSrc: CDN_EVENTS.card3,
       },
     ];
   }
