@@ -36,11 +36,18 @@ export interface TemplateProps extends BaseTemplateProps {
 }
 
 /**
+ * Template component type - accepts templates with specific pageContent types
+ * Each template has its own specific props, but all extend BaseTemplateProps
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type TemplateComponent = React.ComponentType<any>;
+
+/**
  * Template configuration
  * Maps page slugs to their template components and any special requirements
  */
 export interface TemplateConfig {
-  component: React.ComponentType<TemplateProps>;
+  component: TemplateComponent;
   requiresSiteSettings?: boolean;
 }
 
@@ -84,7 +91,7 @@ export function getTemplateConfig(slug: string): TemplateConfig | null {
  * Get the template component for a given page slug
  * Returns null if no template is registered for the slug
  */
-export function getTemplate(slug: string): React.ComponentType<TemplateProps> | null {
+export function getTemplate(slug: string): TemplateComponent | null {
   const config = getTemplateConfig(slug);
   return config?.component || null;
 }
