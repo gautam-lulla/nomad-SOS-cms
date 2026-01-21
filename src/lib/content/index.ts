@@ -246,11 +246,17 @@ function transformFlatToNested(flat: Record<string, unknown>): Record<string, un
 
   // Menu section -> menuSection for components
   if (flat.menuHeading || flat.menuParagraph) {
+    // Determine fullWidthImage - use CMS value or default
+    const menuFullWidthImage = flat.menuFullWidthImageSrc
+      ? { src: flat.menuFullWidthImageSrc, alt: flat.menuFullWidthImageAlt || 'Dining experience' }
+      : { src: `${CDN_BASE_URL}/about/dining-table.jpg`, alt: 'Dining experience' };
+
     nested.menuSection = {
       heading: flat.menuHeading,
       paragraph: flat.menuParagraph,
       buttonText: flat.menuButtonText,
       buttonHref: flat.menuButtonHref,
+      fullWidthImage: menuFullWidthImage,
     };
   }
 
