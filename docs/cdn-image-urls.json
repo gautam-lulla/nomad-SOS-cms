@@ -1,0 +1,39 @@
+{
+  "cdnBaseUrl": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev",
+  "generatedAt": "2026-01-21T17:33:06.895Z",
+  "images": {
+    "hero": {
+      "left": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/71094575-8210-4159-aaf8-d906864406a5/original.jpg",
+      "right": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/9cba71ad-268d-46f6-8b97-b4288c80c1f2/original.jpg"
+    },
+    "gallery": {
+      "image1": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/5f5df1a2-d4a2-484c-bd11-fba3bc6d05ce/original.jpg",
+      "image2": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/a4751e8d-1db4-43e1-a130-f2eb61cdaab9/original.jpg",
+      "image3": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/0f56c48c-b080-4fbc-a4ee-e0d6c0c44e70/original.jpg"
+    },
+    "events": {
+      "hero": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/f5f6b0ff-6738-4316-bec5-f6fe16ed3d39/original.jpg",
+      "card1": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/f9b69cf9-c2ef-4609-81e0-c4187a571c53/original.jpg",
+      "card2": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/bef6acee-fa10-4817-b73b-9eed82b02902/original.jpg",
+      "card3": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/0c3ff6fc-71d1-4af9-be40-f701a9db1245/original.jpg",
+      "card4": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/f4c71ddc-3e7c-4b7b-9b63-e3e651c86f1b/original.jpg",
+      "card5": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/43f83988-9342-4ec5-9ccf-f7294797e387/original.jpg",
+      "card6": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/653bd87a-9e24-4224-b4ef-754f02aec33a/original.jpg"
+    },
+    "contact": {
+      "hero": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/9239a0d1-b7d7-4594-8cbd-8700cc010aa7/original.jpg"
+    },
+    "instagram": {
+      "image1": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/730077ef-b5fe-40cf-9b23-0c8f887b3491/original.jpg",
+      "image2": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/1edc5e8b-c217-43ab-8931-99599a77e78b/original.jpg",
+      "image3": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/930dee05-fa68-406d-9df8-5dec2fa932fa/original.png",
+      "image4": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/311f1eeb-fff7-4cf5-8ddc-9ba38cfd031b/original.jpg"
+    },
+    "menu": {
+      "heroLeft": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/d5821d71-ecaa-4353-87b9-000a58054aad/original.jpg",
+      "heroRight": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/eeeaea0a-69c4-40c0-aee4-41e32c19468a/original.jpg",
+      "gallery1": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/5c48daf7-8aee-408f-a220-9ca78e880114/original.jpg",
+      "gallery2": "https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/392c6ca6-a296-49a4-8cfc-dba3babe67c0/original.jpg"
+    }
+  }
+}
