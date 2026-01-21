@@ -1019,3 +1019,90 @@ function getDefaultSiteSettings(): SiteSettings {
     },
   };
 }
+
+// ============================================================================
+// Dynamic Routing Support
+// ============================================================================
+
+/**
+ * Page data structure for dynamic routing
+ */
+export interface PageData {
+  id: string;
+  slug: string;
+  data: Record<string, unknown>;
+}
+
+/**
+ * Fetch a page by its URL slug for dynamic routing.
+ * Returns the page data with id, slug, and transformed content.
+ * Returns null if page doesn't exist.
+ */
+export async function getPageBySlug(slug: string): Promise<PageData | null> {
+  const client = getServerClient();
+
+  try {
+    const typeId = await getContentTypeId('nomad-page');
+
+    const { data, error } = await client.query<ContentEntryResponse>({
+      query: GET_PAGE_CONTENT,
+      variables: {
+        contentTypeId: typeId,
+        organizationId: CMS_ORG_ID,
+        slug,
+      },
+    });
+
+    if (error || !data?.contentEntryBySlug) {
+      console.error(`Page not found: ${slug}`, error);
+      return null;
+    }
+
+    const rawData = transformImageUrls(data.contentEntryBySlug.data || {});
+
+    // Transform flat CMS data to nested format for components
+    const transformedData = isFlatFormat(rawData)
+      ? transformFlatToNested(rawData)
+      : rawData;
+
+    return {
+      id: data.contentEntryBySlug.id,
+      slug: data.contentEntryBySlug.slug,
+      data: transformedData,
+    };
+  } catch (e) {
+    console.error(`Failed to fetch page: ${slug}`, e);
+    return null;
+  }
+}
+
+/**
+ * Get all page slugs for static generation.
+ * Used by generateStaticParams in the catch-all route.
+ */
+export async function getAllPageSlugs(): Promise<string[]> {
+  const client = getServerClient();
+
+  try {
+    const typeId = await getContentTypeId('nomad-page');
+
+    const { data } = await client.query<ContentEntriesResponse>({
+      query: GET_ALL_ENTRIES_BY_TYPE,
+      variables: {
+        filter: {
+          contentTypeId: typeId,
+          organizationId: CMS_ORG_ID,
+          take: 100,
+        },
+      },
+    });
+
+    const slugs = data?.contentEntries?.items?.map((item) => item.slug) || [];
+
+    // Filter out homepage (handled by dedicated route) and menu (application page)
+    return slugs.filter((slug) => slug !== 'homepage' && slug !== 'menu');
+  } catch (e) {
+    console.error('Failed to fetch page slugs', e);
+    return [];
+  }
+}
