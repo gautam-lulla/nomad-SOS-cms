@@ -53,4 +53,25 @@ body {
     letter-spacing: var(--letter-spacing-cta);
     text-transform: uppercase;
   }
+
+  /* Animation utilities */
+  .transition-button {
+    transition: var(--transition-button);
+  }
+
+  .transition-color {
+    transition: var(--transition-color);
+  }
+
+  .transition-opacity {
+    transition: var(--transition-opacity);
+  }
+
+  .duration-normal {
+    transition-duration: var(--duration-normal);
+  }
+
+  .ease-out-custom {
+    transition-timing-function: var(--ease-out);
+  }
 }

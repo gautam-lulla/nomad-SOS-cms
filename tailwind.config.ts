@@ -90,6 +90,14 @@ export default {
         tight: "1.3",
         relaxed: "1.6",
       },
+
+      /* ==================== TRANSITIONS ==================== */
+      transitionTimingFunction: {
+        "ease-out-custom": "cubic-bezier(0, 0, 0.2, 1)",
+      },
+      transitionDuration: {
+        "300": "300ms",
+      },
     },
   },
   plugins: [],

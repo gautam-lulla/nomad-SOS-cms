@@ -56,15 +56,15 @@ export function FAQAccordion({ items, className, cmsEntry, cmsFieldPrefix }: FAQ
         >
           <button
             onClick={() => setOpenIndex(openIndex === index ? null : index)}
-            className="w-full flex items-center justify-between py-s px-0 text-left"
+            className="w-full flex items-center justify-between py-s px-0 text-left transition-colors duration-300 ease-out hover:text-pink-500 group"
           >
             <span
-              className="font-sabon text-h3 text-off-white-100 pr-m max-w-[712px]"
+              className="font-sabon text-h3 text-off-white-100 pr-m max-w-[712px] group-hover:text-pink-500 transition-colors duration-300 ease-out"
               {...cmsAttrs("question", item.slug, "Question")}
             >
               {item.question}
             </span>
-            <span className="text-off-white-100 flex-shrink-0">
+            <span className="text-off-white-100 flex-shrink-0 group-hover:text-pink-500 transition-colors duration-300 ease-out">
               {openIndex === index ? (
                 <MinusIcon />
               ) : (

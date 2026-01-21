@@ -68,4 +68,21 @@
   --letter-spacing-body: -0.32px;
   --letter-spacing-cta: 0.36px;
   --letter-spacing-h5: 0.42px;
+
+  /* ==================== ANIMATIONS ==================== */
+
+  /* Durations */
+  --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+
+  /* Easings */
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Standard button/link hover transition */
+  --transition-button: all var(--duration-normal) var(--ease-out);
+  --transition-color: color var(--duration-normal) var(--ease-out);
+  --transition-opacity: opacity var(--duration-normal) var(--ease-out);
 }

@@ -196,7 +196,7 @@ export function Navigation({
                       className={cn(
                         "leading-[1.2] tracking-tight-h2",
                         "text-off-white-100 hover:text-pink-500 hover:italic",
-                        "transition-all duration-200",
+                        "transition-all duration-300 ease-out",
                         "font-sabon text-h2-mobile md:text-[32px] lg:text-h2"
                       )}
                       data-cms-entry="global-settings"

@@ -36,7 +36,7 @@ export function InstagramFeed({
           href={handleUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="font-sabon text-h3 text-off-white-100 hover:text-pink-500 transition-colors"
+          className="font-sabon text-h3 text-off-white-100 hover:text-pink-500 transition-colors duration-300 ease-out"
           data-cms-entry="global-instagram"
           data-cms-field="handle"
           data-cms-label="Instagram Handle"

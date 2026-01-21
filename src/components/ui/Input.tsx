@@ -16,9 +16,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <div
         className={cn(
           "flex items-center justify-between gap-xs",
-          "border-b pb-3xs",
-          variant === "dark" && "border-black-900",
-          variant === "light" && "border-off-white-100"
+          "border-b pb-3xs transition-colors duration-300 ease-out",
+          variant === "dark" && "border-black-900 focus-within:border-pink-500",
+          variant === "light" && "border-off-white-100 focus-within:border-pink-500"
         )}
       >
         <input

@@ -16,7 +16,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           "font-gotham font-bold text-cta uppercase tracking-wide-cta",
           "inline-flex items-center justify-center gap-xxs",
-          "transition-all duration-300 ease-in-out",
+          "transition-all duration-300 ease-out",
           size === "default" && "px-s pt-3xs pb-2xs",
           size === "small" && "px-3xs pt-[10px] pb-3xs",
           variant === "filled" && [

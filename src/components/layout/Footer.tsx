@@ -84,7 +84,7 @@ export function Footer({
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-gotham font-bold text-h5 uppercase tracking-wide-h5 text-black-900 leading-relaxed hover:underline"
+                className="font-gotham font-bold text-h5 uppercase tracking-wide-h5 text-black-900 leading-relaxed hover:underline transition-all duration-300 ease-out hover:opacity-70"
               >
                 {link.label}
               </Link>
@@ -145,7 +145,7 @@ export function Footer({
             <Link
               key={index}
               href={link.href}
-              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 hover:underline"
+              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 hover:underline transition-all duration-300 ease-out hover:text-pink-500"
             >
               {link.label}
             </Link>
