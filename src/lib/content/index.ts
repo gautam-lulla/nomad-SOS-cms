@@ -12,14 +12,16 @@ const CDN_BASE_URL = 'https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev/nomad'
 
 /**
  * Check if an object is an image object from the CMS inline editor.
- * Image objects have url/src and typically id, alt, filename.
+ * Inline editor saves images as objects with id/filename - these should be
+ * converted to URL strings. Simple {src, alt} objects from arrays should NOT match.
  */
 function isImageObject(obj: unknown): obj is { url?: string; src?: string } {
   if (typeof obj !== 'object' || obj === null) return false;
   const o = obj as Record<string, unknown>;
-  // Must have url or src, and should have typical image fields
+  // Only match inline editor image objects (have id OR filename)
+  // Do NOT match simple {src, alt} pairs from arrays like instagramImages
   return (typeof o.url === 'string' || typeof o.src === 'string') &&
-    (o.id !== undefined || o.filename !== undefined || o.alt !== undefined);
+    (o.id !== undefined || o.filename !== undefined);
 }
 
 /**
