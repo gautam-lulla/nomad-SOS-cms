@@ -25,13 +25,14 @@ export { PrivateEventsTemplate } from './PrivateEventsTemplate';
 export * from './types';
 
 import type { BaseTemplateProps } from './types';
+import type { SiteSettings } from '@/lib/content';
 
 /**
  * Common props that all templates receive from the catch-all route
  */
 export interface TemplateProps extends BaseTemplateProps {
   pageContent: Record<string, unknown>;
-  siteSettings?: Record<string, unknown>;
+  siteSettings?: SiteSettings;
 }
 
 /**
