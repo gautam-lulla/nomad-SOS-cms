@@ -24,12 +24,22 @@ export { PrivateEventsTemplate } from './PrivateEventsTemplate';
 // Re-export types
 export * from './types';
 
+import type { BaseTemplateProps } from './types';
+
+/**
+ * Common props that all templates receive from the catch-all route
+ */
+export interface TemplateProps extends BaseTemplateProps {
+  pageContent: Record<string, unknown>;
+  siteSettings?: Record<string, unknown>;
+}
+
 /**
  * Template configuration
  * Maps page slugs to their template components and any special requirements
  */
 export interface TemplateConfig {
-  component: React.ComponentType<any>;
+  component: React.ComponentType<TemplateProps>;
   requiresSiteSettings?: boolean;
 }
 
@@ -73,7 +83,7 @@ export function getTemplateConfig(slug: string): TemplateConfig | null {
  * Get the template component for a given page slug
  * Returns null if no template is registered for the slug
  */
-export function getTemplate(slug: string): React.ComponentType<any> | null {
+export function getTemplate(slug: string): React.ComponentType<TemplateProps> | null {
   const config = getTemplateConfig(slug);
   return config?.component || null;
 }
