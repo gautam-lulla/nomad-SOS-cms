@@ -113,7 +113,7 @@ export function ProgrammingTemplate({ slug, pageContent, instagramContent }: Pro
               {/* Event Content */}
               <div className="px-4 md:px-6 lg:px-m pt-6 lg:pt-m pb-6 lg:pb-3s">
                 <h3
-                  className="font-gotham font-bold text-[16px] uppercase tracking-[0.48px] text-off-white-100 mb-xs"
+                  className="font-gotham font-bold text-h4 uppercase text-off-white-100 mb-xs"
                   data-cms-entry={slug}
                   data-cms-field={`events[${index}].title`}
                   data-cms-type="text"

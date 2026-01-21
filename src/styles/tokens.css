@@ -46,9 +46,16 @@
   /* ==================== TYPOGRAPHY ==================== */
 
   /* Font Sizes */
+  --font-size-h1: 56px;
+  --font-size-h1-tablet: 48px;
+  --font-size-h1-mobile: 36px;
   --font-size-h2: 36px;
+  --font-size-h2-tablet: 32px;
   --font-size-h2-mobile: 28px;
   --font-size-h3: 24px;
+  --font-size-h3-tablet: 20px;
+  --font-size-h3-mobile: 18px;
+  --font-size-h4: 16px;
   --font-size-h5: 14px;
   --font-size-body-s: 16px;
   --font-size-cta: 12px;
@@ -63,8 +70,10 @@
   --line-height-relaxed: 1.6;
 
   /* Letter Spacing */
+  --letter-spacing-h1: -1.12px;
   --letter-spacing-h2: -0.72px;
   --letter-spacing-h3: -0.48px;
+  --letter-spacing-h4: 0.48px;
   --letter-spacing-body: -0.32px;
   --letter-spacing-cta: 0.36px;
   --letter-spacing-h5: 0.42px;

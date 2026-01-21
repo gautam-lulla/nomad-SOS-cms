@@ -197,7 +197,7 @@ export function Navigation({
                         "leading-[1.2] tracking-tight-h2",
                         "text-off-white-100 hover:text-pink-500 hover:italic",
                         "transition-all duration-300 ease-out",
-                        "font-sabon text-h2-mobile md:text-[32px] lg:text-h2"
+                        "font-sabon text-h2-mobile md:text-h2-tablet lg:text-h2"
                       )}
                       data-cms-entry="global-settings"
                       data-cms-field={`navigation.links[${index}].label`}

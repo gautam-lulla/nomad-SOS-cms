@@ -48,13 +48,13 @@ export function TeamGrid({ members, className, cmsEntry, cmsFieldPrefix }: TeamG
           <div className="px-4 md:px-6 lg:px-[40px] pt-6 lg:pt-m">
             <div className="mb-xs">
               <h3
-                className="font-gotham font-bold text-[16px] uppercase tracking-[0.48px] text-off-white-100 leading-tight"
+                className="font-gotham font-bold text-h4 uppercase text-off-white-100"
                 {...cmsAttrs(index, "name")}
               >
                 {member.name}
               </h3>
               <p
-                className="font-gotham font-bold text-[16px] uppercase tracking-[0.48px] text-off-white-100 leading-tight"
+                className="font-gotham font-bold text-h4 uppercase text-off-white-100"
                 {...cmsAttrs(index, "title")}
               >
                 {member.title}

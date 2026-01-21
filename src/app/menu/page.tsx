@@ -51,7 +51,7 @@ export default async function MenuPage() {
               {categories.map((category, index) => (
                 <button
                   key={category.id}
-                  className={`font-sabon text-[18px] md:text-[20px] lg:text-h3 tracking-tight-h3 text-left transition-colors whitespace-nowrap ${
+                  className={`font-sabon text-h3-mobile md:text-h3-tablet lg:text-h3 text-left transition-colors whitespace-nowrap ${
                     index === 0
                       ? "text-pink-500 italic"
                       : "text-off-white-100 hover:text-pink-500"
@@ -71,7 +71,7 @@ export default async function MenuPage() {
             {/* Menu Header */}
             <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-6 lg:mb-m border-b border-off-white-100 pb-xs">
               <h1
-                className="font-sabon text-[36px] md:text-[48px] lg:text-[56px] leading-tight text-off-white-100"
+                className="font-sabon text-h1-mobile md:text-h1-tablet lg:text-h1 text-off-white-100"
                 data-cms-entry={categories.find(c => c.id === activeCategoryId)?.slug}
                 data-cms-field="name"
                 data-cms-label="Menu Title"
@@ -113,7 +113,7 @@ export default async function MenuPage() {
                     >
                       <div className="flex-1">
                         <h3
-                          className="font-gotham font-bold text-[14px] uppercase tracking-[0.42px] text-off-white-100"
+                          className="font-gotham font-bold text-h5 uppercase text-off-white-100"
                           data-cms-field="name"
                         >
                           {item.name}
@@ -126,7 +126,7 @@ export default async function MenuPage() {
                         </p>
                       </div>
                       <span
-                        className="font-gotham font-bold text-[14px] text-off-white-100 ml-4 lg:ml-m"
+                        className="font-gotham font-bold text-h5 text-off-white-100 ml-4 lg:ml-m"
                         data-cms-field="price"
                       >
                         {item.price}

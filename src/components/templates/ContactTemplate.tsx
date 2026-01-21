@@ -21,7 +21,7 @@ export function ContactTemplate({ slug, pageContent, instagramContent }: Contact
           {/* Contact Info */}
           <div className="lg:w-1/2">
             <h1
-              className="font-sabon text-[36px] md:text-[48px] lg:text-[56px] leading-tight text-off-white-100 mb-xs"
+              className="font-sabon text-h1-mobile md:text-h1-tablet lg:text-h1 text-off-white-100 mb-xs"
               data-cms-entry={slug}
               data-cms-field="hero.title"
               data-cms-label="Hero Title"
