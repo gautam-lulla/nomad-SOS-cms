@@ -1,155 +1,207 @@
-import { cn } from "@/lib/utils";
-import { Input, Checkbox } from "@/components/ui";
-import { Logo } from "./Logo";
-import Image from "next/image";
-import Link from "next/link";
-import type { NavigationLink, HoursEntry } from "@/lib/content";
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface FooterProps {
-  className?: string;
-  location: {
-    name: string;
-    address: string;
-    phone: string;
-  };
-  hours: HoursEntry[];
-  wordmarkImage: string;
-  wordmarkAlt: string;
-  newsletterPlaceholder: string;
-  newsletterConsentText: string;
-  links: NavigationLink[];
-  legalLinks: NavigationLink[];
+  column1Title?: string;
+  column1Links?: Array<{ label: string; url?: string | null }>;
+  column2Title?: string;
+  column2Links?: Array<{ label: string; url?: string | null }>;
+  column3Title?: string;
+  column3Links?: Array<{ label: string; url?: string | null }>;
+  newsletterHeading?: string;
+  newsletterPlaceholder?: string;
+  privacyPolicyLabel?: string;
+  copyrightText?: string;
+  legalLinks?: Array<{ label: string; url: string }>;
+  footerLogo?: string;
+  footerLogoAlt?: string;
+  wordmark?: string;
+  wordmarkAlt?: string;
 }
 
 export function Footer({
-  className,
-  location,
-  hours,
-  wordmarkImage,
-  wordmarkAlt,
+  column1Links,
+  column2Links,
+  column3Links,
+  newsletterHeading,
   newsletterPlaceholder,
-  newsletterConsentText,
-  links,
+  privacyPolicyLabel,
+  copyrightText,
   legalLinks,
+  footerLogo,
+  footerLogoAlt,
+  wordmark,
+  wordmarkAlt,
 }: FooterProps) {
-  // Parse address into lines for display
-  const addressLines = location.address.split(", ");
-  const addressPart1 = addressLines.slice(0, 2).join(", ");
-  const addressPart2 = addressLines.slice(2).join(", ");
-
   return (
-    <footer className={cn("bg-pink-500", className)}>
-      <div className="max-w-[1440px] mx-auto">
-        {/* Main Footer Content */}
-        <div className="flex flex-col lg:flex-row items-start justify-between p-4 md:p-6 lg:p-3m gap-8 lg:gap-0">
-          {/* Address */}
-          <div className="w-full lg:w-[229px]">
-            <div
-              className="font-gotham font-bold text-h5 uppercase tracking-wide-h5 text-black-900 leading-relaxed"
-              data-cms-entry="global-settings"
-              data-cms-field="location"
-              data-cms-type="json"
-              data-cms-label="Location"
-            >
-              <p>{location.name}</p>
-              <p>{addressPart1},</p>
-              <p>{addressPart2}</p>
+    <footer className="bg-pink-400">
+      {/* Main Footer Content */}
+      <div className="flex flex-col gap-[60px] items-center pt-0 max-w-page mx-auto">
+        {/* Top Row - Columns */}
+        <div className="w-full flex flex-wrap justify-between p-[60px]">
+          {/* Column 1 - Location */}
+          {column1Links && column1Links.length > 0 && (
+            <div className="w-[229px]">
+              {column1Links.map((link, index) => (
+                <p
+                  key={index}
+                  className="font-gotham font-bold text-sm uppercase tracking-[0.42px] leading-[1.6] text-ink-900"
+                  data-cms-entry="global-footer"
+                  data-cms-field={`column1Links[${index}].label`}
+                >
+                  {link.label}
+                </p>
+              ))}
             </div>
-          </div>
+          )}
 
-          {/* Hours */}
-          <div
-            className="font-gotham font-bold text-h5 uppercase tracking-wide-h5 text-black-900 leading-relaxed"
-            data-cms-entry="global-settings"
-            data-cms-field="hours"
-            data-cms-type="array"
-            data-cms-label="Hours"
-          >
-            {hours.map((entry, index) => (
-              <p key={index}>
-                {entry.days} {entry.time}
+          {/* Column 2 - Hours */}
+          {column2Links && column2Links.length > 0 && (
+            <div>
+              {column2Links.map((link, index) => (
+                <p
+                  key={index}
+                  className="font-gotham font-bold text-sm uppercase tracking-[0.42px] leading-[1.6] text-ink-900"
+                  data-cms-entry="global-footer"
+                  data-cms-field={`column2Links[${index}].label`}
+                >
+                  {link.label}
+                </p>
+              ))}
+            </div>
+          )}
+
+          {/* Column 3 - Links */}
+          {column3Links && column3Links.length > 0 && (
+            <div className="flex flex-col gap-[2px]">
+              {column3Links.map((link, index) => (
+                link.url ? (
+                  <Link
+                    key={index}
+                    href={link.url}
+                    className="font-gotham font-bold text-sm uppercase tracking-[0.42px] leading-[1.6] text-ink-900 hover:underline"
+                    data-cms-entry="global-footer"
+                    data-cms-field={`column3Links[${index}].label`}
+                  >
+                    {link.label}
+                  </Link>
+                ) : (
+                  <span
+                    key={index}
+                    className="font-gotham font-bold text-sm uppercase tracking-[0.42px] leading-[1.6] text-ink-900"
+                    data-cms-entry="global-footer"
+                    data-cms-field={`column3Links[${index}].label`}
+                  >
+                    {link.label}
+                  </span>
+                )
+              ))}
+            </div>
+          )}
+
+          {/* Newsletter Form */}
+          <div className="w-[433px] flex flex-col gap-3">
+            {newsletterHeading && (
+              <p
+                className="font-gotham font-bold text-sm uppercase tracking-[0.42px] text-ink-900 mb-2"
+                data-cms-entry="global-footer"
+                data-cms-field="newsletterHeading"
+              >
+                {newsletterHeading}
               </p>
-            ))}
+            )}
+            <div className="border-b border-ink-900 pb-3 flex items-center justify-between">
+              <input
+                type="email"
+                placeholder={newsletterPlaceholder}
+                className="flex-1 bg-transparent font-gotham font-bold text-sm uppercase tracking-[0.42px] text-ink-900 placeholder-ink-900 outline-none"
+                data-cms-entry="global-footer"
+                data-cms-field="newsletterPlaceholder"
+              />
+              <button type="submit" aria-label="Subscribe to newsletter">
+                <svg width="13" height="1" viewBox="0 0 13 1" className="text-ink-900">
+                  <path d="M0 0.5H13" stroke="currentColor" strokeWidth="2" />
+                </svg>
+              </button>
+            </div>
+            {privacyPolicyLabel && (
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="privacy-policy"
+                  className="w-[14px] h-[14px] border border-ink-900 bg-transparent"
+                />
+                <label
+                  htmlFor="privacy-policy"
+                  className="font-gotham font-bold text-xs uppercase tracking-[0.36px] text-ink-900"
+                  data-cms-entry="global-footer"
+                  data-cms-field="privacyPolicyLabel"
+                >
+                  {privacyPolicyLabel}
+                </label>
+              </div>
+            )}
           </div>
+        </div>
 
-          {/* Links */}
+        {/* Center Logo */}
+        <div
+          className="w-[272px] h-[272px] relative"
+          data-cms-entry="global-footer"
+          data-cms-field="footerLogo"
+          data-cms-type="image"
+        >
+          <Image
+            src={footerLogo || '/images/logos/footer-mark.svg'}
+            alt={footerLogoAlt || 'NoMad Wynwood Mark'}
+            fill
+            className="object-contain"
+            unoptimized={footerLogo?.endsWith('.svg') || !footerLogo}
+          />
+        </div>
+
+        {/* Wordmark */}
+        <div className="w-full px-[60px] pb-0">
           <div
-            className="flex flex-col gap-[2px]"
-            data-cms-entry="global-settings"
-            data-cms-field="footer.links"
-            data-cms-type="array"
-            data-cms-label="Footer Links"
+            className="w-full h-[96px] relative"
+            data-cms-entry="global-footer"
+            data-cms-field="wordmark"
+            data-cms-type="image"
           >
-            {links.map((link) => (
+            <Image
+              src={wordmark || '/images/logos/footer-wordmark.svg'}
+              alt={wordmarkAlt || 'NoMad Wynwood'}
+              fill
+              className="object-contain object-left"
+              unoptimized={wordmark?.endsWith('.svg') || !wordmark}
+            />
+          </div>
+        </div>
+
+        {/* Bottom Bar - Copyright & Legal */}
+        <div className="w-full bg-ink-900 py-4 px-5">
+          <div className="flex items-center justify-center gap-4">
+            {copyrightText && (
+              <span
+                className="font-gotham font-bold text-xs uppercase tracking-[0.36px] text-off-white"
+                data-cms-entry="global-footer"
+                data-cms-field="copyrightText"
+              >
+                {copyrightText}
+              </span>
+            )}
+            {legalLinks?.map((link, index) => (
               <Link
-                key={link.href}
-                href={link.href}
-                className="font-gotham font-bold text-h5 uppercase tracking-wide-h5 text-black-900 leading-relaxed hover:underline transition-all duration-300 ease-out hover:opacity-70"
+                key={index}
+                href={link.url}
+                className="font-gotham font-bold text-xs uppercase tracking-[0.36px] text-off-white hover:underline"
+                data-cms-entry="global-footer"
+                data-cms-field={`legalLinks[${index}].label`}
               >
                 {link.label}
               </Link>
             ))}
           </div>
-
-          {/* Newsletter */}
-          <div className="w-full lg:w-[433px]">
-            <form className="flex flex-col gap-3xs">
-              <Input
-                type="email"
-                placeholder={newsletterPlaceholder}
-                variant="dark"
-                showArrow={true}
-                data-cms-entry="global-settings"
-                data-cms-field="footer.newsletterPlaceholder"
-                data-cms-label="Newsletter Placeholder"
-              />
-              <Checkbox
-                label={newsletterConsentText}
-                variant="dark"
-                data-cms-entry="global-settings"
-                data-cms-field="footer.newsletterConsentText"
-                data-cms-label="Newsletter Consent Text"
-              />
-            </form>
-          </div>
-        </div>
-
-        {/* Logo Mark - 272px per Figma */}
-        <div className="flex justify-center py-8 md:py-10 lg:py-3m">
-          <Logo variant="dark" size="large" />
-        </div>
-
-        {/* Horizontal Wordmark - matches hero at 96px */}
-        <div className="px-[30px] lg:px-3m pb-8 md:pb-10 lg:pb-3m">
-          <div className="relative h-[40px] md:h-[70px] lg:h-[96px] w-full max-w-[1320px] mx-auto">
-            <Image
-              src={wordmarkImage}
-              alt={wordmarkAlt}
-              fill
-              className="object-contain"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Legal Bar - Full Width */}
-      <div className="bg-black-900 px-2s py-xs">
-        <div
-          className="flex flex-wrap items-center justify-center gap-xs"
-          data-cms-entry="global-settings"
-          data-cms-field="footer.legalLinks"
-          data-cms-type="array"
-          data-cms-label="Legal Links"
-        >
-          {legalLinks.map((link, index) => (
-            <Link
-              key={index}
-              href={link.href}
-              className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100 hover:underline transition-all duration-300 ease-out hover:text-pink-500"
-            >
-              {link.label}
-            </Link>
-          ))}
         </div>
       </div>
     </footer>

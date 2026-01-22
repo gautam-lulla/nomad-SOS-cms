@@ -1,122 +1,96 @@
-import { SiteNavigation, SiteFooter } from "@/components/layout";
-import {
-  Gallery,
-  FAQAccordion,
-  InstagramFeed,
-} from "@/components/blocks";
-import Link from "next/link";
-import { getPageContent, getInstagramContent } from "@/lib/content";
-import { PrivateEventsForm } from "./private-events-form";
+import { getPageContent, getHeroSection, getInstagramFeed, getGallery, getAllFaqItems } from '@/lib/content';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { Gallery } from '@/components/sections/Gallery';
+import { EventInquiryForm } from '@/components/sections/EventInquiryForm';
+import { FaqAccordion } from '@/components/sections/FaqAccordion';
+import { InstagramFeed } from '@/components/sections/InstagramFeed';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 
-export default async function PrivateEventsPage() {
-  // Fetch content from CMS
-  const privateEventsContent = await getPageContent('private-events');
-  const instagramContent = await getInstagramContent();
-
-  const { hero, gallery, form, faq } = privateEventsContent as {
-    hero: { heading: string; paragraph: string; buttonText: string };
-    gallery: Array<{ src: string; alt: string }>;
-    form: {
-      title: string;
-      fields: {
-        firstName: { label: string; placeholder: string };
-        lastName: { label: string; placeholder: string };
-        email: { label: string; placeholder: string };
-        phone: { label: string; placeholder: string };
-        country: { label: string; placeholder: string };
-        eventType: { label: string; placeholder: string };
-        guests: { label: string; placeholder: string };
-        startTime: { label: string; placeholder: string };
-      };
-      additionalOptions: { label: string; options: string[] };
-      additionalInfo: { label: string; placeholder: string };
-      submitText: string;
-    };
-    faq: { title: string; items: Array<{ question: string; answer: string }> };
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPageContent('private-events');
+  return {
+    title: page?.metaTitle || 'Private Events',
+    description: page?.metaDescription,
   };
+}
+
+export default async function PrivateEventsPage() {
+  const page = await getPageContent('private-events');
+  if (!page) {
+    return <div>Page not found</div>;
+  }
+
+  const hero = page.heroSlug ? await getHeroSection(page.heroSlug) : null;
+  const gallery = await getGallery('private-events-gallery');
+  const faqs = await getAllFaqItems();
+  const instagram = page.showInstagram ? await getInstagramFeed() : null;
+
+  // Filter FAQs by private-events category if applicable
+  const filteredFaqs = page.faqCategory
+    ? faqs.filter((faq) => faq.category === page.faqCategory)
+    : faqs;
 
   return (
-    <main className="bg-black-900 min-h-screen">
-      {/* Navigation */}
-      <SiteNavigation />
-
+    <>
       {/* Hero Section */}
-      <section className="pt-[120px] md:pt-[130px] lg:pt-[140px] px-[30px] lg:px-3m">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
-          {/* Heading */}
-          <div className="lg:w-1/2">
-            <h1
-              className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 max-w-[544px]"
-              data-cms-entry="private-events"
-              data-cms-field="hero.heading"
-              data-cms-label="Hero Heading"
-            >
-              {hero.heading}
-            </h1>
-          </div>
+      {hero && (
+        <HeroSection
+          entry={page.heroSlug!}
+          variant={hero.variant as 'split-screen' | 'full-screen' | 'gallery' | 'text-only'}
+          headline={hero.headline}
+          subtitle={hero.subtitle}
+          bodyText={hero.bodyText}
+          backgroundImage={hero.backgroundImage}
+          backgroundImageAlt={hero.backgroundImageAlt}
+          ctaText={hero.ctaText}
+          ctaUrl={hero.ctaUrl}
+          ctaAriaLabel={hero.ctaAriaLabel}
+          textAlignment={hero.textAlignment as 'left' | 'center' | 'right'}
+          overlayOpacity={hero.overlayOpacity}
+        />
+      )}
 
-          {/* Content */}
-          <div className="lg:w-[433px] lg:ml-auto">
-            <p
-              className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s"
-              data-cms-entry="private-events"
-              data-cms-field="hero.paragraph"
-              data-cms-type="textarea"
-              data-cms-label="Hero Paragraph"
-            >
-              {hero.paragraph}
-            </p>
-            <Link
-              href="#contact-form"
-              className="font-gotham font-bold text-cta uppercase tracking-wide-cta inline-flex items-center justify-center gap-xxs transition-all duration-300 ease-in-out px-s pt-3xs pb-2xs bg-transparent text-off-white-100 border border-off-white-100 hover:bg-pink-500 hover:text-black-900 hover:border-pink-500"
-            >
-              <span
-                data-cms-entry="private-events"
-                data-cms-field="hero.buttonText"
-                data-cms-label="Hero Button Text"
-              >
-                {hero.buttonText}
-              </span>
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Gallery Section */}
+      {gallery && gallery.images.length > 0 && (
+        <Gallery
+          entry="private-events-gallery"
+          sectionLabel={gallery.sectionLabel}
+          images={gallery.images}
+          variant="grid-3"
+        />
+      )}
 
-      {/* Gallery */}
-      <section className="pt-10 md:pt-16 lg:pt-xl">
-        <Gallery images={gallery} />
-      </section>
-
-      {/* Contact Form - Client Component */}
-      <PrivateEventsForm form={form} />
-
-      {/* FAQ Section */}
-      <section className="pt-10 md:pt-16 lg:pt-xl pb-6 lg:pb-3m">
-        <div className="max-w-[877px] mx-auto px-[30px] lg:px-3m">
-          <h2
-            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
-            data-cms-entry="private-events"
-            data-cms-field="faq.title"
-            data-cms-label="FAQ Title"
-          >
-            {faq.title}
-          </h2>
-          <FAQAccordion items={faq.items} cmsEntry="private-events" cmsFieldPrefix="faq" />
-        </div>
-      </section>
-
-      {/* Instagram Feed */}
-      <InstagramFeed
-        title={instagramContent.title}
-        handle={instagramContent.handle}
-        handleUrl={instagramContent.handleUrl}
-        images={instagramContent.images}
+      {/* Event Inquiry Form */}
+      <EventInquiryForm
+        entry="private-events-form"
+        sectionLabel="Inquiries"
+        heading="Tell us about your event"
+        description="Complete the form below and our events team will get back to you within 24 hours to discuss your private event."
       />
 
-      {/* Footer */}
-      <SiteFooter />
-    </main>
+      {/* FAQ Section */}
+      {filteredFaqs.length > 0 && (
+        <FaqAccordion
+          entry="private-events"
+          sectionLabel="Questions"
+          heading={page.faqHeading || 'Frequently Asked Questions'}
+          items={filteredFaqs}
+        />
+      )}
+
+      {/* Instagram Feed */}
+      {instagram && (
+        <InstagramFeed
+          entry="global-instagram"
+          title={instagram.title}
+          handle={instagram.handle}
+          profileUrl={instagram.profileUrl}
+          sectionLabel={instagram.sectionLabel}
+          images={instagram.images}
+        />
+      )}
+    </>
   );
 }

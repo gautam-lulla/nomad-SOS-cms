@@ -1,32 +1,56 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { TextareaHTMLAttributes, forwardRef } from "react";
+import { forwardRef } from 'react';
 
-interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  variant?: "light" | "dark";
+interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label?: string;
+  error?: string;
+  // CMS data attributes
+  'data-cms-entry'?: string;
+  'data-cms-field'?: string;
 }
 
-const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ className, variant = "dark", ...props }, ref) => {
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+  ({ label, error, className = '', id, required, rows = 4, ...props }, ref) => {
+    const textareaId = id || props.name || label?.toLowerCase().replace(/\s+/g, '-');
+
     return (
-      <textarea
-        ref={ref}
-        className={cn(
-          "w-full bg-transparent outline-none resize-y",
-          "border-b border-t-0 border-l-0 border-r-0",
-          "font-sabon text-body-s py-3xs min-h-[150px]",
-          "transition-colors",
-          variant === "dark" && "border-black-900 text-black-900 placeholder:text-black-900/70 focus:border-pink-500",
-          variant === "light" && "border-off-white-100 text-off-white-100 placeholder:text-off-white-100/70 focus:border-pink-500",
-          className
+      <div className="w-full">
+        {label && (
+          <label
+            htmlFor={textareaId}
+            className="block font-gotham font-bold text-xs uppercase tracking-[0.36px] text-off-white mb-2"
+          >
+            {label}
+            {required && <span className="text-pink-400 ml-1">*</span>}
+          </label>
         )}
-        {...props}
-      />
+        <textarea
+          ref={ref}
+          id={textareaId}
+          required={required}
+          rows={rows}
+          className={`
+            w-full
+            bg-transparent
+            border-b border-off-white/30
+            py-3
+            font-sabon text-base text-off-white
+            placeholder:text-off-white/50
+            focus:outline-none focus:border-pink-400
+            transition-colors duration-200
+            resize-none
+            ${error ? 'border-red-500' : ''}
+            ${className}
+          `}
+          {...props}
+        />
+        {error && (
+          <p className="mt-2 font-gotham text-xs text-red-500">{error}</p>
+        )}
+      </div>
     );
   }
 );
 
-TextArea.displayName = "TextArea";
-
-export { TextArea };
+Textarea.displayName = 'Textarea';

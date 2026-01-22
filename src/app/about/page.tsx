@@ -1,134 +1,138 @@
-import { SiteNavigation, SiteFooter } from "@/components/layout";
-import {
-  SectionHalfScreen,
-  TextSection,
-  TeamGrid,
-  AwardsCarousel,
-  FAQAccordion,
-  InstagramFeed,
-  FullWidthImage,
-} from "@/components/blocks";
-import Image from "next/image";
-import { getPageContent, getInstagramContent } from "@/lib/content";
+import { getPageContent, getHeroSection, getContentSection, getInstagramFeed, getAllFaqItems, getAllAwards } from '@/lib/content';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { ContentSection } from '@/components/sections/ContentSection';
+import { InstagramFeed } from '@/components/sections/InstagramFeed';
+import { TeamSection } from '@/components/sections/TeamSection';
+import { AwardsGrid } from '@/components/sections/AwardCard';
+import { FaqAccordion } from '@/components/sections/FaqAccordion';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 
-export default async function AboutPage() {
-  // Fetch content from CMS
-  const aboutContent = await getPageContent('about');
-  const instagramContent = await getInstagramContent();
-
-  const { hero, heritage, quote, fullWidthImage, team, awards, faq } = aboutContent as {
-    hero: { heading: string; imageSrc: string };
-    heritage: { title: string; paragraph: string; imageSrc: string };
-    quote: { heading: string; paragraph: string };
-    fullWidthImage?: { src: string; alt: string };
-    team: Array<{ name: string; title: string; description: string; imageSrc: string }>;
-    awards: { title: string; logos: Array<{ src: string; alt: string }> };
-    faq: { title: string; items: Array<{ question: string; answer: string }> };
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPageContent('about');
+  return {
+    title: page?.metaTitle || 'About',
+    description: page?.metaDescription,
   };
+}
+
+export default async function AboutPage() {
+  const page = await getPageContent('about');
+  if (!page) {
+    return <div>Page not found</div>;
+  }
+
+  const hero = page.heroSlug ? await getHeroSection(page.heroSlug) : null;
+  const instagram = page.showInstagram ? await getInstagramFeed() : null;
+
+  // Fetch content sections
+  const sections = await Promise.all(
+    (page.sections || []).map(async (section) => {
+      if (section.type === 'content-section') {
+        return { type: 'content-section', slug: section.slug, data: await getContentSection(section.slug) };
+      }
+      return null;
+    })
+  );
+
+  // Fetch FAQ items (filter by category if specified)
+  const allFaqItems = page.showFaq ? await getAllFaqItems() : [];
+  const faqItems = page.faqCategory
+    ? allFaqItems.filter(item => item.category === page.faqCategory)
+    : allFaqItems;
+
+  // Fetch awards
+  const awards = page.showAwards ? await getAllAwards() : [];
+  const sortedAwards = [...awards].sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+
 
   return (
-    <main className="bg-black-900 min-h-screen">
-      {/* Navigation */}
-      <SiteNavigation />
-
-      {/* Hero Section with Heading Overlay */}
-      <section className="relative">
-        {/* Heading */}
-        <div className="pt-[140px] md:pt-[180px] lg:pt-[210px] pb-6 lg:pb-3m px-[30px] lg:px-3m">
-          <h1
-            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 max-w-[544px]"
-            data-cms-entry="about"
-            data-cms-field="hero.heading"
-            data-cms-label="Hero Heading"
-          >
-            {hero.heading}
-          </h1>
-        </div>
-
-        {/* Full Width Hero Image */}
-        <div className="relative h-[400px] md:h-[600px] lg:h-[840px] w-full">
-          <Image
-            src={hero.imageSrc}
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-      </section>
-
-      {/* Heritage Section */}
-      <SectionHalfScreen
-        heading={heritage.title}
-        paragraphs={[heritage.paragraph]}
-        imageSrc={heritage.imageSrc}
-        variant="image-right"
-        headingSize="h1"
-        cmsEntry="about"
-        cmsFieldPrefix="heritage"
-      />
-
-      {/* Quote Section */}
-      <section className="py-10 md:py-16 lg:py-xl">
-        <TextSection
-          heading={quote.heading}
-          paragraph={quote.paragraph}
-          layout="centered"
-          cmsEntry="about"
-          cmsFieldPrefix="quote"
+    <>
+      {/* Hero Section */}
+      {hero && (
+        <HeroSection
+          entry={page.heroSlug!}
+          variant={hero.variant as 'split-screen' | 'full-screen' | 'gallery' | 'text-only'}
+          headline={hero.headline}
+          subtitle={hero.subtitle}
+          bodyText={hero.bodyText}
+          backgroundImage={hero.backgroundImage}
+          backgroundImageAlt={hero.backgroundImageAlt}
+          ctaText={hero.ctaText}
+          ctaUrl={hero.ctaUrl}
+          ctaAriaLabel={hero.ctaAriaLabel}
+          textAlignment={hero.textAlignment as 'left' | 'center' | 'right'}
+          overlayOpacity={hero.overlayOpacity}
         />
-      </section>
+      )}
 
-      {/* Team Grid */}
-      <section>
-        <TeamGrid members={team} />
-      </section>
+      {/* Content Sections */}
+      {sections.map((section, index) => {
+        if (!section || !section.data) return null;
 
-      {/* Full Width Image */}
-      {fullWidthImage && (
-        <section className="mt-10 md:mt-16 lg:mt-xl">
-          <FullWidthImage
-            src={fullWidthImage.src}
-            alt={fullWidthImage.alt}
-          />
-        </section>
+        if (section.type === 'content-section') {
+          const data = section.data;
+          return (
+            <ContentSection
+              key={index}
+              entry={section.slug}
+              variant={data.variant as 'image-left' | 'image-right' | 'text-only' | 'full-width-image'}
+              heading={data.heading}
+              subheading={data.subheading}
+              bodyText={data.bodyText}
+              image={data.image}
+              imageAlt={data.imageAlt}
+              ctaText={data.ctaText}
+              ctaUrl={data.ctaUrl}
+              ctaAriaLabel={data.ctaAriaLabel}
+              backgroundColor={data.backgroundColor as 'dark' | 'light' | 'pink'}
+            />
+          );
+        }
+
+        return null;
+      })}
+
+      {/* Team Section */}
+      {page.showTeam && page.teamMembers && page.teamMembers.length > 0 && (
+        <TeamSection
+          entry="about"
+          heading={page.teamHeading}
+          subheading={page.teamSubheading}
+          members={page.teamMembers}
+        />
       )}
 
       {/* Awards Section */}
-      <section className="pt-16 md:pt-24 lg:pt-[160px]">
-        <AwardsCarousel
-          title={awards.title}
-          logos={awards.logos}
+      {page.showAwards && sortedAwards.length > 0 && (
+        <AwardsGrid
+          entry="about"
+          heading={page.awardsHeading || 'Awards & Recognitions'}
+          awards={sortedAwards}
         />
-      </section>
+      )}
 
       {/* FAQ Section */}
-      <section className="pt-16 md:pt-24 lg:pt-[160px] pb-6 lg:pb-3m">
-        <div className="max-w-[877px] mx-auto px-[30px] lg:px-3m">
-          <h2
-            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
-            data-cms-entry="about"
-            data-cms-field="faq.title"
-            data-cms-label="FAQ Title"
-          >
-            {faq.title}
-          </h2>
-          <FAQAccordion items={faq.items} cmsEntry="about" cmsFieldPrefix="faq" />
-        </div>
-      </section>
+      {page.showFaq && faqItems.length > 0 && (
+        <FaqAccordion
+          entry="about"
+          heading={page.faqHeading || 'Frequently Asked Questions'}
+          items={faqItems}
+        />
+      )}
 
       {/* Instagram Feed */}
-      <InstagramFeed
-        title={instagramContent.title}
-        handle={instagramContent.handle}
-        handleUrl={instagramContent.handleUrl}
-        images={instagramContent.images}
-      />
-
-      {/* Footer */}
-      <SiteFooter />
-    </main>
+      {instagram && (
+        <InstagramFeed
+          entry="global-instagram"
+          title={instagram.title}
+          handle={instagram.handle}
+          profileUrl={instagram.profileUrl}
+          sectionLabel={instagram.sectionLabel}
+          images={instagram.images}
+        />
+      )}
+    </>
   );
 }

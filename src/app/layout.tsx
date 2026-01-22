@@ -1,95 +1,101 @@
-import type { Metadata } from "next";
-import localFont from "next/font/local";
-import { Suspense } from "react";
-import { InlineEditorLoader } from "@/components/InlineEditorLoader";
-import "./globals.css";
+import { Suspense } from 'react';
+import './globals.css';
+import { Navigation } from '@/components/layout/Navigation';
+import { Footer } from '@/components/layout/Footer';
+import { InlineEditorLoader } from '@/components/InlineEditorLoader';
+import { getSiteSettings, getNavigation, getFooter } from '@/lib/content';
 
-const sabon = localFont({
-  src: [
-    {
-      path: "../../public/fonts/Sabon/Sabon.ttf",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/Sabon/SabonItalic.ttf",
-      weight: "400",
-      style: "italic",
-    },
-    {
-      path: "../../public/fonts/Sabon/SabonBold.ttf",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/Sabon/SabonBoldItalic.ttf",
-      weight: "700",
-      style: "italic",
-    },
-  ],
-  variable: "--font-sabon",
-  display: "swap",
-});
+export const dynamic = 'force-dynamic';
 
-const gotham = localFont({
-  src: [
-    {
-      path: "../../public/fonts/gotham/Gotham-Book.otf",
-      weight: "400",
-      style: "normal",
+export async function generateMetadata() {
+  const settings = await getSiteSettings();
+  return {
+    title: {
+      default: settings?.siteName || 'NoMad Wynwood',
+      template: `%s | ${settings?.siteName || 'NoMad Wynwood'}`,
     },
-    {
-      path: "../../public/fonts/gotham/Gotham-BookItalic.otf",
-      weight: "400",
-      style: "italic",
-    },
-    {
-      path: "../../public/fonts/gotham/Gotham-Medium.otf",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/gotham/Gotham-MediumItalic.otf",
-      weight: "500",
-      style: "italic",
-    },
-    {
-      path: "../../public/fonts/gotham/Gotham-Bold.otf",
-      weight: "700",
-      style: "normal",
-    },
-    {
-      path: "../../public/fonts/gotham/Gotham-BoldItalic.otf",
-      weight: "700",
-      style: "italic",
-    },
-  ],
-  variable: "--font-gotham",
-  display: "swap",
-});
+    description: settings?.siteDescription || 'Experience exceptional dining at NoMad Wynwood',
+  };
+}
 
-export const metadata: Metadata = {
-  title: "NoMad Wynwood",
-  description: "NoMad Wynwood - The NoMad Bar in Miami",
-};
-
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
+  // Fetch global content
+  const [settings, navigation, footer] = await Promise.all([
+    getSiteSettings(),
+    getNavigation(),
+    getFooter(),
+  ]);
+
   return (
     <html lang="en">
-      <body className={`${sabon.variable} ${gotham.variable} antialiased bg-black-900`}>
-        <div className="max-w-page mx-auto">
-          {children}
-        </div>
-        <Suspense fallback={null}>
-          <InlineEditorLoader
-            orgSlug="spherical-hospitality"
-            apiBase={process.env.NEXT_PUBLIC_CMS_URL || "https://backend-production-162b.up.railway.app"}
-            adminBase={process.env.NEXT_PUBLIC_CMS_ADMIN_URL || "https://sphereos.vercel.app"}
+      <head>
+        {/* Load fonts via CSS - fallback to system fonts */}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+              :root {
+                --font-sabon: 'Georgia', 'Times New Roman', serif;
+                --font-gotham: 'system-ui', 'Helvetica Neue', sans-serif;
+              }
+            `,
+          }}
+        />
+      </head>
+      <body className="bg-ink-900 text-off-white min-h-screen">
+        {/* Navigation */}
+        {settings && navigation && (
+          <Navigation
+            logoUrl={settings.logoUrl}
+            logoAlt={settings.logoAlt || settings.siteName}
+            menuLinks={navigation.menuLinks || []}
+            ctaText={navigation.ctaText}
+            ctaUrl={navigation.ctaUrl}
+            ctaAriaLabel={navigation.ctaAriaLabel}
+            backgroundImage={navigation.backgroundImage}
+            backgroundImageAlt={navigation.backgroundImageAlt}
+            address={
+              settings.address
+                ? `${settings.address.street}\n${settings.address.city}, ${settings.address.state} ${settings.address.zip}`
+                : undefined
+            }
+            phone={settings.phone}
+            hours={settings.hours}
+            menuButtonOpenLabel={navigation.menuButtonOpenLabel}
+            menuButtonCloseLabel={navigation.menuButtonCloseLabel}
+            locationSectionLabel={navigation.locationSectionLabel}
+            hoursSectionLabel={navigation.hoursSectionLabel}
+            closedDayLabel={settings.closedDayLabel}
           />
+        )}
+
+        {/* Main Content */}
+        <main className="pt-[110px] max-w-page mx-auto">{children}</main>
+
+        {/* Footer */}
+        {footer && (
+          <Footer
+            column1Links={footer.column1Links}
+            column2Links={footer.column2Links}
+            column3Links={footer.column3Links}
+            newsletterHeading={footer.newsletterHeading}
+            newsletterPlaceholder={footer.newsletterPlaceholder}
+            privacyPolicyLabel={footer.privacyPolicyLabel}
+            copyrightText={footer.copyrightText}
+            legalLinks={footer.legalLinks}
+            footerLogo={footer.footerLogo}
+            footerLogoAlt={footer.footerLogoAlt}
+            wordmark={footer.wordmark}
+            wordmarkAlt={footer.wordmarkAlt}
+          />
+        )}
+
+        {/* Inline Editor */}
+        <Suspense fallback={null}>
+          <InlineEditorLoader orgSlug="spherical-hospitality" />
         </Suspense>
       </body>
     </html>

@@ -1,55 +1,47 @@
-import { SiteNavigation } from "@/components/layout";
-import { getSiteSettings } from "@/lib/content";
-import Image from "next/image";
-import Link from "next/link";
+import { getPageContent, getHeroSection } from '@/lib/content';
+import { HeroSection } from '@/components/sections/HeroSection';
+
+export const dynamic = 'force-dynamic';
 
 export default async function NotFound() {
-  const settings = await getSiteSettings();
-  const { notFound } = settings;
+  const page = await getPageContent('404');
+  const hero = page?.heroSlug ? await getHeroSection(page.heroSlug) : null;
 
-  return (
-    <main className="bg-black-900 h-screen overflow-hidden relative">
-      {/* Navigation */}
-      <SiteNavigation />
-
-      {/* Gallery Strip - positioned below nav */}
-      <section className="absolute top-[100px] md:top-[105px] lg:top-[110px] left-0 right-0">
-        <div className="grid grid-cols-3 md:grid-cols-6 h-[310px] md:h-[296px]">
-          {notFound.galleryImages.map((image, index) => (
-            <div
-              key={index}
-              className="relative"
-            >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                className="object-cover"
-              />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 404 Content - positioned at bottom */}
-      <section className="absolute bottom-0 left-0 right-0 p-[30px] lg:p-[60px]">
-        <div className="flex flex-col gap-2xxs">
-          <h1 className="font-sabon text-h2-mobile lg:text-h2 text-off-white-100 leading-tight tracking-tight-h2">
-            {notFound.title}
+  if (!hero) {
+    // Fallback if CMS content not available
+    return (
+      <section className="relative h-[600px] bg-ink-900 flex items-center justify-center px-[60px]">
+        <div className="max-w-[800px] text-center">
+          <h1 className="font-sabon text-[48px] leading-[1.2] tracking-[-1px] text-off-white">
+            Page Not Found
           </h1>
-          <div className="flex flex-col gap-3s">
-            <p className="font-sabon text-h2-mobile lg:text-h2 text-off-white-100 leading-tight tracking-tight-h2">
-              {notFound.message}
-            </p>
-            <Link
-              href={notFound.buttonHref}
-              className="font-gotham font-bold text-cta uppercase tracking-wide-cta inline-flex items-center justify-center w-fit px-s pt-3xs pb-2xs bg-transparent text-off-white-100 border border-off-white-100 hover:bg-pink-500 hover:text-black-900 hover:border-pink-500 transition-all duration-300"
+          <p className="font-sabon text-base leading-[1.6] tracking-[-0.32px] text-off-white mt-6">
+            The page you&apos;re looking for doesn&apos;t exist.
+          </p>
+          <div className="mt-8">
+            <a
+              href="/"
+              className="inline-flex items-center justify-center font-gotham font-bold text-xs uppercase tracking-[0.36px] px-[18px] pt-[12px] pb-[14px] border border-off-white text-off-white hover:bg-off-white hover:text-ink-900 transition-colors"
             >
-              {notFound.buttonText}
-            </Link>
+              Return Home
+            </a>
           </div>
         </div>
       </section>
-    </main>
+    );
+  }
+
+  return (
+    <HeroSection
+      entry={page?.heroSlug || 'hero-404'}
+      variant={hero.variant as 'split-screen' | 'full-screen' | 'gallery' | 'text-only'}
+      headline={hero.headline}
+      subtitle={hero.subtitle}
+      bodyText={hero.bodyText}
+      ctaText={hero.ctaText}
+      ctaUrl={hero.ctaUrl}
+      ctaAriaLabel={hero.ctaAriaLabel}
+      textAlignment={hero.textAlignment as 'left' | 'center' | 'right'}
+    />
   );
 }

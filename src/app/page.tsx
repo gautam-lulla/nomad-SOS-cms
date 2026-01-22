@@ -1,262 +1,128 @@
-import { SiteNavigation, SiteFooter } from "@/components/layout";
 import {
-  HeroSplitScreen,
-  Gallery,
-  SectionHalfScreen,
-  InstagramFeed,
-  FullWidthImage,
-} from "@/components/blocks";
-import { Button } from "@/components/ui";
-import Link from "next/link";
-import { getPageContent, getInstagramContent } from "@/lib/content";
+  getPageContent,
+  getHeroSection,
+  getContentSection,
+  getGallery,
+  getInstagramFeed,
+  ContentSection as ContentSectionData,
+  Gallery as GalleryData,
+} from '@/lib/content';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { ContentSection } from '@/components/sections/ContentSection';
+import { Gallery } from '@/components/sections/Gallery';
+import { InstagramFeed } from '@/components/sections/InstagramFeed';
 
-// Force dynamic rendering - content comes from CMS at request time
 export const dynamic = 'force-dynamic';
 
-export default async function HomePage() {
-  // Fetch content from CMS
-  const homepageContent = await getPageContent('homepage');
-  const instagramContent = await getInstagramContent();
+type SectionResult =
+  | { type: 'content-section'; slug: string; data: ContentSectionData | null }
+  | { type: 'gallery'; slug: string; data: GalleryData | null }
+  | null;
 
-  const {
-    hero,
-    introSection,
-    gallery,
-    menuSection,
-    eventsSection,
-    contactSection,
-  } = homepageContent as {
-    hero: { leftImage: string; rightImage: string; logoSrc: string };
-    introSection: {
-      heading: string;
-      paragraph: string;
-      buttonText: string;
-      location: { address: string; phone: string };
-      hours: { times: string[] };
-    };
-    gallery: Array<{ src: string; alt: string }>;
-    menuSection: { heading: string; paragraph: string; buttonText: string; buttonHref: string; fullWidthImage?: { src: string; alt: string } };
-    eventsSection: {
-      heading: string;
-      paragraph: string;
-      buttonText: string;
-      buttonHref: string;
-      imageSrc: string;
-    };
-    contactSection: {
-      heading: string;
-      paragraph: string;
-      buttonText: string;
-      buttonHref: string;
-      imageSrc: string;
-    };
-  };
+export default async function HomePage() {
+  // Fetch page content
+  const page = await getPageContent('home');
+  if (!page) {
+    return <div>Page not found</div>;
+  }
+
+  // Fetch hero section
+  const hero = page.heroSlug ? await getHeroSection(page.heroSlug) : null;
+
+  // Fetch content sections
+  const sections: SectionResult[] = await Promise.all(
+    (page.sections || []).map(async (section): Promise<SectionResult> => {
+      if (section.type === 'content-section') {
+        return { type: 'content-section', slug: section.slug, data: await getContentSection(section.slug) };
+      }
+      if (section.type === 'gallery') {
+        return { type: 'gallery', slug: section.slug, data: await getGallery(section.slug) };
+      }
+      return null;
+    })
+  );
+
+  // Fetch Instagram feed if enabled
+  const instagram = page.showInstagram ? await getInstagramFeed() : null;
 
   return (
-    <main className="bg-black-900 min-h-screen">
-      {/* Navigation */}
-      <SiteNavigation />
-
+    <>
       {/* Hero Section */}
-      <HeroSplitScreen
-        leftImage={hero.leftImage}
-        rightImage={hero.rightImage}
-        logoSrc={hero.logoSrc}
-        showGradients={true}
-        showLogo={true}
-        cmsEntry="homepage"
-      />
+      {hero && (
+        <HeroSection
+          entry={page.heroSlug!}
+          variant={hero.variant as 'split-screen' | 'full-screen' | 'gallery' | 'text-only'}
+          headline={hero.headline}
+          subtitle={hero.subtitle}
+          bodyText={hero.bodyText}
+          backgroundImage={hero.backgroundImage}
+          backgroundImageAlt={hero.backgroundImageAlt}
+          backgroundVideo={hero.backgroundVideo}
+          leftImage={hero.leftImage}
+          leftImageAlt={hero.leftImageAlt}
+          rightImage={hero.rightImage}
+          rightImageAlt={hero.rightImageAlt}
+          galleryImages={hero.galleryImages}
+          logoImage={hero.logoImage}
+          logoImageAlt={hero.logoImageAlt}
+          ctaText={hero.ctaText}
+          ctaUrl={hero.ctaUrl}
+          ctaAriaLabel={hero.ctaAriaLabel}
+          textAlignment={hero.textAlignment as 'left' | 'center' | 'right'}
+          overlayOpacity={hero.overlayOpacity}
+        />
+      )}
 
-      {/* Intro Section with Location & Hours */}
-      <section className="pt-10 md:pt-16 lg:pt-3l px-[30px] lg:px-3m">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
-          {/* Heading */}
-          <div className="lg:w-1/2">
-            <h2
-              className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 max-w-[544px]"
-              data-cms-entry="homepage"
-              data-cms-field="intro.heading"
-              data-cms-label="Intro Heading"
-            >
-              {introSection.heading}
-            </h2>
-          </div>
+      {/* Page Sections */}
+      {sections.map((section, index) => {
+        if (!section || !section.data) return null;
 
-          {/* Content */}
-          <div className="lg:w-[715px] lg:ml-auto">
-            <div className="max-w-[433px]">
-              <p
-                className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s"
-                data-cms-entry="homepage"
-                data-cms-field="intro.paragraph"
-                data-cms-type="textarea"
-                data-cms-label="Intro Paragraph"
-              >
-                {introSection.paragraph}
-              </p>
-
-              <Button variant="outline" className="mb-8 lg:mb-3m">
-                <span
-                  data-cms-entry="homepage"
-                  data-cms-field="intro.buttonText"
-                  data-cms-label="Intro Button Text"
-                >
-                  {introSection.buttonText}
-                </span>
-              </Button>
-
-              {/* Location & Hours */}
-              <div className="flex flex-col sm:flex-row gap-6 sm:gap-m">
-                {/* Location */}
-                <div className="w-full sm:w-[186px]">
-                  <div className="flex items-center gap-xxs mb-3xs">
-                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
-                      01.
-                    </span>
-                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
-                      location
-                    </span>
-                  </div>
-                  <div className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body">
-                    <p
-                      data-cms-entry="homepage"
-                      data-cms-field="intro.location.address"
-                      data-cms-label="Address"
-                    >
-                      {introSection.location.address}
-                    </p>
-                    <p
-                      data-cms-entry="homepage"
-                      data-cms-field="intro.location.phone"
-                      data-cms-label="Phone"
-                    >
-                      {introSection.location.phone}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Hours */}
-                <div className="w-full sm:w-[186px]">
-                  <div className="flex items-center gap-xxs mb-3xs">
-                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
-                      02.
-                    </span>
-                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
-                      hours
-                    </span>
-                  </div>
-                  <div
-                    className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body"
-                    data-cms-entry="homepage"
-                    data-cms-field="intro.hours.times"
-                    data-cms-type="array"
-                    data-cms-label="Hours"
-                  >
-                    {introSection.hours.times.map((time, index) => (
-                      <p key={index}>{time}</p>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Gallery */}
-      <section className="pt-10 md:pt-16 lg:pt-xl">
-        <Gallery images={gallery} />
-      </section>
-
-      {/* Menu Section */}
-      <section className="pt-10 md:pt-16 lg:pt-3l">
-        <div className="px-[30px] lg:px-3m">
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-0">
-            {/* Heading */}
-            <div className="lg:w-1/2">
-              <h2
-                className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 max-w-[544px]"
-                data-cms-entry="homepage"
-                data-cms-field="menu.heading"
-                data-cms-label="Menu Heading"
-              >
-                {menuSection.heading}
-              </h2>
-            </div>
-
-            {/* Content */}
-            <div className="lg:w-[715px] lg:ml-auto">
-              <div className="max-w-[433px]">
-                <p
-                  className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s"
-                  data-cms-entry="homepage"
-                  data-cms-field="menu.paragraph"
-                  data-cms-type="textarea"
-                  data-cms-label="Menu Paragraph"
-                >
-                  {menuSection.paragraph}
-                </p>
-                <Link href={menuSection.buttonHref}>
-                  <Button variant="outline">
-                    <span
-                      data-cms-entry="homepage"
-                      data-cms-field="menu.buttonText"
-                      data-cms-label="Menu Button Text"
-                    >
-                      {menuSection.buttonText}
-                    </span>
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Full Width Menu Image */}
-        {menuSection.fullWidthImage && (
-          <div className="mt-10 md:mt-16 lg:mt-xl">
-            <FullWidthImage
-              src={menuSection.fullWidthImage.src}
-              alt={menuSection.fullWidthImage.alt}
+        if (section.type === 'content-section' && section.data) {
+          const data = section.data;
+          return (
+            <ContentSection
+              key={index}
+              entry={section.slug}
+              variant={data.variant as 'image-left' | 'image-right' | 'text-only' | 'full-width-image'}
+              heading={data.heading}
+              subheading={data.subheading}
+              bodyText={data.bodyText}
+              image={data.image}
+              imageAlt={data.imageAlt}
+              ctaText={data.ctaText}
+              ctaUrl={data.ctaUrl}
+              ctaAriaLabel={data.ctaAriaLabel}
+              backgroundColor={data.backgroundColor as 'dark' | 'light' | 'pink'}
             />
-          </div>
-        )}
-      </section>
+          );
+        }
 
-      {/* Events Section - Image Right */}
-      <SectionHalfScreen
-        heading={eventsSection.heading}
-        paragraphs={[eventsSection.paragraph]}
-        buttonText={eventsSection.buttonText}
-        buttonHref={eventsSection.buttonHref}
-        imageSrc={eventsSection.imageSrc}
-        variant="image-right"
-        cmsEntry="homepage"
-        cmsFieldPrefix="events"
-      />
+        if (section.type === 'gallery' && section.data) {
+          const data = section.data;
+          return (
+            <Gallery
+              key={index}
+              entry={section.slug}
+              sectionLabel={data.sectionLabel}
+              images={data.images}
+            />
+          );
+        }
 
-      {/* Contact Section - Image Left */}
-      <SectionHalfScreen
-        heading={contactSection.heading}
-        paragraphs={[contactSection.paragraph]}
-        buttonText={contactSection.buttonText}
-        buttonHref={contactSection.buttonHref}
-        imageSrc={contactSection.imageSrc}
-        variant="image-left"
-        cmsEntry="homepage"
-        cmsFieldPrefix="contact"
-      />
+        return null;
+      })}
 
       {/* Instagram Feed */}
-      <InstagramFeed
-        title={instagramContent.title}
-        handle={instagramContent.handle}
-        handleUrl={instagramContent.handleUrl}
-        images={instagramContent.images}
-      />
-
-      {/* Footer */}
-      <SiteFooter />
-    </main>
+      {instagram && (
+        <InstagramFeed
+          entry="global-instagram"
+          title={instagram.title}
+          handle={instagram.handle}
+          profileUrl={instagram.profileUrl}
+          sectionLabel={instagram.sectionLabel}
+          images={instagram.images}
+        />
+      )}
+    </>
   );
 }

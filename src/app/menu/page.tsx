@@ -1,160 +1,87 @@
-import { SiteNavigation, SiteFooter } from "@/components/layout";
-import { Gallery, InstagramFeed } from "@/components/blocks";
-import Image from "next/image";
-import { getPageContent, getMenuContent, getInstagramContent } from "@/lib/content";
+import { getPageContent, getHeroSection, getAllMenuCategories, getInstagramFeed } from '@/lib/content';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { MenuCategory } from '@/components/sections/MenuCategory';
+import { InstagramFeed } from '@/components/sections/InstagramFeed';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 
-export default async function MenuPage() {
-  // Fetch content from CMS
-  const pageContent = await getPageContent('menu');
-  const menuData = await getMenuContent();
-  const instagramContent = await getInstagramContent();
-
-  // Get page-specific content
-  const { hero, gallery } = pageContent as {
-    hero: { images: Array<{ src: string; alt: string }> };
-    gallery: Array<{ src: string; alt: string }>;
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPageContent('menu');
+  return {
+    title: page?.metaTitle || 'Menu',
+    description: page?.metaDescription,
   };
+}
 
-  // Get menu-specific content
-  const { categories, activeCategoryId, menuTitle, menuSubtitle, sections } = menuData;
+export default async function MenuPage() {
+  const page = await getPageContent('menu');
+  if (!page) {
+    return <div>Page not found</div>;
+  }
+
+  const hero = page.heroSlug ? await getHeroSection(page.heroSlug) : null;
+  const menuCategories = await getAllMenuCategories();
+  const instagram = page.showInstagram ? await getInstagramFeed() : null;
+
+  // Filter to only include categories with items
+  const categoriesWithItems = menuCategories.filter(c => c.items && c.items.length > 0);
+
+  // Sort by sortOrder
+  const sortedCategories = [...categoriesWithItems].sort(
+    (a, b) => (a.sortOrder || 0) - (b.sortOrder || 0)
+  );
 
   return (
-    <main className="bg-black-900 min-h-screen relative">
-      {/* Navigation */}
-      <SiteNavigation />
+    <>
+      {/* Hero Section */}
+      {hero && (
+        <HeroSection
+          entry={page.heroSlug!}
+          variant={hero.variant as 'split-screen' | 'full-screen' | 'gallery' | 'text-only'}
+          headline={hero.headline}
+          subtitle={hero.subtitle}
+          bodyText={hero.bodyText}
+          backgroundImage={hero.backgroundImage}
+          backgroundImageAlt={hero.backgroundImageAlt}
+          leftImage={hero.leftImage}
+          leftImageAlt={hero.leftImageAlt}
+          rightImage={hero.rightImage}
+          rightImageAlt={hero.rightImageAlt}
+          logoImage={hero.logoImage}
+          logoImageAlt={hero.logoImageAlt}
+          textAlignment={hero.textAlignment as 'left' | 'center' | 'right'}
+          overlayOpacity={hero.overlayOpacity}
+        />
+      )}
 
-      {/* Hero Gallery */}
-      <section className="absolute top-0 left-0 right-0 z-0">
-        <div className="flex h-[400px] md:h-[600px] lg:h-[840px]">
-          {hero.images.map((image, index) => (
-            <div key={index} className={`flex-1 relative ${index > 0 ? 'hidden md:block' : ''}`}>
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                className="object-cover"
-                priority={index === 0}
-              />
-            </div>
+      {/* Menu Categories */}
+      <section className="bg-ink-900 px-[60px] py-[60px]">
+        <div className="max-w-[800px]">
+          {sortedCategories.map((category, index) => (
+            <MenuCategory
+              key={index}
+              entry="menu"
+              name={category.name}
+              availability={category.availability}
+              items={category.items || []}
+              index={index}
+            />
           ))}
         </div>
       </section>
 
-      {/* Menu Content */}
-      <section className="relative z-10 pt-[450px] md:pt-[680px] lg:pt-[940px] px-[30px] lg:px-3m pb-10 lg:pb-xl">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-xl">
-          {/* Sidebar Categories */}
-          <div className="lg:w-[320px] shrink-0">
-            <nav className="flex flex-row flex-wrap lg:flex-col gap-3 lg:gap-2xxs lg:sticky lg:top-[100px]">
-              {categories.map((category, index) => (
-                <button
-                  key={category.id}
-                  className={`font-sabon text-h3-mobile md:text-h3-tablet lg:text-h3 text-left transition-colors whitespace-nowrap ${
-                    index === 0
-                      ? "text-pink-500 italic"
-                      : "text-off-white-100 hover:text-pink-500"
-                  }`}
-                  data-cms-entry={category.slug}
-                  data-cms-field="name"
-                  data-cms-label="Category Name"
-                >
-                  {category.name}
-                </button>
-              ))}
-            </nav>
-          </div>
-
-          {/* Menu Items */}
-          <div className="flex-1">
-            {/* Menu Header */}
-            <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-6 lg:mb-m border-b border-off-white-100 pb-xs">
-              <h1
-                className="font-sabon text-h1-mobile md:text-h1-tablet lg:text-h1 text-off-white-100"
-                data-cms-entry={categories.find(c => c.id === activeCategoryId)?.slug}
-                data-cms-field="name"
-                data-cms-label="Menu Title"
-              >
-                {menuTitle}
-              </h1>
-              <span
-                className="font-sabon text-body-s text-off-white-100 italic mt-2 sm:mt-0"
-                data-cms-entry={categories.find(c => c.id === activeCategoryId)?.slug}
-                data-cms-field="subtitle"
-                data-cms-label="Menu Subtitle"
-              >
-                {menuSubtitle}
-              </span>
-            </div>
-
-            {/* Menu Sections */}
-            {sections.map((section) => (
-              <div key={section.id} className="mb-10 lg:mb-l">
-                {/* Section Title */}
-                <h2
-                  className="font-gotham font-bold text-h5 uppercase tracking-wide-h5 text-off-white-100 mb-6 lg:mb-m border-b border-off-white-100 pb-3xs"
-                  data-cms-entry={section.slug}
-                  data-cms-field="name"
-                  data-cms-label="Section Name"
-                >
-                  {section.name}
-                </h2>
-
-                {/* Menu Items Grid */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-10 lg:gap-x-xl gap-y-4 lg:gap-y-m">
-                  {section.items.map((item) => (
-                    <div
-                      key={item.id}
-                      className="flex justify-between items-start border-b border-off-white-100/20 pb-xs"
-                      data-cms-entry={item.slug}
-                      data-cms-type="menu-item"
-                      data-cms-label={item.name}
-                    >
-                      <div className="flex-1">
-                        <h3
-                          className="font-gotham font-bold text-h5 uppercase text-off-white-100"
-                          data-cms-field="name"
-                        >
-                          {item.name}
-                        </h3>
-                        <p
-                          className="font-sabon text-body-s text-off-white-100/70 italic"
-                          data-cms-field="description"
-                        >
-                          {item.description}
-                        </p>
-                      </div>
-                      <span
-                        className="font-gotham font-bold text-h5 text-off-white-100 ml-4 lg:ml-m"
-                        data-cms-field="price"
-                      >
-                        {item.price}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Food Gallery */}
-      <section className="relative z-10">
-        <Gallery images={gallery} />
-      </section>
-
       {/* Instagram Feed */}
-      <InstagramFeed
-        title={instagramContent.title}
-        handle={instagramContent.handle}
-        handleUrl={instagramContent.handleUrl}
-        images={instagramContent.images}
-      />
-
-      {/* Footer */}
-      <SiteFooter />
-    </main>
+      {instagram && (
+        <InstagramFeed
+          entry="global-instagram"
+          title={instagram.title}
+          handle={instagram.handle}
+          profileUrl={instagram.profileUrl}
+          sectionLabel={instagram.sectionLabel}
+          images={instagram.images}
+        />
+      )}
+    </>
   );
 }

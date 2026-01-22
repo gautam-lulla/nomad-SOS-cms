@@ -11,13 +11,14 @@ export default {
       /* ==================== COLORS ==================== */
       colors: {
         // Primitives
-        "off-white": {
-          100: "#f6f4eb",
-        },
-        black: {
+        "off-white": "#f6f4eb",
+        ink: {
           900: "#0e0e0e",
+          800: "#1a1a1a",
         },
         pink: {
+          300: "#f5a5c5",
+          400: "#f07aaa",
           500: "#f07aaa",
         },
         // Semantic - Surface

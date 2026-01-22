@@ -1,9 +1,0 @@
-export { HeroSplitScreen } from "./HeroSplitScreen";
-export { SectionHalfScreen } from "./SectionHalfScreen";
-export { Gallery } from "./Gallery";
-export { InstagramFeed } from "./InstagramFeed";
-export { TextSection } from "./TextSection";
-export { FAQAccordion } from "./FAQAccordion";
-export { TeamGrid } from "./TeamGrid";
-export { FullWidthImage } from "./FullWidthImage";
-export { AwardsCarousel } from "./AwardsCarousel";

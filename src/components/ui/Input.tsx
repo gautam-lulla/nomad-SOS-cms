@@ -1,51 +1,54 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { InputHTMLAttributes, forwardRef } from "react";
-import { ArrowRightIcon } from "@/components/icons";
+import { forwardRef } from 'react';
 
-interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  showArrow?: boolean;
-  variant?: "light" | "dark";
-  inputStyle?: "form" | "newsletter";
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  error?: string;
+  // CMS data attributes
+  'data-cms-entry'?: string;
+  'data-cms-field'?: string;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, showArrow = true, variant = "dark", inputStyle = "newsletter", ...props }, ref) => {
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  ({ label, error, className = '', id, required, ...props }, ref) => {
+    const inputId = id || props.name || label?.toLowerCase().replace(/\s+/g, '-');
+
     return (
-      <div
-        className={cn(
-          "flex items-center justify-between gap-xs",
-          "border-b pb-3xs transition-colors duration-300 ease-out",
-          variant === "dark" && "border-black-900 focus-within:border-pink-500",
-          variant === "light" && "border-off-white-100 focus-within:border-pink-500"
+      <div className="w-full">
+        {label && (
+          <label
+            htmlFor={inputId}
+            className="block font-gotham font-bold text-xs uppercase tracking-[0.36px] text-off-white mb-2"
+          >
+            {label}
+            {required && <span className="text-pink-400 ml-1">*</span>}
+          </label>
         )}
-      >
         <input
           ref={ref}
-          className={cn(
-            "flex-1 bg-transparent outline-none",
-            inputStyle === "newsletter" && "font-gotham font-bold text-h5 uppercase tracking-wide-h5",
-            inputStyle === "form" && "font-sabon text-body-s italic",
-            variant === "dark" && "text-black-900 placeholder:text-black-900/70",
-            variant === "light" && "text-off-white-100 placeholder:text-off-white-100/70",
-            className
-          )}
+          id={inputId}
+          required={required}
+          className={`
+            w-full
+            bg-transparent
+            border-b border-off-white/30
+            py-3
+            font-sabon text-base text-off-white
+            placeholder:text-off-white/50
+            focus:outline-none focus:border-pink-400
+            transition-colors duration-200
+            ${error ? 'border-red-500' : ''}
+            ${className}
+          `}
           {...props}
         />
-        {showArrow && (
-          <ArrowRightIcon
-            className={cn(
-              variant === "dark" && "text-black-900",
-              variant === "light" && "text-off-white-100"
-            )}
-          />
+        {error && (
+          <p className="mt-2 font-gotham text-xs text-red-500">{error}</p>
         )}
       </div>
     );
   }
 );
 
-Input.displayName = "Input";
-
-export { Input };
+Input.displayName = 'Input';

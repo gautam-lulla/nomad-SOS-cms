@@ -1,276 +1,260 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { useState, useEffect, useCallback } from "react";
-import { Button } from "@/components/ui";
-import { HamburgerIcon, CloseIcon } from "@/components/icons";
-import { Logo } from "./Logo";
-import Image from "next/image";
-import Link from "next/link";
-import type { NavigationLink, HoursEntry } from "@/lib/content";
+import { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { Button } from '../ui/Button';
 
 interface NavigationProps {
-  className?: string;
-  links: NavigationLink[];
-  location: {
-    name: string;
-    address: string;
-    phone: string;
-  };
-  hours: HoursEntry[];
-  menuLabel: string;
-  closeLabel: string;
-  reserveButtonText: string;
-  reserveButtonUrl: string;
-  backgroundImage: string;
+  logoUrl: string;
+  logoAlt: string;
+  menuLinks: Array<{
+    label: string;
+    href: string;
+    isExternal?: boolean;
+  }>;
+  ctaText?: string;
+  ctaUrl?: string;
+  ctaAriaLabel?: string;
+  backgroundImage?: string;
+  backgroundImageAlt?: string;
+  // Location info from settings
+  address?: string;
+  phone?: string;
+  // Hours from settings
+  hours?: Array<{
+    days: string;
+    open?: string | null;
+    close?: string | null;
+    closed?: boolean;
+  }>;
+  // UI labels (from CMS)
+  menuButtonOpenLabel?: string;
+  menuButtonCloseLabel?: string;
+  locationSectionLabel?: string;
+  hoursSectionLabel?: string;
+  closedDayLabel?: string;
 }
 
 export function Navigation({
-  className,
-  links,
-  location,
-  hours,
-  menuLabel,
-  closeLabel,
-  reserveButtonText,
-  reserveButtonUrl,
+  logoUrl,
+  logoAlt,
+  menuLinks,
+  ctaText,
+  ctaUrl,
+  ctaAriaLabel,
   backgroundImage,
+  backgroundImageAlt,
+  address,
+  phone,
+  hours,
+  menuButtonOpenLabel,
+  menuButtonCloseLabel,
+  locationSectionLabel,
+  hoursSectionLabel,
+  closedDayLabel,
 }: NavigationProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const closeMenu = useCallback(() => setIsMenuOpen(false), []);
-
-  // Handle Escape key to close menu
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isMenuOpen) {
-        closeMenu();
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isMenuOpen, closeMenu]);
-
-  // Prevent body scroll when menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isMenuOpen]);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <>
-      {/* Main Navigation */}
-      <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 h-[80px] md:h-[100px] lg:h-[110px]",
-          className
-        )}
-      >
-        <div className="relative max-w-page mx-auto h-full">
-          {/* Hamburger Menu */}
+      {/* Fixed Navigation Bar */}
+      <header className="fixed top-0 left-0 right-0 z-50 h-[110px]">
+        <nav className="relative flex items-center justify-between h-full px-5 max-w-page mx-auto">
+          {/* Hamburger / Close Button */}
           <button
-            onClick={() => setIsMenuOpen(true)}
+            onClick={toggleMenu}
+            className="flex items-center gap-3 p-0 cursor-pointer group"
+            aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMenuOpen}
-            aria-controls="main-menu"
-            aria-label="Open navigation menu"
-            className="absolute left-4 md:left-5 top-[24px] md:top-[30px] lg:top-[34px] flex items-center gap-2 md:gap-4 text-off-white-100 cursor-pointer transition-colors duration-300 ease-out hover:text-pink-500"
           >
-            <HamburgerIcon aria-hidden={true} />
+            {isMenuOpen ? (
+              /* Close X Icon */
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                className="text-off-white"
+              >
+                <path
+                  d="M1 1L13 13M13 1L1 13"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            ) : (
+              /* Hamburger Icon - 3 horizontal lines */
+              <div className="w-[50px] h-[14px] flex flex-col justify-between">
+                <span className="block w-full h-[2px] bg-off-white" />
+                <span className="block w-full h-[2px] bg-off-white" />
+                <span className="block w-full h-[2px] bg-off-white" />
+              </div>
+            )}
             <span
-              className="hidden md:inline font-gotham font-bold text-cta uppercase tracking-wide-cta"
-              data-cms-entry="global-settings"
-              data-cms-field="navigation.menuLabel"
-              data-cms-label="Menu Label"
+              className="font-gotham font-bold text-xs uppercase tracking-[0.36px] text-off-white"
+              data-cms-entry="global-navigation"
+              data-cms-field={isMenuOpen ? 'menuButtonCloseLabel' : 'menuButtonOpenLabel'}
             >
-              {menuLabel}
+              {isMenuOpen ? menuButtonCloseLabel : menuButtonOpenLabel}
             </span>
           </button>
 
           {/* Center Logo */}
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-            <Logo variant="light" size="medium" />
-          </div>
-
-          {/* Reserve Button */}
-          <div className="absolute right-4 md:right-5 top-4 md:top-5">
-            <Button
-              variant="filled"
-              className="text-cta-small md:text-cta px-3 md:px-s"
-              {...(reserveButtonUrl && reserveButtonUrl !== "#" ? { as: "a", href: reserveButtonUrl } : {})}
-            >
-              <span
-                data-cms-entry="global-settings"
-                data-cms-field="navigation.reserveButtonText"
-                data-cms-label="Reserve Button Text"
-              >
-                {reserveButtonText}
-              </span>
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      {/* Expanded Menu Overlay */}
-      {isMenuOpen && (
-        <div
-          id="main-menu"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Navigation menu"
-          className="fixed inset-0 z-[100] bg-black-900"
-        >
-          <div className="relative max-w-page mx-auto h-full">
-            {/* Background Image */}
+          <Link
+            href="/"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            aria-label="Home"
+          >
             <div
-              className="absolute right-0 top-0 w-[720px] h-[840px] hidden lg:block"
+              className="w-[110px] h-[110px] relative"
               data-cms-entry="global-settings"
-              data-cms-field="navigation.backgroundImage"
+              data-cms-field="logoUrl"
               data-cms-type="image"
-              data-cms-label="Navigation Background Image"
             >
               <Image
-                src={backgroundImage}
-                alt=""
+                src={logoUrl || '/images/logos/nav-logo-emblem.svg'}
+                alt={logoAlt}
                 fill
-                className="object-cover"
+                className="object-contain"
+                priority
+                unoptimized={logoUrl?.endsWith('.svg') || !logoUrl}
               />
             </div>
+          </Link>
 
-            {/* Close Button */}
-            <button
-              onClick={closeMenu}
-              aria-label="Close navigation menu"
-              className="absolute left-4 md:left-5 top-6 md:top-7 flex items-center gap-2 md:gap-2.5 text-off-white-100 cursor-pointer z-10 transition-colors duration-300 ease-out hover:text-pink-500"
+          {/* CTA Button */}
+          {ctaText && ctaUrl && (
+            <Button
+              href={ctaUrl}
+              variant="primary"
+              ariaLabel={ctaAriaLabel}
+              isExternal
+              data-cms-entry="global-navigation"
+              data-cms-field="ctaText"
             >
-              <CloseIcon aria-hidden={true} />
-              <span
-                className="hidden md:inline font-gotham font-bold text-cta uppercase tracking-wide-cta"
-                data-cms-entry="global-settings"
-                data-cms-field="navigation.closeLabel"
-                data-cms-label="Close Label"
-              >
-                {closeLabel}
-              </span>
-            </button>
+              {ctaText}
+            </Button>
+          )}
+        </nav>
+      </header>
 
-            {/* Reserve Button */}
-            <div className="absolute right-4 md:right-5 top-4 md:top-5 z-10">
-              <Button
-                variant="filled"
-                className="text-cta-small md:text-cta px-3 md:px-s"
-                {...(reserveButtonUrl && reserveButtonUrl !== "#" ? { as: "a", href: reserveButtonUrl } : {})}
-              >
-                <span
-                  data-cms-entry="global-settings"
-                  data-cms-field="navigation.reserveButtonText"
-                  data-cms-label="Reserve Button Text"
-                >
-                  {reserveButtonText}
-                </span>
-              </Button>
-            </div>
-
-            {/* Center Logo */}
-            <div className="absolute left-1/2 top-0 -translate-x-1/2 z-10">
-              <Logo variant="light" size="medium" />
-            </div>
-
-            {/* Menu Links */}
-            <nav
-              aria-label="Main navigation"
-              className="absolute left-4 md:left-[60px] top-[120px] md:top-[160px] lg:top-[190px]"
-            >
-              <ul className="space-y-[3px]" role="list">
-                {links.map((link, index) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      onClick={closeMenu}
-                      className={cn(
-                        "leading-[1.2] tracking-tight-h2",
-                        "text-off-white-100 hover:text-pink-500 hover:italic",
-                        "transition-all duration-300 ease-out",
-                        "font-sabon text-h2-mobile md:text-h2-tablet lg:text-h2"
-                      )}
-                      data-cms-entry="global-settings"
-                      data-cms-field={`navigation.links[${index}].label`}
-                      data-cms-type="text"
-                      data-cms-label={`Nav Link ${index + 1}`}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-
-            {/* Location Info */}
-            <div className="absolute left-4 md:left-[60px] bottom-[80px] md:bottom-[120px] lg:bottom-[178px]">
-              <div className="flex flex-col sm:flex-row gap-6 sm:gap-3m">
-                {/* Location */}
-                <div className="w-full sm:w-[187px]">
-                  <div className="flex items-center gap-2.5 mb-3xs">
-                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
-                      01.
-                    </span>
-                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
-                      location
-                    </span>
-                  </div>
-                  <div className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body">
-                    <p
-                      data-cms-entry="global-settings"
-                      data-cms-field="location.address"
-                      data-cms-label="Address"
-                    >
-                      {location.address}
-                    </p>
-                    <p
-                      data-cms-entry="global-settings"
-                      data-cms-field="location.phone"
-                      data-cms-label="Phone"
-                    >
-                      {location.phone}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Hours */}
-                <div className="w-full sm:w-[187px]">
-                  <div className="flex items-center gap-2.5 mb-3xs">
-                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
-                      02.
-                    </span>
-                    <span className="font-gotham font-bold text-cta uppercase tracking-wide-cta text-off-white-100">
-                      hours
-                    </span>
-                  </div>
-                  <div
-                    className="font-sabon text-body-s text-off-white-100 leading-relaxed tracking-tight-body"
-                    data-cms-entry="global-settings"
-                    data-cms-field="hours"
-                    data-cms-type="array"
-                    data-cms-label="Hours"
-                  >
-                    {hours.map((entry, index) => (
-                      <p key={index}>
-                        {entry.days} {entry.time}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+      {/* Full-Screen Menu Overlay */}
+      <div
+        className={`fixed inset-0 z-40 bg-ink-900 transition-transform duration-500 ${
+          isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+        }`}
+        aria-hidden={!isMenuOpen}
+      >
+        {/* Background Image (right half on desktop, top half on mobile) */}
+        <div className="absolute right-0 top-0 w-full h-[45%] lg:w-1/2 lg:h-full">
+          {backgroundImage && (
+            <Image
+              src={backgroundImage}
+              alt={backgroundImageAlt || ''}
+              fill
+              className="object-cover"
+              data-cms-entry="global-navigation"
+              data-cms-field="backgroundImage"
+              data-cms-type="image"
+            />
+          )}
+          {/* Logo at bottom-left of image section */}
+          <div className="absolute bottom-4 left-4 lg:bottom-8 lg:left-8 w-[80px] h-[80px] lg:w-[100px] lg:h-[100px]">
+            <Image
+              src={logoUrl || '/images/logos/nav-logo-emblem.svg'}
+              alt={logoAlt}
+              fill
+              className="object-contain"
+              unoptimized={logoUrl?.endsWith('.svg') || !logoUrl}
+            />
           </div>
         </div>
-      )}
+
+        {/* Menu Content */}
+        <div className="relative h-full pt-[50%] lg:pt-[190px] px-5 lg:px-[60px] lg:w-1/2">
+          {/* Menu Links */}
+          <nav className="space-y-2">
+            {menuLinks.map((link, index) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="block font-sabon text-[36px] leading-[1.2] tracking-[-0.72px] text-off-white hover:text-pink-400 hover:italic transition-colors"
+                data-cms-entry="global-navigation"
+                data-cms-field={`menuLinks[${index}].label`}
+              >
+                {link.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Bottom Info */}
+          <div className="absolute bottom-[178px] left-[60px] flex gap-[60px]">
+            {/* Location */}
+            {address && (
+              <div className="w-[187px]">
+                <div className="flex items-center gap-[10px] mb-3">
+                  <span
+                    className="font-gotham font-bold text-xs uppercase tracking-[0.36px] text-off-white"
+                    data-cms-entry="global-navigation"
+                    data-cms-field="locationSectionLabel"
+                  >
+                    {locationSectionLabel}
+                  </span>
+                </div>
+                <p
+                  className="font-sabon text-base leading-[1.6] tracking-[-0.32px] text-off-white whitespace-pre-line"
+                  data-cms-entry="global-settings"
+                  data-cms-field="address"
+                >
+                  {address}
+                </p>
+                {phone && (
+                  <p
+                    className="font-sabon text-base leading-[1.6] tracking-[-0.32px] text-off-white"
+                    data-cms-entry="global-settings"
+                    data-cms-field="phone"
+                  >
+                    {phone}
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Hours */}
+            {hours && hours.length > 0 && (
+              <div className="w-[187px]">
+                <div className="flex items-center gap-[10px] mb-3">
+                  <span
+                    className="font-gotham font-bold text-xs uppercase tracking-[0.36px] text-off-white"
+                    data-cms-entry="global-navigation"
+                    data-cms-field="hoursSectionLabel"
+                  >
+                    {hoursSectionLabel}
+                  </span>
+                </div>
+                <div
+                  className="font-sabon text-base leading-[1.6] tracking-[-0.32px] text-off-white"
+                  data-cms-entry="global-settings"
+                  data-cms-field="hours"
+                >
+                  {hours.map((h, i) => (
+                    <p key={i}>
+                      {h.closed
+                        ? `${h.days} ${closedDayLabel ? `(${closedDayLabel})` : ''}`
+                        : `${h.days} ${h.open} — ${h.close}`}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   );
 }

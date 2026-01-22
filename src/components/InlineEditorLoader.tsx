@@ -5,20 +5,9 @@ import { useSearchParams } from 'next/navigation';
 
 interface InlineEditorLoaderProps {
   orgSlug: string;
-  apiBase?: string;
-  adminBase?: string; // Separate admin URL if admin panel is on different port/domain
 }
 
-/**
- * Loads the CMS inline editor script when ?edit=true is present in the URL.
- * This component has zero impact on normal visitors - the script only loads
- * when edit mode is explicitly requested.
- */
-export function InlineEditorLoader({
-  orgSlug,
-  apiBase = 'https://backend-production-162b.up.railway.app',
-  adminBase = 'https://sphereos.vercel.app',
-}: InlineEditorLoaderProps) {
+export function InlineEditorLoader({ orgSlug }: InlineEditorLoaderProps) {
   const searchParams = useSearchParams();
   const isEditMode = searchParams.get('edit') === 'true';
 
@@ -26,31 +15,26 @@ export function InlineEditorLoader({
     if (!isEditMode) return;
 
     // Check if script is already loaded
-    if (document.querySelector('script[data-cms-editor]')) {
-      return;
-    }
+    if (document.querySelector('script[data-cms-editor]')) return;
 
-    // Dynamically inject the editor script
     const script = document.createElement('script');
-    // Add cache-busting parameter for development
-    const cacheBuster = process.env.NODE_ENV === 'development' ? `?v=${Date.now()}` : '';
-    script.src = `${apiBase}/inline-editor.js${cacheBuster}`;
+    script.src =
+      'https://backend-production-162b.up.railway.app/inline-editor.js';
     script.dataset.cmsOrg = orgSlug;
-    script.dataset.cmsApi = apiBase;
-    if (adminBase) {
-      script.dataset.cmsAdmin = adminBase;
-    }
+    script.dataset.cmsApi = 'https://backend-production-162b.up.railway.app';
+    script.dataset.cmsAdmin = 'https://sphereos.vercel.app';
     script.dataset.cmsEditor = 'true';
     script.defer = true;
     document.head.appendChild(script);
 
     return () => {
-      // Cleanup on unmount (though this typically won't happen)
-      script.remove();
+      // Cleanup on unmount (though typically not needed for this use case)
+      const existingScript = document.querySelector('script[data-cms-editor]');
+      if (existingScript) {
+        existingScript.remove();
+      }
     };
-  }, [isEditMode, orgSlug, apiBase, adminBase]);
+  }, [isEditMode, orgSlug]);
 
   return null;
 }
-
-export default InlineEditorLoader;

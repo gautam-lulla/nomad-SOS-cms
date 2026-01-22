@@ -1,190 +1,89 @@
-import { SiteNavigation, SiteFooter } from "@/components/layout";
-import { FAQAccordion, InstagramFeed } from "@/components/blocks";
-import { Button } from "@/components/ui";
-import Image from "next/image";
-import { getPageContent, getInstagramContent } from "@/lib/content";
+import { getPageContent, getHeroSection, getAllEvents, getAllFaqItems, getInstagramFeed } from '@/lib/content';
+import { HeroSection } from '@/components/sections/HeroSection';
+import { EventsList } from '@/components/sections/EventsList';
+import { FaqAccordion } from '@/components/sections/FaqAccordion';
+import { InstagramFeed } from '@/components/sections/InstagramFeed';
+import { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
 
-export default async function ProgrammingPage() {
-  // Fetch content from CMS
-  const programmingContent = await getPageContent('programming');
-  const instagramContent = await getInstagramContent();
-
-  const { hero, intro, events, pagination, faq } = programmingContent as {
-    hero: { heading: string; imageSrc: string };
-    intro: { columns: string[]; buttonText: string };
-    events: Array<{ title: string; description: string; imageSrc: string }>;
-    pagination: { current: number; total: number };
-    faq: { title: string; items: Array<{ question: string; answer: string }> };
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getPageContent('programming');
+  return {
+    title: page?.metaTitle || 'Programming',
+    description: page?.metaDescription,
   };
+}
+
+export default async function ProgrammingPage() {
+  const page = await getPageContent('programming');
+  if (!page) {
+    return <div>Page not found</div>;
+  }
+
+  const hero = page.heroSlug ? await getHeroSection(page.heroSlug) : null;
+  const events = await getAllEvents();
+  const faqs = page.showFaq !== false ? await getAllFaqItems() : [];
+  const instagram = page.showInstagram ? await getInstagramFeed() : null;
+
+  // Filter FAQs by programming category if specified
+  const filteredFaqs = page.faqCategory
+    ? faqs.filter((faq) => faq.category === page.faqCategory)
+    : faqs;
 
   return (
-    <main className="bg-black-900 min-h-screen">
-      {/* Navigation */}
-      <SiteNavigation />
-
+    <>
       {/* Hero Section */}
-      <section className="relative">
-        {/* Hero Image */}
-        <div
-          className="relative h-[400px] md:h-[600px] lg:h-[840px] w-full"
-          data-cms-entry="programming"
-          data-cms-field="hero.imageSrc"
-          data-cms-type="image"
-          data-cms-label="Hero Image"
-        >
-          <Image
-            src={hero.imageSrc}
-            alt=""
-            fill
-            className="object-cover"
-            priority
-          />
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black-900/80 to-transparent" />
-        </div>
+      {hero && (
+        <HeroSection
+          entry={page.heroSlug!}
+          variant={hero.variant as 'split-screen' | 'full-screen' | 'gallery' | 'text-only'}
+          headline={hero.headline}
+          subtitle={hero.subtitle}
+          bodyText={hero.bodyText}
+          backgroundImage={hero.backgroundImage}
+          backgroundImageAlt={hero.backgroundImageAlt}
+          ctaText={hero.ctaText}
+          ctaUrl={hero.ctaUrl}
+          ctaAriaLabel={hero.ctaAriaLabel}
+          textAlignment={hero.textAlignment as 'left' | 'center' | 'right'}
+          overlayOpacity={hero.overlayOpacity}
+        />
+      )}
 
-        {/* Hero Content */}
-        <div className="absolute top-[120px] md:top-[130px] lg:top-[140px] left-4 right-4 md:left-6 md:right-6 lg:left-3m lg:right-3m">
-          <h1
-            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 max-w-[544px]"
-            data-cms-entry="programming"
-            data-cms-field="hero.heading"
-            data-cms-label="Hero Heading"
-          >
-            {hero.heading}
-          </h1>
-        </div>
-      </section>
-
-      {/* Intro Section */}
-      <section className="pt-10 md:pt-16 lg:pt-xl px-[30px] lg:px-3m">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-xl">
-          {/* Left Column with Button */}
-          <div className="lg:w-1/2">
-            <p
-              className="font-sabon text-body-s text-off-white-100 leading-relaxed mb-6 lg:mb-3s max-w-[433px]"
-              data-cms-entry="programming"
-              data-cms-field="intro.columns.0"
-              data-cms-type="textarea"
-              data-cms-label="Intro Column 1"
-            >
-              {intro.columns[0]}
-            </p>
-            <Button variant="outline">
-              <span
-                data-cms-entry="programming"
-                data-cms-field="intro.buttonText"
-                data-cms-label="Intro Button Text"
-              >
-                {intro.buttonText}
-              </span>
-            </Button>
-          </div>
-
-          {/* Right Column */}
-          <div className="lg:w-1/2">
-            <p
-              className="font-sabon text-body-s text-off-white-100 leading-relaxed max-w-[433px]"
-              data-cms-entry="programming"
-              data-cms-field="intro.columns.1"
-              data-cms-type="textarea"
-              data-cms-label="Intro Column 2"
-            >
-              {intro.columns[1]}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Events Grid */}
-      <section className="pt-10 md:pt-16 lg:pt-xl">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0">
-          {events.map((event, index) => (
-            <div key={index} className="flex flex-col">
-              {/* Event Image */}
-              <div
-                className="relative h-[350px] md:h-[500px] lg:h-[700px]"
-                data-cms-entry="programming"
-                data-cms-field={`events[${index}].imageSrc`}
-                data-cms-type="image"
-                data-cms-label={`Event ${index + 1} Image`}
-              >
-                <Image
-                  src={event.imageSrc}
-                  alt={event.title}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-
-              {/* Event Content */}
-              <div className="px-4 md:px-6 lg:px-m pt-6 lg:pt-m pb-6 lg:pb-3s">
-                <h3
-                  className="font-gotham font-bold text-h4 uppercase text-off-white-100 mb-xs"
-                  data-cms-entry="programming"
-                  data-cms-field={`events[${index}].title`}
-                  data-cms-type="text"
-                  data-cms-label={`Event ${index + 1} Title`}
-                >
-                  {event.title}
-                </h3>
-                <p
-                  className="font-sabon text-body-s text-off-white-100 leading-relaxed"
-                  data-cms-entry="programming"
-                  data-cms-field={`events[${index}].description`}
-                  data-cms-type="textarea"
-                  data-cms-label={`Event ${index + 1} Description`}
-                >
-                  {event.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Pagination */}
-        <div className="flex items-center justify-center gap-xs py-10 lg:py-xl">
-          <span className="font-gotham font-bold text-cta text-off-white-100">
-            ( 0{pagination.current} )
-          </span>
-          {[...Array(pagination.total - 1)].map((_, i) => (
-            <span
-              key={i}
-              className="font-gotham font-bold text-cta text-off-white-100/50 hover:text-off-white-100 cursor-pointer"
-            >
-              0{i + 2}
-            </span>
-          ))}
-        </div>
-      </section>
+      {/* Events List with pagination - shows 6 events per page */}
+      {events.length > 0 && (
+        <EventsList
+          entry="programming"
+          sectionLabel={page.eventsSectionLabel}
+          events={events}
+          variant="grid"
+          limit={6}
+          showPagination={true}
+        />
+      )}
 
       {/* FAQ Section */}
-      <section className="pb-6 lg:pb-3m">
-        <div className="max-w-[877px] mx-auto px-[30px] lg:px-3m">
-          <h2
-            className="font-sabon text-h2-mobile md:text-h2 text-off-white-100 text-center mb-10 lg:mb-l"
-            data-cms-entry="programming"
-            data-cms-field="faq.title"
-            data-cms-label="FAQ Title"
-          >
-            {faq.title}
-          </h2>
-          <FAQAccordion items={faq.items} cmsEntry="programming" cmsFieldPrefix="faq" />
-        </div>
-      </section>
+      {filteredFaqs.length > 0 && (
+        <FaqAccordion
+          entry="programming"
+          sectionLabel="Questions"
+          heading={page.faqHeading || 'Frequently Asked Questions'}
+          items={filteredFaqs}
+        />
+      )}
 
       {/* Instagram Feed */}
-      <InstagramFeed
-        title={instagramContent.title}
-        handle={instagramContent.handle}
-        handleUrl={instagramContent.handleUrl}
-        images={instagramContent.images}
-      />
-
-      {/* Footer */}
-      <SiteFooter />
-    </main>
+      {instagram && (
+        <InstagramFeed
+          entry="global-instagram"
+          title={instagram.title}
+          handle={instagram.handle}
+          profileUrl={instagram.profileUrl}
+          sectionLabel={instagram.sectionLabel}
+          images={instagram.images}
+        />
+      )}
+    </>
   );
 }
