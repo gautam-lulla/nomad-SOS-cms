@@ -60,8 +60,8 @@ export default async function MenuPage() {
         <div className="max-w-[800px]">
           {sortedCategories.map((category, index) => (
             <MenuCategory
-              key={index}
-              entry="menu"
+              key={category.slug}
+              entry={category.slug}
               name={category.name}
               availability={category.availability}
               items={category.items || []}

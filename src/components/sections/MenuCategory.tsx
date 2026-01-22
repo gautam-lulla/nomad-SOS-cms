@@ -18,7 +18,6 @@ export function MenuCategory({
   name,
   availability,
   items,
-  index,
 }: MenuCategoryProps) {
   return (
     <section className="py-10 border-t border-off-white/20 first:border-t-0">
@@ -27,7 +26,7 @@ export function MenuCategory({
         <h2
           className="font-sabon text-[36px] leading-[1.3] tracking-[-0.72px] text-off-white"
           data-cms-entry={entry}
-          data-cms-field={`categories[${index}].name`}
+          data-cms-field="name"
         >
           {name}
         </h2>
@@ -35,7 +34,7 @@ export function MenuCategory({
           <p
             className="font-gotham font-bold text-xs uppercase tracking-[0.36px] text-off-white/60 mt-2"
             data-cms-entry={entry}
-            data-cms-field={`categories[${index}].availability`}
+            data-cms-field="availability"
           >
             {availability}
           </p>
@@ -54,7 +53,7 @@ export function MenuCategory({
                 <h3
                   className="font-sabon text-[20px] leading-[1.3] tracking-[-0.4px] text-off-white"
                   data-cms-entry={entry}
-                  data-cms-field={`categories[${index}].items[${itemIndex}].name`}
+                  data-cms-field={`items[${itemIndex}].name`}
                 >
                   {item.name}
                 </h3>
@@ -76,7 +75,7 @@ export function MenuCategory({
                 <p
                   className="font-sabon text-base leading-[1.6] tracking-[-0.32px] text-off-white/70 mt-1"
                   data-cms-entry={entry}
-                  data-cms-field={`categories[${index}].items[${itemIndex}].description`}
+                  data-cms-field={`items[${itemIndex}].description`}
                 >
                   {item.description}
                 </p>
@@ -86,7 +85,7 @@ export function MenuCategory({
               <span
                 className="font-gotham font-bold text-sm uppercase tracking-[0.42px] text-off-white flex-shrink-0"
                 data-cms-entry={entry}
-                data-cms-field={`categories[${index}].items[${itemIndex}].price`}
+                data-cms-field={`items[${itemIndex}].price`}
               >
                 {item.price}
               </span>

@@ -491,6 +491,7 @@ export async function getAllEvents(): Promise<Event[]> {
 }
 
 export interface MenuCategory {
+  slug: string;
   name: string;
   availability?: string;
   items: Array<{
@@ -503,7 +504,39 @@ export interface MenuCategory {
 }
 
 export async function getAllMenuCategories(): Promise<MenuCategory[]> {
-  return fetchEntries<MenuCategory>('menu-category');
+  const client = getPublicClient();
+  const contentTypeId = CONTENT_TYPE_IDS['menu-category'];
+
+  if (!contentTypeId) {
+    console.error('Unknown content type: menu-category');
+    return [];
+  }
+
+  try {
+    const { data } = await client.query<ContentEntriesResponse>({
+      query: GET_CONTENT_ENTRIES,
+      variables: {
+        filter: {
+          contentTypeId,
+          organizationId: ORG_ID,
+          take: 100,
+        },
+      },
+    });
+
+    if (!data?.contentEntries?.items) {
+      return [];
+    }
+
+    // Include slug with the data for inline editor support
+    return data.contentEntries.items.map((item) => ({
+      slug: item.slug,
+      ...transformImageUrls(item.data),
+    })) as MenuCategory[];
+  } catch (error) {
+    console.error('Error fetching menu categories:', error);
+    return [];
+  }
 }
 
 export interface Award {
