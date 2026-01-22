@@ -17,12 +17,24 @@ export function InlineEditorLoader({ orgSlug }: InlineEditorLoaderProps) {
     // Check if script is already loaded
     if (document.querySelector('script[data-cms-editor]')) return;
 
+    // Use local URLs in development, production URLs in production
+    const isDev = process.env.NODE_ENV === 'development' ||
+                  window.location.hostname === 'localhost';
+
+    const apiBase = isDev
+      ? 'http://localhost:3001'
+      : 'https://backend-production-162b.up.railway.app';
+
+    // Admin runs on port 3002 locally (the headless-cms admin)
+    const adminBase = isDev
+      ? 'http://localhost:3002'
+      : 'https://sphereos.vercel.app';
+
     const script = document.createElement('script');
-    script.src =
-      'https://backend-production-162b.up.railway.app/inline-editor.js';
+    script.src = `${apiBase}/inline-editor.js`;
     script.dataset.cmsOrg = orgSlug;
-    script.dataset.cmsApi = 'https://backend-production-162b.up.railway.app';
-    script.dataset.cmsAdmin = 'https://sphereos.vercel.app';
+    script.dataset.cmsApi = apiBase;
+    script.dataset.cmsAdmin = adminBase;
     script.dataset.cmsEditor = 'true';
     script.defer = true;
     document.head.appendChild(script);
