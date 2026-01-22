@@ -1,7 +1,11 @@
 import { ApolloClient, InMemoryCache, HttpLink, from } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 
-const CMS_GRAPHQL_URL = process.env.NEXT_PUBLIC_CMS_GRAPHQL_URL || 'http://localhost:3000/graphql';
+// Support both NEXT_PUBLIC_ and server-only env vars, with production fallback
+const CMS_GRAPHQL_URL =
+  process.env.CMS_API_URL ||
+  process.env.NEXT_PUBLIC_CMS_GRAPHQL_URL ||
+  'https://backend-production-162b.up.railway.app/graphql';
 
 /**
  * Check if we're in CMS edit mode by reading the cookie.
