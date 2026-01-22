@@ -21,8 +21,8 @@ const CMS_EMAIL = process.env.CMS_EMAIL || 'dev@sphereos.local';
 const CMS_PASSWORD = process.env.CMS_PASSWORD || 'password123';
 const CDN_BASE = 'https://pub-21daddc5e64940d8bfac214df111cd0c.r2.dev';
 
-// Content Type IDs from the CMS
-const CONTENT_TYPE_IDS: Record<string, string> = {
+// Content Type IDs - Local Development
+const LOCAL_CONTENT_TYPE_IDS: Record<string, string> = {
   'site-settings': 'c675b32e-649c-4c6b-94db-cb57224d1a9b',
   'footer': '1ac54fb2-fed8-49d8-b483-2c1d6c1a9eff',
   'instagram-feed': '53f450dc-916c-4618-9388-e2b6cf05ab2e',
@@ -30,17 +30,29 @@ const CONTENT_TYPE_IDS: Record<string, string> = {
   'hero-section': 'f568e78c-1037-40d3-8a65-4f52685a1eb2',
 };
 
-// Use local paths for logos (served by Next.js from public folder)
-// These will work in development. For production, upload to R2 and update these URLs.
-const LOCAL_BASE = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+// Content Type IDs - Production
+const PROD_CONTENT_TYPE_IDS: Record<string, string> = {
+  'site-settings': '1fdce80f-82bd-4f77-bb2b-37c821db98d3',
+  'footer': '47028833-a53b-4b17-9c32-f853c5707890',
+  'instagram-feed': '1af8af67-8ec3-4a98-a0de-e013d5d4bc52',
+  'gallery': '832daa6c-3359-41a8-b6ad-aae3f60c1caa',
+  'hero-section': '44092183-c6d4-4e80-b58e-57b5e59a5e0b',
+};
+
+// Select content type IDs based on CMS API URL
+const isProduction = CMS_API_URL.includes('railway.app');
+const CONTENT_TYPE_IDS = isProduction ? PROD_CONTENT_TYPE_IDS : LOCAL_CONTENT_TYPE_IDS;
+
+// Use relative paths for logos (served by Next.js from public folder)
+// Relative paths work in both local and production environments
 
 // CDN Image URLs - All verified working URLs
 const CDN_URLS = {
   logos: {
-    // Local SVG logos (from Figma export) - use local paths for dev
-    mark: `${LOCAL_BASE}/images/logos/nav-logo-emblem.svg`,
-    footerMark: `${LOCAL_BASE}/images/logos/footer-mark.svg`,
-    wordmark: `${LOCAL_BASE}/images/logos/footer-wordmark.svg`,
+    // Relative paths work in both environments
+    mark: `/images/logos/nav-logo-emblem.svg`,
+    footerMark: `/images/logos/footer-mark.svg`,
+    wordmark: `/images/logos/footer-wordmark.svg`,
   },
   instagram: {
     image1: `${CDN_BASE}/730077ef-b5fe-40cf-9b23-0c8f887b3491/original.jpg`,
