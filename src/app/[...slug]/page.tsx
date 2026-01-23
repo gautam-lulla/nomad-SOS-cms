@@ -21,9 +21,22 @@ interface Props {
   params: Promise<{ slug: string[] }>;
 }
 
+// Static file extensions that should not be handled by CMS
+const STATIC_FILE_EXTENSIONS = ['.ico', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.webp', '.css', '.js', '.map', '.json', '.xml', '.txt'];
+
+function isStaticFile(slug: string): boolean {
+  return STATIC_FILE_EXTENSIONS.some(ext => slug.endsWith(ext));
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const pageSlug = slug.join('/');
+
+  // Don't try to fetch metadata for static files
+  if (isStaticFile(pageSlug)) {
+    return { title: 'Not Found' };
+  }
+
   const page = await getPageContent(pageSlug);
 
   if (!page) {
@@ -39,6 +52,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function DynamicPage({ params }: Props) {
   const { slug } = await params;
   const pageSlug = slug.join('/');
+
+  // Don't handle static file requests - let them 404 naturally
+  if (isStaticFile(pageSlug)) {
+    notFound();
+  }
 
   // Fetch page content from CMS
   const page = await getPageContent(pageSlug);

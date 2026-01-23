@@ -3,20 +3,20 @@ import { GET_CONTENT_ENTRY_BY_SLUG, GET_CONTENT_ENTRIES } from '../queries';
 
 const ORG_ID = process.env.CMS_ORGANIZATION_ID || '4a8061e8-ea3e-4b95-8c30-9143a8f7e803';
 
-// Content Type IDs - Local Development
+// Content Type IDs - Local Development (synced from production)
 const LOCAL_CONTENT_TYPE_IDS: Record<string, string> = {
-  'site-settings': 'c675b32e-649c-4c6b-94db-cb57224d1a9b',
-  'navigation': '4744dd96-44f1-42e1-8b42-f7e437db2d35',
-  'footer': '1ac54fb2-fed8-49d8-b483-2c1d6c1a9eff',
-  'hero-section': 'f568e78c-1037-40d3-8a65-4f52685a1eb2',
-  'content-section': 'bd2974d6-39ad-44bc-8beb-ee4b5c25811c',
-  'gallery': '7e05102c-b270-45bd-8a34-e402d63e7852',
-  'instagram-feed': '53f450dc-916c-4618-9388-e2b6cf05ab2e',
-  'faq-item': '1cf0fa5e-59b3-46dc-9ea2-a45aee6b2ac3',
-  'event': '23d0f666-0a0e-465f-80ba-6cf396c2447c',
-  'menu-category': '3a4388ed-9fb2-4351-ba40-0c4d05c4b804',
-  'award': '4db4496a-a5d8-4300-ad60-fba0202b2a7e',
-  'page': '54d15929-4f6a-4939-9423-338d7f9fd21f',
+  'award': '8008517f-c476-4ceb-ab6c-3df13bdf88a4',
+  'content-section': '763ff8ee-6d6f-4ddc-b175-4d395a9a8c56',
+  'event': 'bae34dd9-5ddf-4c8a-870b-b5a538b6d177',
+  'faq-item': 'b52859b2-c7a4-456a-a135-6db0249ab14e',
+  'footer': '47028833-a53b-4b17-9c32-f853c5707890',
+  'gallery': '832daa6c-3359-41a8-b6ad-aae3f60c1caa',
+  'hero-section': '44092183-c6d4-4e80-b58e-57b5e59a5e0b',
+  'instagram-feed': '1af8af67-8ec3-4a98-a0de-e013d5d4bc52',
+  'menu-category': 'ac70b2a0-3985-4d10-8071-b77789a5ef5b',
+  'navigation': '42bd9d3b-6d1b-4eab-83d5-d36632a098bf',
+  'page': 'b0414bca-4298-48bb-b9a6-4335ce587983',
+  'site-settings': '1fdce80f-82bd-4f77-bb2b-37c821db98d3',
 };
 
 // Content Type IDs - Production
